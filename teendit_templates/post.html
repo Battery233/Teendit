@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap-3.3.7-dist 2/css/bootstrap.css">
+ <link rel="stylesheet" href="css/mystyle.css">
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top"  >
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><img src="images/teendit_logo.png" alt="teendit" height="45" width="120" style="margin-top: -13px"></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li ><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home &nbsp&nbsp&nbsp&nbsp&nbsp<span class="sr-only">(current)</span></a></li>
+        
+        <li class=" active dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> &nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Account &nbsp&nbsp&nbsp&nbsp&nbsp <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Log In</a></li>
+            <li><a href="#">New? Sign Up</a></li>
+            
+          </ul>
+        </li>
+        <li> <a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp Newsflash &nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+      </ul>
+      <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="button" class="btn btn-default btn-md">
+  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
+</button>   
+      </form>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<br>
+  <br>
+<div class="container-fluid">
+  <div class="row" style="word-break:break-all; word-wrap:break-word;">
+  <div class="col-sm-2" >
+    <div class="list-group">
+      <a href="#" class="list-group-item active" style="border:none;border-radius:3px">Hotspots</a>
+      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Sports</a>
+      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Music</a>
+      <a href="#" class="list-group-item" style="border:none;border-radius:3px">TV series</a>
+      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Life</a>
+      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Events</a>
+      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Shopping</a>
+  </div>
+</div>
+  <div class="col-sm-7" >
+<ol class="breadcrumb">
+  <li><a href="#">Global Stream</a></li>
+  <li><a href="#">Hotspots</a></li>
+  <li class="active">Post</li>
+</ol>
+      <form action="#" method="post">
+<h4>Headline</h4>
+<input type="text" name="headline" class="form-control" placeholder="Text input" style="margin-bottom: 20px">
+
+<h4>Content</h4>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-align-center" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-text-color" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+</button>
+
+<textarea class="form-control" name="content" placeholder="Text input" rows="12" style="margin-bottom: 20px"></textarea>
+
+<h4>File Upload</h4>
+<div class="form-group">
+    <input type="file" id="exampleInputFile">
+</div>
+<br>
+<br>
+ <button type="submit" class="btn btn-primary">POST</button>
+ <br>
+<br>
+<br>
+<br>
+</form>
+</div>
+<div class="col-sm-3" >
+  <h3>Top Search Queries</h3>
+
+<ol>
+  <li><a href="#" style="color:#000000">Yasmin Karachiwala</li>
+  <li><a href="#" style="color:#000000">NBA</li>
+  <li><a href="#" style="color:#000000">Game of Thrones</li>
+  <li><a href="#" style="color:#000000">Yasmin Karachiwala</li>
+  <li><a href="#" style="color:#000000">NBA</li>
+  <li><a href="#" style="color:#000000">Game of Thrones</li>
+</ol> 
+  </div>
+
+</div>
+ </div>
+
+
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
