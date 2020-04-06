@@ -1,0 +1,4 @@
+.metadata/
+ToDoList/build/
+*.class
+**/.DS_Store
