@@ -1,4 +1,4 @@
 .metadata/
-ToDoList/build/
+teendit/build/
 *.class
 **/.DS_Store
