@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login Page</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/bootstrap-3.3.7-dist 2/css/bootstrap.css">
- <link rel="stylesheet" href="css/mystyle.css">
+<title>Login Page</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="css/bootstrap-3.3.7-dist 2/css/bootstrap.css">
+<link rel="stylesheet" href="css/mystyle.css">
+<script type="text/javascript" src="js/login.js"></script>
 
 </head>
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top"  >
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"><img src="images/teendit_logo.png" alt="teendit" height="45" width="120" style="margin-top: -13px"></a>
-    </div>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><img
+					src="images/teendit_logo.png" alt="teendit" height="45" width="120"
+					style="margin-top: -13px"></a>
+			</div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li ><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home &nbsp&nbsp&nbsp&nbsp&nbsp<span class="sr-only">(current)</span></a></li>
-        
-        <li class=" active dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> &nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Account &nbsp&nbsp&nbsp&nbsp&nbsp <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Log In</a></li>
-            <li><a href="#">New? Sign Up</a></li>
-            
-          </ul>
-        </li>
-        <li> <a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp Newsflash &nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
-      </ul>
-<!--       <form class="navbar-form navbar-right">
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp <span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
+							&nbsp&nbsp&nbsp&nbsp&nbsp<span class="sr-only">(current)</span></a></li>
+
+					<li class=" active dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">
+							&nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-user"
+							aria-hidden="true"></span> Account &nbsp&nbsp&nbsp&nbsp&nbsp <span
+							class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Log In</a></li>
+							<li><a href="#">New? Sign Up</a></li>
+
+						</ul></li>
+					<li><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp Newsflash
+							&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+				</ul>
+				<!--       <form class="navbar-form navbar-right">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
@@ -45,109 +58,120 @@
   <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
 </button>   
       </form> -->
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+				</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
 
-<div class="content">
-  <div class="jumbotron">
-  <div class="container">
-    <div align="center">
-    <br/>
-    <br/>
-    <img src="images/teendit_logo.png" alt="teendit" height="110" width="320">
-  </div>
-  <br/>
+	<div class="content">
+		<div class="jumbotron">
+			<div class="container">
+				<div align="center">
+					<br /> <br /> <img src="images/teendit_logo.png" alt="teendit"
+						height="110" width="320">
+				</div>
+				<br />
 
-    <!-- <h1 class="text-center">Teendit</h1> -->
-    <p class="text-center">Share More, Live Better</p>
-  </div>
-  </div>
-  <div class="col-xs-7 col-md-6 col-center-block">
-
+				<!-- <h1 class="text-center">Teendit</h1> -->
+				<p class="text-center">Share More, Live Better</p>
+			</div>
+		</div>
+		<div class="col-xs-7 col-md-6 col-center-block">
 
 
 
-  <form class="form-horizontal col-center-block" role="form" method="POST" id="form" action="#">
-<!--       <div><p style="color:whitesmoke" align="center">{{ error }}</p>
+
+			<form class="form-horizontal col-center-block" role="form"
+				method="POST" id="form" action="#">
+				<!--       <div><p style="color:whitesmoke" align="center">{{ error }}</p>
       </div> -->
-   <div class="form-group">
-      <label for="uname" class="col-sm-3 control-label"></label>
-      <div class="col-sm-6">
-         <input type="text" class="form-control" id="txtUserName" name="username"
-            placeholder="Mobile number, email or username " required>
-          <span id="username.info" style="color:red"></span>
-      </div>
-   </div>
+				<div class="form-group">
+					<label for="uname" class="col-sm-3 control-label"></label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="txtUserName"
+							name="username" placeholder="Mobile number, email or username "
+							required> <span id="username.info" style="color: red"></span>
+					</div>
+				</div>
 
-   <div class="form-group">
-       <label for="passwd" class="col-sm-3 control-label"></label>
-       <div class="col-sm-6">
-          <input type="password" class="form-control" name="password" id="txtPassword"
-            placeholder="Password" required>
-           <span id="password.info" style="color:red"></span>
-       </div>
-   </div>
-   <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-10">
-    <label class="form-check-label">
-      <input type="checkbox" name="login_identity" class="form-check-input"><span style="color:#CCCCCC" > &nbspI am a parent</span>
-    </label>
-  </div>
-  </div>
-
-
-
-   <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-10">
-         <button type="submit" class="btn btn-primary">Log In</button>
-          <div><a href="#" >Forget Password?</a></div>
-      </div>
-   </div>
-      <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-10">
-         <a href="#" role="button">New? Sign Up</a>
-
-      </div>
-   </div>
-   <div>
-   </div>
-</form>
+				<div class="form-group">
+					<label for="passwd" class="col-sm-3 control-label"></label>
+					<div class="col-sm-6">
+						<input type="password" class="form-control" name="password"
+							id="txtPassword" placeholder="Password" required> <span
+							id="password.info" style="color: red"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<label class="form-check-label"> <input type="checkbox"
+							name="login_identity" class="form-check-input"><span
+							style="color: #CCCCCC"> &nbspI am a parent</span>
+						</label>
+					</div>
+				</div>
 
 
 
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<button type="submit" class="btn btn-primary">Log In</button>
+						<div>
+							<a href="#">Forget Password?</a>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<a href="#" role="button">New? Sign Up</a>
+
+					</div>
+				</div>
+				<div></div>
+			</form>
 
 
-</div>
-</div>
 
-<footer class="footer">
-  <div class="row" style="color:#CCCCCC">
-  <div class="col-md-2"><strong>&nbsp&nbsp&nbspCompany</strong>
-<br>&nbsp&nbsp&nbsp<a href="#" style="color: #AAAAAA">About</a>
-<br>&nbsp&nbsp&nbsp<a href="#" style="color: #AAAAAA">Career</a>
-  </div>
-  <div class="col-md-2"><strong>Community</strong>
-<br><a href="#" style="color: #AAAAAA">Guidelines</a>
-<br><a href="#" style="color: #AAAAAA">Support</a>
-  </div>
-  <div class="col-md-2"><strong>Legal</strong>
-    <br><a href="#" style="color: #AAAAAA">Privacy</a>
-    <br><a href="#" style="color: #AAAAAA">Terms</a>
-  </div>
-  <div class="col-md-2"><strong>Contact</strong>
-    <br><a href="#" style="color: #AAAAAA">Brands</a>
-  </div>
-  <div class="col-md-4 text-right"><br>©TEENDIT 2020. All rights reserved.&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-  
-</div>
-</footer>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
+
+
+		</div>
+	</div>
+
+	<footer class="footer">
+		<div class="row" style="color: #CCCCCC">
+			<div class="col-md-2">
+				<strong>&nbsp&nbsp&nbspCompany</strong> <br>&nbsp&nbsp&nbsp<a
+					href="#" style="color: #AAAAAA">About</a> <br>&nbsp&nbsp&nbsp<a
+					href="#" style="color: #AAAAAA">Career</a>
+			</div>
+			<div class="col-md-2">
+				<strong>Community</strong> <br>
+				<a href="#" style="color: #AAAAAA">Guidelines</a> <br>
+				<a href="#" style="color: #AAAAAA">Support</a>
+			</div>
+			<div class="col-md-2">
+				<strong>Legal</strong> <br>
+				<a href="#" style="color: #AAAAAA">Privacy</a> <br>
+				<a href="#" style="color: #AAAAAA">Terms</a>
+			</div>
+			<div class="col-md-2">
+				<strong>Contact</strong> <br>
+				<a href="#" style="color: #AAAAAA">Brands</a>
+			</div>
+			<div class="col-md-4 text-right">
+				<br>©TEENDIT 2020. All rights
+				reserved.&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			</div>
+
+		</div>
+	</footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
 
 
 </body>

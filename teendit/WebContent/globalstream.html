@@ -1,153 +1,190 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login Page</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/bootstrap-3.3.7-dist 2/css/bootstrap.css">
- <link rel="stylesheet" href="css/mystyle.css">
+<title>Global Stream</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="css/bootstrap-3.3.7-dist 2/css/bootstrap.css">
+<link rel="stylesheet" href="css/mystyle.css">
+<script type="text/javascript" src="js/globalstream.js"></script>
 
 </head>
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top"  >
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"><img src="images/teendit_logo.png" alt="teendit" height="45" width="120" style="margin-top: -13px"></a>
-    </div>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><img
+					src="images/teendit_logo.png" alt="teendit" height="45" width="120"
+					style="margin-top: -13px"></a>
+			</div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li ><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home &nbsp&nbsp&nbsp&nbsp&nbsp<span class="sr-only">(current)</span></a></li>
-        
-        <li class=" active dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> &nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Account &nbsp&nbsp&nbsp&nbsp&nbsp <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Log In</a></li>
-            <li><a href="#">New? Sign Up</a></li>
-            
-          </ul>
-        </li>
-        <li> <a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp Newsflash &nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
-      </ul>
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="button" class="btn btn-default btn-md">
-  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
-</button>   
-      </form>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-<br>
-  <br>
-<div class="container-fluid">
-  <div class="row" style="word-break:break-all; word-wrap:break-word;">
-  <div class="col-sm-2" >
-    <div class="list-group">
-      <a href="#" class="list-group-item active" style="border:none;border-radius:3px">Hotspots</a>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp <span
+							class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
+							&nbsp&nbsp&nbsp&nbsp&nbsp<span class="sr-only">(current)</span></a></li>
 
+					<li class=" active dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">
+							&nbsp&nbsp&nbsp&nbsp&nbsp <span class="glyphicon glyphicon-user"
+							aria-hidden="true"></span> Account &nbsp&nbsp&nbsp&nbsp&nbsp <span
+							class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Log In</a></li>
+							<li><a href="#">New? Sign Up</a></li>
 
-      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Sports</a>
-      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Music</a>
-      <a href="#" class="list-group-item" style="border:none;border-radius:3px">TV series</a>
-      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Life</a>
-      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Events</a>
-      <a href="#" class="list-group-item" style="border:none;border-radius:3px">Shopping</a>
-  </div>
+						</ul></li>
+					<li><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp Newsflash
+							&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search">
+					</div>
+					<button type="button" class="btn btn-default btn-md">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					</button>
+				</form>
+				</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<br>
+	<br>
+	<div class="container-fluid">
+		<div class="row" style="word-break: break-all; word-wrap: break-word;">
+			<div class="col-sm-2">
+				<div class="list-group">
+					<a href="#" class="list-group-item active"
+						style="border: none; border-radius: 3px">Hotspots</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">Sports</a>
+					<a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Music</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">TV
+						series</a> <a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Life</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">Events</a>
+					<a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Shopping</a>
+				</div>
 
-</div>
+			</div>
 
-  <div class="col-sm-7" >
+			<div class="col-sm-7">
 
-  <div class="news-list">
-    <div class="news-list-item clearfix" style="padding-bottom: 20px;border-bottom: 1px solid #eee">
-      <div class="row">
-      <div class="col-xs-4">
-      <img src="images/news.jpg">
-      </div>
-  <div class="col-xs-8">
-    <div><a href="#" class="title" style="display:block;color:#444;font-size: 18px;font-weight: bold;margin-bottom: 5px;line-height: 1.5 ">headline</a></div>
-    <p>content</p>
-    <div class="info" style="color:#888;">
-      <span><span class="avatar"><img src="images/avatar.jpeg">
-      </span><a href="#" style="color:#000000">username</a>
-</span>·
-      <span>3/25/2020</span>
-    </div>
-  </div>
-  </div>
-</div>
-<h4>Comments</h4>
-<div>
-<li id='comment_id'><blockquote class='blockquote'><h6 class='mb-0'>useful post!</h6>
-               <footer class='blockquote-footer'>by</span><cite title='Source Title'>
-               <span class='avatar'><img src="images/avatar.jpeg"><a href='#'>username</a>&nbsp·&nbsp
-               <span>03-25-2020&nbsp13:18</span></cite></footer></blockquote></li>
-</div>
-<div class="row">
-<div class="col-xs-10"><input type="text" class="form-control" name="comment_content" id="comment_input"
-            placeholder="Please comment here" required></div>
-<div class="col-xs-1"><button type="submit" class="btn btn-primary">Comment</button></div>
-<div class="col-xs-1"><button type="submit" class="btn btn-warning">Bully Report</button></div>
-</div>
-<br>
-</div>
-</div>
-  <div class="col-sm-3" >
-  <h3>Top Search Queries</h3>
-<ol>
-  <li><a href="#" style="color:#000000">Yasmin Karachiwala</li>
-  <li><a href="#" style="color:#000000">NBA</li>
-  <li><a href="#" style="color:#000000">Game of Thrones</li>
-  <li><a href="#" style="color:#000000">Yasmin Karachiwala</li>
-  <li><a href="#" style="color:#000000">NBA</li>
-  <li><a href="#" style="color:#000000">Game of Thrones</li>
-</ol>
-      <div>
-          <a href="#" style="color:#FFFFFF">
-              <button type="submit" class="btn btn-primary" style="margin-left: 30px; margin-top: 20px; ">I want to post something...</button>
-          </a>
-  </div>
-</div>
- </div>
-<footer class="footer">
-  <div class="row" style="color:#CCCCCC">
-  <div class="col-md-2"><strong>&nbsp&nbsp&nbspCompany</strong>
-<br>&nbsp&nbsp&nbsp<a href="#" style="color: #AAAAAA">About</a>
-<br>&nbsp&nbsp&nbsp<a href="#" style="color: #AAAAAA">Career</a>
-  </div>
-  <div class="col-md-2"><strong>Community</strong>
-<br><a href="#" style="color: #AAAAAA">Guidelines</a>
-<br><a href="#" style="color: #AAAAAA">Support</a>
-  </div>
-  <div class="col-md-2"><strong>Legal</strong>
-    <br><a href="#" style="color: #AAAAAA">Privacy</a>
-    <br><a href="#" style="color: #AAAAAA">Terms</a>
-  </div>
-  <div class="col-md-2"><strong>Contact</strong>
-    <br><a href="#" style="color: #AAAAAA">Brands</a>
-  </div>
-  <div class="col-md-4 text-right"><br>©TEENDIT 2020. All rights reserved.&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-  
-</div>
-</footer>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
+				<div class="news-list">
+					<div class="news-list-item clearfix"
+						style="padding-bottom: 20px; border-bottom: 1px solid #eee">
+						<div class="row">
+							<div class="col-xs-4">
+								<img src="images/news.jpg">
+							</div>
+							<div class="col-xs-8">
+								<div>
+									<a href="#" class="title"
+										style="display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5">headline</a>
+								</div>
+								<p>content</p>
+								<div class="info" style="color: #888;">
+									<span><span class="avatar"><img
+											src="images/avatar.jpeg"> </span><a href="#"
+										style="color: #000000">username</a> </span>· <span>3/25/2020</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<h4>Comments</h4>
+					<div>
+						<li id='comment_id'><blockquote class='blockquote'>
+								<h6 class='mb-0'>useful post!</h6>
+								<footer class='blockquote-footer'>
+									by</span><cite title='Source Title'> <span class='avatar'><img
+											src="images/avatar.jpeg"><a href='#'>username</a>&nbsp·&nbsp
+											<span>03-25-2020&nbsp13:18</span></cite>
+								</footer>
+							</blockquote></li>
+					</div>
+					<div class="row">
+						<div class="col-xs-10">
+							<input type="text" class="form-control" name="comment_content"
+								id="comment_input" placeholder="Please comment here" required>
+						</div>
+						<div class="col-xs-1">
+							<button type="submit" class="btn btn-primary">Comment</button>
+						</div>
+						<div class="col-xs-1">
+							<button type="submit" class="btn btn-warning">Bully
+								Report</button>
+						</div>
+					</div>
+					<br>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<h3>Top Search Queries</h3>
+				<ol>
+					<li><a href="#" style="color: #000000">Yasmin Karachiwala</li>
+					<li><a href="#" style="color: #000000">NBA</li>
+					<li><a href="#" style="color: #000000">Game of Thrones</li>
+					<li><a href="#" style="color: #000000">Yasmin Karachiwala</li>
+					<li><a href="#" style="color: #000000">NBA</li>
+					<li><a href="#" style="color: #000000">Game of Thrones</li>
+				</ol>
+				<div>
+					<a href="#" style="color: #FFFFFF">
+						<button type="submit" class="btn btn-primary"
+							style="margin-left: 30px; margin-top: 20px;">I want to
+							post something...</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<footer class="footer">
+			<div class="row" style="color: #CCCCCC">
+				<div class="col-md-2">
+					<strong>&nbsp&nbsp&nbspCompany</strong> <br>&nbsp&nbsp&nbsp<a
+						href="#" style="color: #AAAAAA">About</a> <br>&nbsp&nbsp&nbsp<a
+						href="#" style="color: #AAAAAA">Career</a>
+				</div>
+				<div class="col-md-2">
+					<strong>Community</strong> <br> <a href="#"
+						style="color: #AAAAAA">Guidelines</a> <br> <a href="#"
+						style="color: #AAAAAA">Support</a>
+				</div>
+				<div class="col-md-2">
+					<strong>Legal</strong> <br> <a href="#" style="color: #AAAAAA">Privacy</a>
+					<br> <a href="#" style="color: #AAAAAA">Terms</a>
+				</div>
+				<div class="col-md-2">
+					<strong>Contact</strong> <br> <a href="#"
+						style="color: #AAAAAA">Brands</a>
+				</div>
+				<div class="col-md-4 text-right">
+					<br>©TEENDIT 2020. All rights
+					reserved.&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+				</div>
 
-
+			</div>
+		</footer>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
 </body>
 </html>
