@@ -55,19 +55,15 @@ public class SearchItem extends HttpServlet {
 			for (Item item : items) {
 				JSONObject obj = item.toJSONObject();
 				List<Comment> comments = connection.getComments(userId, item.getItemId());
-				JSONArray commentArray = new JSONArray();
 				for (Comment comment : comments) {
 					JSONObject comObj = comment.toJSONObject();
 					List<Reply> replies = connection.getReplies(userId, comment.getCommentId());
-					JSONArray replyArray = new JSONArray();
 					for (Reply reply : replies) {
 						JSONObject repObj = reply.toJSONObject();
-						replyArray.put(repObj);
+						comObj.append("replies", repObj);
 					}
-					comObj.append("replies", replyArray);
-					commentArray.put(comObj);
+					obj.append("comments", comObj);
 				}
-				obj.append("comments", commentArray);
 				array.put(obj);
 			}
 			RpcHelper.writeJsonArray(response, array);
@@ -93,15 +89,6 @@ public class SearchItem extends HttpServlet {
 	  		 JSONObject input = RpcHelper.readJSONObject(request);
 
 	  		 if (input.has("item_id")) {
-	  			 //Integer itemId = Integer.parseInt(input.getString("item_id"));
-		  		 
-//		  		 ItemBuilder builder = new ItemBuilder();
-//		  		 builder.setItemId(input.getString("item_id"));
-//				 builder.setUserId(input.getString("user_id"));
-//				 builder.setName(input.getString("name"));
-//				 builder.setContent(input.getString("content"));
-//				 Item item = builder.build();
-	  			 
 	  			 CommentBuilder builder = new CommentBuilder();
 				 builder.setUserId(input.getString("user_id"));
 				 builder.setItemId(input.getString("item_id"));
@@ -148,10 +135,16 @@ public class SearchItem extends HttpServlet {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
 	  		 JSONObject input = RpcHelper.readJSONObject(request);
-	  		 //String userId = input.getString("user_id");
-	  		 String itemId = input.getString("item_id");
+	  		 String todeleteId;
+	  		 if (input.has("reply_id")) {
+	  			todeleteId = input.getString("reply_id");
+	  		 } else if (input.has("comment_id")) {
+	  			todeleteId = input.getString("comment_id");
+	  		 } else {
+	  			todeleteId = input.getString("item_id");
+	  			connection.deleteItems(todeleteId);
+	  		 }
 	  		
-	  		 connection.deleteItems(itemId);
 	  		 RpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
 	  		
 	  	 } catch (Exception e) {

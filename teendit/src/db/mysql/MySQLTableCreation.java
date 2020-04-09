@@ -5,6 +5,12 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.Connection;
 
+/**
+ * The tool class for creating a table in the db
+ * and setup corresponding schema.
+ * Run the main method the first time when the database is
+ * created and connected.
+ */
 public class MySQLTableCreation {
 	public static void main(String[] args) {
 		try {
@@ -27,8 +33,11 @@ public class MySQLTableCreation {
 			
 			sql = "DROP TABLE IF EXISTS comments";
 			statement.executeUpdate(sql);
-			
+				
 			sql = "DROP TABLE IF EXISTS replies";
+			statement.executeUpdate(sql);
+			
+			sql = "DROP TABLE IF EXISTS parents";
 			statement.executeUpdate(sql);
 			
 			// Step 3 Create new tables
@@ -63,15 +72,20 @@ public class MySQLTableCreation {
 					+ "user_id VARCHAR(255) NOT NULL,"
 					+ "password VARCHAR(255) NOT NULL,"
 					+ "email VARCHAR(255) NOT NULL,"
-					+ "parent_id VARCHAR(255),"
+					+ "parent_email VARCHAR(255),"
 					+ "time_to_view INT,"
 					+ "PRIMARY KEY (user_id)"
 					+ ")";
 			statement.executeUpdate(sql);
 			
-//			// Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
-//			sql = "INSERT INTO users VALUES('1234', '1111', 'Eat lunch', 'Remember to eat lunch', '2020-01-16 07:08', '0')";
-//			statement.executeUpdate(sql);
+			sql = "CREATE TABLE parents ("
+					+ "parent_email VARCHAR(255) NOT NULL,"
+					+ "password VARCHAR(255) NOT NULL,"
+					+ "user_id VARCHAR(255),"
+					+ "time_to_view INT,"
+					+ "PRIMARY KEY (parent_email)"
+					+ ")";
+			statement.executeUpdate(sql);
 			
 			conn.close();
 			System.out.println("Import done successfully");

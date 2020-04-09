@@ -3,6 +3,12 @@ package entity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Reply object.
+ * Every reply is an reply object.
+ * This object contains all the information of the reply, 
+ * including reply Id, user Id, comment Id and content.
+ */
 public class Reply {
 	private String replyId;
 	private String userId;
@@ -25,6 +31,7 @@ public class Reply {
 		//this.checked = builder.checked;
 	}
 	
+	//getters for the values
 	public String getReplyId() {
 		return commentId;
 	}
@@ -53,6 +60,7 @@ public class Reply {
 //		return checked;
 //	}
 	
+	// Create a json object using the values
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		try {
@@ -69,6 +77,7 @@ public class Reply {
 		return obj;
 	}
 	
+	// a builder class for create the reply objects and init values
 	public static class ReplyBuilder {
 		private String replyId;
 		private String userId;

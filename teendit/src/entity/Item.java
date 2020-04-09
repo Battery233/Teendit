@@ -3,13 +3,17 @@ package entity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Item object.
+ * Every post is an Item object.
+ * This object contains all the information of the post, 
+ * including ItemId, user Id, post name and content.
+ */
 public class Item {
 	private String itemId;
 	private String userId;
 	private String name;
 	private String content;
-	//private String time;
-	//private int checked;
 	
 	/**
 	 * This is a builder pattern in Java.
@@ -23,6 +27,7 @@ public class Item {
 		//this.checked = builder.checked;
 	}
 	
+	//getters for the values
 	public String getItemId() {
 		return itemId;
 	}
@@ -47,6 +52,7 @@ public class Item {
 //		return checked;
 //	}
 	
+	// Create a json object using the values
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		try {
@@ -62,6 +68,7 @@ public class Item {
 		return obj;
 	}
 	
+	// a builder class for create the item objects and init values 
 	public static class ItemBuilder {
 		private String itemId;
 		private String userId;

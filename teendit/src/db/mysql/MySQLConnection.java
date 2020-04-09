@@ -17,10 +17,15 @@ import entity.Reply;
 import entity.Reply.ReplyBuilder;
 import entity.Item.ItemBuilder;
 
+/**
+ * Tool class for database item adding, editing, deleting
+ * and reading.
+ */
 public class MySQLConnection implements DBConnection {
 	
 	private Connection conn;
 	
+	// setup connection to the db
 	public MySQLConnection() {
 	  	 try {
 	  		 Class.forName("com.mysql.cj.jdbc.Driver").getConstructor().newInstance();
@@ -75,11 +80,8 @@ public class MySQLConnection implements DBConnection {
 	  		 PreparedStatement ps = conn.prepareStatement(sql);
 	  		 ps.setString(1, null);
 	  		 ps.setString(2, comment.getUserId());
-	  		 //ps.setString(3, item.getName());
 	  		 ps.setString(3, comment.getItemId());
 	  		 ps.setString(4, comment.getContent());
-	  		 //ps.setString(5, item.getTime());
-	  		 //ps.setInt(4, item.isChecked());
 	  		 ps.execute();
 	  		
 	  	 } catch (Exception e) {
@@ -109,6 +111,7 @@ public class MySQLConnection implements DBConnection {
 	  		 e.printStackTrace();
 	  	 }
 	}
+	
 	
 	@Override
 	public void updateItems(Item item) {
@@ -143,6 +146,40 @@ public class MySQLConnection implements DBConnection {
 			String sql = "DELETE FROM items WHERE item_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Integer.parseInt(itemId));
+			ps.execute();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void deleteComments(String commentId) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+	  	}
+		try {
+			String sql = "DELETE FROM comments WHERE comment_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Integer.parseInt(commentId));
+			ps.execute();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void deleteReplies(String replyId) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+	  	}
+		try {
+			String sql = "DELETE FROM replies WHERE reply_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Integer.parseInt(replyId));
 			ps.execute();
 			
 		} catch (Exception e) {
@@ -434,7 +471,7 @@ public class MySQLConnection implements DBConnection {
 	}
 	
 	@Override
-	public boolean registerUser(String userId, String password, String email) {
+	public boolean registerUser(String userId, String password, String email, String parentEmail) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
 			return false;
@@ -446,7 +483,7 @@ public class MySQLConnection implements DBConnection {
 			ps.setString(1, userId);
 			ps.setString(2, password);
 			ps.setString(3, email);
-			ps.setString(4, "-1");
+			ps.setString(4, parentEmail);
 			ps.setInt(5, -1);
 			
 			return ps.executeUpdate() == 1;
@@ -454,6 +491,59 @@ public class MySQLConnection implements DBConnection {
 			e.printStackTrace();
 		}
 		return false;	
+	}
+	
+	@Override
+	public boolean registerParent(String parentEmail, String userId) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return false;
+		}
+
+		try {
+			String sql = "INSERT IGNORE INTO parents VALUES (?, ?, ?, ?)";
+			String password = generateRandomString(13);
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, parentEmail);
+			ps.setString(2, password);
+			ps.setString(3, userId);
+			ps.setInt(4, -1);
+			
+			return ps.executeUpdate() == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	/**
+	 * Generate a random sequence for parent initial password
+	 * @param n   the length of the random sequence
+	 * @return    a random string
+	 */
+	private String generateRandomString(int n) {
+		// chose a Character random from this String 
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    + "0123456789!@#$%&*"
+                                    + "abcdefghijklmnopqrstuvxyz"; 
+  
+        // create StringBuilder size of AlphaNumericString 
+        StringBuilder sb = new StringBuilder(n); 
+  
+        for (int i = 0; i < n; i++) { 
+  
+            // generate a random number between 
+            // 0 to AlphaNumericString variable length 
+            int index 
+                = (int)(AlphaNumericString.length() 
+                        * Math.random()); 
+  
+            // add Character one by one in end of sb 
+            sb.append(AlphaNumericString 
+                          .charAt(index)); 
+        } 
+  
+        return sb.toString();
 	}
 	
 	@Override
@@ -475,6 +565,5 @@ public class MySQLConnection implements DBConnection {
 		}
 		return time;
 	}
-
-
+	
 }

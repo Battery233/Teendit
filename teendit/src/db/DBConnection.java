@@ -6,6 +6,9 @@ import entity.Comment;
 import entity.Item;
 import entity.Reply;
 
+/**
+ * The tool interface for establishing connections with databases.
+ */
 public interface DBConnection {
 	/**
 	 * Close the connection.
@@ -33,9 +36,23 @@ public interface DBConnection {
 	/**
 	 * Delete a item for a user.
 	 * 
-	 * @param item
+	 * @param itemId
 	 */
 	public void deleteItems(String itemId);
+	
+	/**
+	 * Delete a comment for a user.
+	 * 
+	 * @param commentId
+	 */
+	public void deleteComments(String commentId);
+	
+	/**
+	 * Delete a reply for a user.
+	 * 
+	 * @param replyId
+	 */
+	public void deleteReplies(String replyId);
 	
 //	/**
 //	 * Check if the item exists under the user
@@ -92,16 +109,53 @@ public interface DBConnection {
 	 * @param lastname
 	 * @return boolean
 	 */
-	public boolean registerUser(String userId, String password, String email);
+	public boolean registerUser(String userId, String password, String email, String parentEmail);
 	
+	/**
+	 * Register one parent account
+	 * @param parentEmail
+	 * @param userId
+	 * @return  boolean
+	 */
+	public boolean registerParent(String parentEmail, String userId);
+	
+	/**
+	 * Get comment id based on item id
+	 * @param userId
+	 * @param itemId
+	 * @return  list of comment IDs
+	 */
 	public List<Integer> getCommentIds (String userId, String itemId);
 	
+	/**
+	 * Get comment based on item id
+	 * @param userId
+	 * @param itemId
+	 * @return list of comments
+	 */
 	public List<Comment> getComments(String userId, String itemId);
 	
+	/**
+	 * Get reply id based on comment id
+	 * @param userId
+	 * @param commentId
+	 * @return  list of reply IDs
+	 */
 	public List<Integer> getReplyIds (String userId, String commentId);
 	
+	/**
+	 * Get reply based on comment id
+	 * @param userId
+	 * @param commentId
+	 * @return  list of replies
+	 */
 	public List<Reply> getReplies(String userId, String commentId);
 	
+	/**
+	 * Get the time limit for viewing web sites
+	 * @param userId
+	 * @return  the time limit number
+	 */
 	public int getTime(String userId);
 
 }

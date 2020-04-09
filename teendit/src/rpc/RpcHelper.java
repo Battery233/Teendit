@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Json tool class.
+ * For reading and writing a json object or a json array
+ */
 public class RpcHelper {
 
 	// Writes a JSONArray to http response.

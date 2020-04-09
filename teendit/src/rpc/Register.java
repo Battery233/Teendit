@@ -37,12 +37,13 @@ public class Register extends HttpServlet {
 			String userId = input.getString("user_id");
 			String password = input.getString("password");
 			String email = input.getString("email");
+			String parentEmail = input.getString("parent_email");
 			
 			JSONObject obj = new JSONObject();
-			if (connection.registerUser(userId, password, email)) {
+			if (connection.registerUser(userId, password, email, parentEmail) && connection.registerParent(parentEmail, userId)) {
 				obj.put("status", "OK");
 			} else {
-				obj.put("status", "User Already Exists");
+				obj.put("status", "User or Parent Already Exists");
 			}
 			RpcHelper.writeJsonObject(response, obj);
 		} catch (Exception e) {

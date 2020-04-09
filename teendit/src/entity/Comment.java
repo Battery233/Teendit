@@ -3,6 +3,12 @@ package entity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Comment object.
+ * Every comment is an comment object.
+ * This object contains all the information of the comment, 
+ * including comment Id, user Id, item Id and content.
+ */
 public class Comment {
 	private String commentId;
 	private String userId;
@@ -25,6 +31,7 @@ public class Comment {
 		//this.checked = builder.checked;
 	}
 	
+	//getters for the values
 	public String getCommentId() {
 		return commentId;
 	}
@@ -53,6 +60,7 @@ public class Comment {
 //		return checked;
 //	}
 	
+	// Create a json object using the values
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		try {
@@ -79,6 +87,7 @@ public class Comment {
 //		private int checked;
 		
 		
+		// a builder class for create the comment objects and init values 
 		public CommentBuilder setCommentId(String commentId) {
 			this.commentId = commentId;
 			return this;
