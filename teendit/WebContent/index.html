@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login Page</title>
+<title>Teendit</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -57,15 +57,13 @@
   <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
 </button>   
       </form> -->
-				</li>
-				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
 
-	<div class="content">
+	<div id="login-content" class="content" style="display:none">
 		<div class="jumbotron">
 			<div class="container">
 				<div align="center">
@@ -79,11 +77,17 @@
 			</div>
 		</div>
 		<div class="col-xs-7 col-md-6 col-center-block">
-
-			<form class="form-horizontal col-center-block" role="form"
-				method="POST" id="form" action="#">
-				<!--       <div><p style="color:whitesmoke" align="center">{{ error }}</p>
-      </div> -->
+		<h1><label for="username">Username</label></h1>
+        <input id="txtUserName" name="username" type="text">
+        <h1><label for="password">Password</label></h1>
+        <input id="txtPassword" name="password" type="password">
+        
+        <div id = "wrapper"><button id="register-form-btn">New User? Register</button>
+        <button id="login-btn">Login</button></div>
+        <div id="login-error"></div>
+			<!-- form class="form-horizontal col-center-block" role="form"
+				method="POST" id="form" >
+			
 				<div class="form-group">
 					<label for="uname" class="col-sm-3 control-label"></label>
 					<div class="col-sm-6">
@@ -112,7 +116,8 @@
 
 				<div class="form-group">
 					<div class="col-sm-offset-3 col-sm-10">
-						<button id="login-btn" type="submit" class="btn btn-primary">Log In</button>
+						<button id="login-btn" type="submit" class="btn btn-primary">Log
+							In</button>
 						<div>
 							<a href="#">Forget Password?</a>
 						</div>
@@ -125,7 +130,84 @@
 					</div>
 				</div>
 				<div></div>
-			</form>
+			</form -->
+		</div>
+	</div>
+	<div id="globalstream-content" class="container-fluid" style="display:none">
+	<br><br><br><br><br>
+		<div class="row" style="word-break: break-all; word-wrap: break-word;">
+			<div class="col-sm-2">
+				<div class="list-group">
+					<a href="#" class="list-group-item active"
+						style="border: none; border-radius: 3px">Hotspots</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">Sports</a>
+					<a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Music</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">TV
+						series</a> <a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Life</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">Events</a>
+					<a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Shopping</a>
+				</div>
+
+			</div>
+
+			<div class="col-sm-7">
+
+				<div id="item-list" class="news-list">
+					<!-- div class="news-list-item clearfix"
+						style="padding-bottom: 20px; border-bottom: 1px solid #eee">
+						<div class="row">
+							<div class="col-xs-8">
+								<div>
+									<a href="#" class="title"
+										style="display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5">headline</a>
+								</div>
+								<p>content</p>
+								<div class="info">
+									<a>username</a><span>3/25/2020</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<h4>Comments</h4>
+					<div>
+						<li id='comment_id'><blockquote class='blockquote'>
+								<h6 class='mb-0'>useful post!</h6>
+								<footer class='blockquote-footer'>
+									by <a href='#'>username</a>&nbsp·&nbsp
+											<span>03-25-2020&nbsp13:18</span>
+								</footer>
+							</blockquote></li>
+					</div>
+					<div class="row">
+						<div class="col-xs-10">
+							<input type="text" class="form-control" name="comment_content"
+								id="comment_input" placeholder="Please comment here" required>
+						</div>
+						<div class="col-xs-1">
+							<button type="submit" class="btn btn-primary">Comment</button>
+						</div>
+						<div class="col-xs-1">
+							<button type="submit" class="btn btn-warning">Bully
+								Report</button>
+						</div>
+					</div-->
+					<br>
+				</div>
+				
+				
+			</div>
+				
+				
+					<a href="#" style="color: #FFFFFF">
+						<button type="submit" class="btn btn-primary"
+							style="margin-left: 30px; margin-top: 20px;">I want to
+							post something...</button>
+					</a>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -137,18 +219,17 @@
 					href="#" style="color: #AAAAAA">Career</a>
 			</div>
 			<div class="col-md-2">
-				<strong>Community</strong> <br>
-				<a href="#" style="color: #AAAAAA">Guidelines</a> <br>
-				<a href="#" style="color: #AAAAAA">Support</a>
+				<strong>Community</strong> <br> <a href="#"
+					style="color: #AAAAAA">Guidelines</a> <br> <a href="#"
+					style="color: #AAAAAA">Support</a>
 			</div>
 			<div class="col-md-2">
-				<strong>Legal</strong> <br>
-				<a href="#" style="color: #AAAAAA">Privacy</a> <br>
-				<a href="#" style="color: #AAAAAA">Terms</a>
+				<strong>Legal</strong> <br> <a href="#" style="color: #AAAAAA">Privacy</a>
+				<br> <a href="#" style="color: #AAAAAA">Terms</a>
 			</div>
 			<div class="col-md-2">
-				<strong>Contact</strong> <br>
-				<a href="#" style="color: #AAAAAA">Brands</a>
+				<strong>Contact</strong> <br> <a href="#"
+					style="color: #AAAAAA">Brands</a>
 			</div>
 			<div class="col-md-4 text-right">
 				<br>©TEENDIT 2020. All rights
@@ -162,7 +243,7 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/md5.js"></script>
-    <script type="text/javascript" src="js/login.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
 
 </body>
 </html>
