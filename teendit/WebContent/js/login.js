@@ -1,9 +1,13 @@
 (function() {
+	var currentUser;
     /**
-     * Initialize major event handlers
-     */
+	 * Initialize major event handlers
+	 */
     function init() {
         document.querySelector('#login-btn').addEventListener('click', login);
+        document.querySelector('#new-post').addEventListener('click', newpost);
+        document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
+        document.querySelector('#return-btn').addEventListener('click', validateSession);
         validateSession();
     }
 
@@ -23,14 +27,15 @@
                     onSessionValid(res);
                 }
             }).catch(function() {})
-
     }
 
     function onSessionValid(res) {
-        user_id = res.user_id;
+        currentUser = res.user_id;
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
+        var newpostContent = document.querySelector('#newpost-content');
         hideElement(loginContent);
+        hideElement(newpostContent);
         showElement(globalContent);
         loadItems();
     }
@@ -38,7 +43,9 @@
     function onSessionInvalid() {
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
+        var newpostContent = document.querySelector('#newpost-content');
         hideElement(globalContent);
+        hideElement(newpostContent);
         showElement(loginContent);
     }
 
@@ -49,6 +56,38 @@
     function showElement(element, style) {
         var displayStyle = style ? style : 'block';
         element.style.display = displayStyle;
+    }
+    
+    function newpost(){
+    	hideElement(document.querySelector('#login-content'));
+    	hideElement(document.querySelector('#globalstream-content'));
+    	showElement(document.querySelector('#newpost-content'));
+    }
+    
+    function sendNewPost(){
+    	var head = document.querySelector('#txtnewpost-headline').value;
+        var content = document.querySelector('#txtnewpost-content').value;
+        if(head==''||content==''){
+        	hideElement(document.querySelector('#login-content'));
+        	hideElement(document.querySelector('#globalstream-content'));
+        	showElement(document.querySelector('#newpost-content'));
+        	alert("write something!");
+        } else{
+        	var url = './main';
+            var req = JSON.stringify({
+                user_id: currentUser,
+                name: head,
+                content: content,
+            });
+
+            console.log(req);
+            fetch(url, {
+                    method: 'POST',
+                    body: req
+                }).then(res => {
+                    console.log(res);
+                })                
+         }
     }
 
     function login() {
@@ -113,8 +152,8 @@
     }
 
     /**
-     * render all the items on the web page.
-     */
+	 * render all the items on the web page.
+	 */
     function listItems(items) {
         var itemList = document.querySelector('#item-list');
         itemList.innerHTML = ''; // clear current results
@@ -125,11 +164,11 @@
     }
 
     /**
-     * render one item on the web page.
-     */
+	 * render one item on the web page.
+	 */
     function addItem(itemList, item) {
         var s = "<div id=\"post-%s\" class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>%s</a><span>%s</span></div></div></div></div>"
-        s = s.format(item.item_id, "Post" + item.item_id + "Title", item.content, item.user_id);
+        s = s.format(item.item_id, "Post" + item.item_id + "Title", item.content, item.user_id," time");
 
         var child = document.createElement('div');
         child.innerHTML = s;
@@ -141,7 +180,7 @@
             for (var i = 0; i < item.comments.length; i++) {
                 var child3 = document.createElement('div');
                 var s2 = "<li id='comment_%s'><blockquote class='blockquote'><h6 class='mb-0'>%s </h6><footer class='blockquote-footer'>by <a href='#'>%s</a>&nbsp·&nbsp<span>%s</span></footer></blockquote></li>";
-                s2 = s2.format(item.comments[i].comment_id, item.comments[i].content, item.comments[i].user_id);
+                s2 = s2.format(item.comments[i].comment_id, item.comments[i].content, item.comments[i].user_id," time");
                 child3.innerHTML = s2;
                 itemList.appendChild(child3);
             }

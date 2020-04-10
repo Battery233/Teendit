@@ -141,11 +141,7 @@
 	</div>
 	<div id="globalstream-content" class="container-fluid"
 		style="display: none">
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br> <br> <br>
 		<div class="row" style="word-break: break-all; word-wrap: break-word;">
 			<div class="col-sm-2">
 				<div class="list-group">
@@ -164,7 +160,7 @@
 
 			</div>
 			<a href="#" style="color: #FFFFFF">
-				<button type="submit" class="btn btn-primary"
+				<button id="new-post" type="submit" class="btn btn-primary"
 					style="margin-left: 30px; margin-top: 20px;">I want to
 					post something...</button>
 			</a>
@@ -213,6 +209,50 @@
 				</div-->
 				</div>
 			</div>
+		</div>
+	</div>
+	<div id="newpost-content" class="container-fluid">
+		<br> <br> <br> <br> <br>
+		<div class="row" style="word-break: break-all; word-wrap: break-word;">
+			<div class="col-sm-2">
+				<div class="list-group">
+					<a href="#" class="list-group-item active"
+						style="border: none; border-radius: 3px">Hotspots</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">Sports</a>
+					<a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Music</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">TV
+						series</a> <a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Life</a> <a href="#"
+						class="list-group-item" style="border: none; border-radius: 3px">Events</a>
+					<a href="#" class="list-group-item"
+						style="border: none; border-radius: 3px">Shopping</a>
+				</div>
+			</div>
+			<div class="col-sm-7">
+				<ol class="breadcrumb">
+					<li><a href="#">Global Stream</a></li>
+					<li><a href="#">Hotspots</a></li>
+					<li class="active">Post</li>
+				</ol>
+				<form action="#" method="post">
+					<h4>Headline</h4>
+					<input id="txtnewpost-headline" type="text" name="headline" class="form-control"
+						placeholder="Text input" style="margin-bottom: 20px">
+
+					<h4>Content</h4>
+					<textarea id = "txtnewpost-content" class="form-control" name="content"
+						placeholder="Text input" rows="12" style="margin-bottom: 20px"></textarea>
+
+
+					<br> <br>
+					<button id="new-post-btn" type="submit" class="btn btn-primary">POST</button>
+					<button id="return-btn" class="btn btn-warning">Return</button>
+					
+					<br> <br> <br> <br>
+				</form>
+			</div>
+
 		</div>
 	</div>
 
