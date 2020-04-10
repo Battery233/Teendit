@@ -1,17 +1,18 @@
 (function() {
-	//id for the current user
+    //id for the current user
     var currentUser;
     /**
      * Initialize major event handlers
      */
     function init() {
-    	//add button listeners
+        //add button listeners
         document.querySelector('#login-btn').addEventListener('click', login);
         document.querySelector('#new-post').addEventListener('click', newpost);
         document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
         document.querySelector('#return-btn').addEventListener('click', validateSession);
         document.querySelector('#logout-btn').addEventListener('click', logout);
         document.querySelector('#register-form-btn').addEventListener('click', register);
+        document.querySelector('#data-notice-btn').addEventListener('click', policy);
         //check the login status and show the components needs to be shown.
         validateSession();
     }
@@ -29,14 +30,14 @@
             })
             .then(res => {
                 if (res.status === 'OK') {
-                	//status = ok means logged in
+                    //status = ok means logged in
                     onSessionValid(res);
                 }
             }).catch(function() {})
     }
 
     function onSessionValid(res) {
-    	//setup the page for the logged in user
+        //setup the page for the logged in user
         currentUser = res.user_id;
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
@@ -52,7 +53,7 @@
     }
 
     function onSessionInvalid() {
-    	//if the session is invalid, go to the login page
+        //if the session is invalid, go to the login page
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
         var newpostContent = document.querySelector('#newpost-content');
@@ -73,8 +74,13 @@
         element.style.display = displayStyle;
     }
 
+    // show the policy information
+    function policy() {
+        alert("For teenage users, by creating this account, we will store users’ ID (user name), password, birthday, browsing time and email address. Your user name, password, and birthday is used to maintain your account, post history, and posts comments. All the information would be securely encrypted and used only for sending account reset information. The birthday data would only be used to determine whether you are the teenage group. For teenage parents, we will store parents’ correlation with their teenage children just to maintain the account. We will temporarily store the ID documents for manually ID verification and will delete them immediately after the verification process. We understand that ID documents are extremely important, we would encrypt them while we are storing them and transferring them. Not all the employees in Teendit can open the ID documents in the database, private keys would be needed. Your data will not be shared with any third party or used for any other purposes that are not directly related to Teendit.");
+    }
+
     function newpost() {
-    	//set up the page to new post editing page
+        //set up the page to new post editing page
         hideElement(document.querySelector('#signup-content'));
         hideElement(document.querySelector('#login-content'));
         hideElement(document.querySelector('#globalstream-content'));
@@ -82,18 +88,18 @@
     }
 
     function sendNewPost() {
-    	//read the content of the post inputs
+        //read the content of the post inputs
         var head = document.querySelector('#txtnewpost-headline').value;
         var content = document.querySelector('#txtnewpost-content').value;
         if (head == '' || content == '') {
-        	//make sure input is valid
+            //make sure input is valid
             hideElement(document.querySelector('#login-content'));
             hideElement(document.querySelector('#globalstream-content'));
             showElement(document.querySelector('#newpost-content'));
             hideElement(document.querySelector('#signup-content'));
             alert("write something!");
         } else {
-        	//send post
+            //send post
             var url = './main';
             var req = JSON.stringify({
                 user_id: currentUser,
@@ -112,7 +118,7 @@
     }
 
     function login() {
-    	//get the user name & password and hash the content
+        //get the user name & password and hash the content
         var username = document.querySelector('#txtUserName').value;
         var password = document.querySelector('#txtPassword').value;
         password = md5(username + md5(password));
@@ -129,7 +135,7 @@
                 body: req
             })
             .then(res => {
-            	//status = 401 if the password does not match
+                //status = 401 if the password does not match
                 if (res.status === 401) {
                     console.log(res);
                     console.log("RETURN VALUE NOT 200!");
@@ -141,7 +147,7 @@
             })
             .then(res => {
                 if (res.status === 'OK') {
-                	//login successfully
+                    //login successfully
                     onSessionValid(res);
                 }
             })
@@ -154,7 +160,7 @@
     }
 
     function logout() {
-    	//logout and get the index page from server
+        //logout and get the index page from server
         var url = './logout';
         var req = JSON.stringify({
             logout: "",
@@ -170,7 +176,7 @@
     }
 
     function register() {
-    	//hard coded user info for now
+        //hard coded user info for now
         alert("username: 111, password 1234\n username: 222, password 5678");
     }
 
@@ -201,7 +207,7 @@
      * render all the items on the web page.
      */
     function listItems(items) {
-    	//get the area for posts
+        //get the area for posts
         var itemList = document.querySelector('#item-list');
         itemList.innerHTML = ''; // clear current results
 
@@ -214,18 +220,18 @@
      * render one item on the web page.
      */
     function addItem(itemList, item) {
-    	//add the post content by adding html elements
+        //add the post content by adding html elements
         var s = "<div id=\"post-%s\" class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>Author: %s</a><span>%s</span></div></div></div></div>"
         s = s.format(item.item_id, item.name, item.content, item.user_id, "");
         var child = document.createElement('div');
         child.innerHTML = s;
         itemList.appendChild(child);
-        
+
         //add the comment bar
         var child2 = document.createElement('div');
         child2.innerHTML = "<h4>Comments</h4>";
         itemList.appendChild(child2);
-        
+
         //add comments for the post, if exist
         if (item.hasOwnProperty('comments')) {
             for (var i = 0; i < item.comments.length; i++) {
@@ -253,9 +259,9 @@
             console.log(item.item_id);
             var comment = document.querySelector(comment_txt).value;
             if (comment === '') {
-            	//do nothing if no text inputed
+                //do nothing if no text inputed
             } else {
-            	//post the commnet to the server
+                //post the commnet to the server
                 var url = './main';
                 var req = JSON.stringify({
                     user_id: currentUser,
@@ -291,7 +297,7 @@
             return args[count++];
         });
     }
-    
+
     //call the init function when the page is loaded
     init();
 })();
