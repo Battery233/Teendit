@@ -1,15 +1,18 @@
 (function() {
+	//id for the current user
     var currentUser;
     /**
      * Initialize major event handlers
      */
     function init() {
+    	//add button listeners
         document.querySelector('#login-btn').addEventListener('click', login);
         document.querySelector('#new-post').addEventListener('click', newpost);
         document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
         document.querySelector('#return-btn').addEventListener('click', validateSession);
         document.querySelector('#logout-btn').addEventListener('click', logout);
         document.querySelector('#register-form-btn').addEventListener('click', register);
+        //check the login status and show the components needs to be shown.
         validateSession();
     }
 
@@ -26,18 +29,21 @@
             })
             .then(res => {
                 if (res.status === 'OK') {
+                	//status = ok means logged in
                     onSessionValid(res);
                 }
             }).catch(function() {})
     }
 
     function onSessionValid(res) {
+    	//setup the page for the logged in user
         currentUser = res.user_id;
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
         var newpostContent = document.querySelector('#newpost-content');
         var signupContent = document.querySelector('#signup-content');
 
+        //show the global stream posts only
         hideElement(loginContent);
         hideElement(newpostContent);
         hideElement(signupContent);
@@ -46,6 +52,7 @@
     }
 
     function onSessionInvalid() {
+    	//if the session is invalid, go to the login page
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
         var newpostContent = document.querySelector('#newpost-content');
@@ -56,6 +63,7 @@
         showElement(loginContent);
     }
 
+    //tool functions for hide and show elements in the page
     function hideElement(element) {
         element.style.display = 'none';
     }
@@ -66,6 +74,7 @@
     }
 
     function newpost() {
+    	//set up the page to new post editing page
         hideElement(document.querySelector('#signup-content'));
         hideElement(document.querySelector('#login-content'));
         hideElement(document.querySelector('#globalstream-content'));
@@ -73,15 +82,18 @@
     }
 
     function sendNewPost() {
+    	//read the content of the post inputs
         var head = document.querySelector('#txtnewpost-headline').value;
         var content = document.querySelector('#txtnewpost-content').value;
         if (head == '' || content == '') {
+        	//make sure input is valid
             hideElement(document.querySelector('#login-content'));
             hideElement(document.querySelector('#globalstream-content'));
             showElement(document.querySelector('#newpost-content'));
             hideElement(document.querySelector('#signup-content'));
             alert("write something!");
         } else {
+        	//send post
             var url = './main';
             var req = JSON.stringify({
                 user_id: currentUser,
@@ -89,7 +101,6 @@
                 content: content,
                 category: "default",
             });
-
             console.log(req);
             fetch(url, {
                 method: 'POST',
@@ -101,6 +112,7 @@
     }
 
     function login() {
+    	//get the user name & password and hash the content
         var username = document.querySelector('#txtUserName').value;
         var password = document.querySelector('#txtPassword').value;
         password = md5(username + md5(password));
@@ -117,30 +129,32 @@
                 body: req
             })
             .then(res => {
+            	//status = 401 if the password does not match
                 if (res.status === 401) {
                     console.log(res);
                     console.log("RETURN VALUE NOT 200!");
                     throw new Error("not 200");
                 } else {
                     console.log(res);
-                    console.log("Status 200!");
                 }
                 return res.json()
             })
             .then(res => {
                 if (res.status === 'OK') {
+                	//login successfully
                     onSessionValid(res);
                 }
             })
             .catch(err => {
                 alert("Login error!");
-                console.log("not 200 error!");
             })
+        //clear the input boxes
         document.getElementById('txtUserName').value = "";
         document.getElementById('txtPassword').value = "";
     }
 
     function logout() {
+    	//logout and get the index page from server
         var url = './logout';
         var req = JSON.stringify({
             logout: "",
@@ -156,9 +170,11 @@
     }
 
     function register() {
+    	//hard coded user info for now
         alert("username: 111, password 1234\n username: 222, password 5678");
     }
 
+    //function for list all the posts in the global stream
     function loadItems() {
         var url = './main';
         var data = null;
@@ -171,7 +187,7 @@
             })
             .then(items => {
                 console.log(items);
-                // record the item and print to the webpage
+                // record the item and print to the web page
                 if (!items || items.length === 0) {} else {
                     listItems(items);
                 }
@@ -185,6 +201,7 @@
      * render all the items on the web page.
      */
     function listItems(items) {
+    	//get the area for posts
         var itemList = document.querySelector('#item-list');
         itemList.innerHTML = ''; // clear current results
 
@@ -197,15 +214,19 @@
      * render one item on the web page.
      */
     function addItem(itemList, item) {
+    	//add the post content by adding html elements
         var s = "<div id=\"post-%s\" class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>Author: %s</a><span>%s</span></div></div></div></div>"
         s = s.format(item.item_id, item.name, item.content, item.user_id, "");
-
         var child = document.createElement('div');
         child.innerHTML = s;
         itemList.appendChild(child);
+        
+        //add the comment bar
         var child2 = document.createElement('div');
         child2.innerHTML = "<h4>Comments</h4>";
         itemList.appendChild(child2);
+        
+        //add comments for the post, if exist
         if (item.hasOwnProperty('comments')) {
             for (var i = 0; i < item.comments.length; i++) {
                 var child3 = document.createElement('div');
@@ -216,22 +237,25 @@
             }
         }
 
-
+        //add the comment input boxes for this post
         var s4 = " <div class=\"row\"><div class=\"col-xs-10\"><input type=\"text\" class=\"form-control\" name=\"comment_content\"id=\"comment-input-%s\" placeholder=\"Please comment here\" required></div><div class=\"col-xs-1\"><button id=\"post-comment-btn-%s\" type=\"submit\" class=\"btn btn-primary\">Comment</button></div><div class=\"col-xs-1\"><button type=\"submit\" class=\"btn btn-warning\">BullyReport</button></div><br><br><br><br>";
         var child4 = document.createElement('div');
         s4 = s4.format(item.item_id, item.item_id);
         child4.innerHTML = s4;
         itemList.appendChild(child4);
+        //set unique id for the comment button according to the post button
         var comment_txt = "#comment-input-" + item.item_id;
         var comment_btn = "#post-comment-btn-%s";
         comment_btn = comment_btn.format(item.item_id);
+        //add listener for posting comments
         document.querySelector(comment_btn).addEventListener('click', function() {
             console.log(comment_txt);
             console.log(item.item_id);
             var comment = document.querySelector(comment_txt).value;
             if (comment === '') {
-
+            	//do nothing if no text inputed
             } else {
+            	//post the commnet to the server
                 var url = './main';
                 var req = JSON.stringify({
                     user_id: currentUser,
@@ -247,6 +271,7 @@
                         console.log(res);
                         if (res.status === 200) {
                             alert("Comment successfully!");
+                            //validate session and refresh the page
                             validateSession();
                         }
                         return res.json();
@@ -258,7 +283,7 @@
         });
     }
 
-
+    //tool function for string formatting
     String.prototype.format = function() {
         var args = Array.prototype.slice.call(arguments);
         var count = 0;
@@ -266,5 +291,7 @@
             return args[count++];
         });
     }
+    
+    //call the init function when the page is loaded
     init();
 })();
