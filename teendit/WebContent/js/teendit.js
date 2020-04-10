@@ -1,13 +1,15 @@
 (function() {
-	var currentUser;
+    var currentUser;
     /**
-	 * Initialize major event handlers
-	 */
+     * Initialize major event handlers
+     */
     function init() {
         document.querySelector('#login-btn').addEventListener('click', login);
         document.querySelector('#new-post').addEventListener('click', newpost);
         document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
         document.querySelector('#return-btn').addEventListener('click', validateSession);
+        document.querySelector('#logout-btn').addEventListener('click', logout);
+        document.querySelector('#register-form-btn').addEventListener('click', register);
         validateSession();
     }
 
@@ -34,8 +36,11 @@
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
         var newpostContent = document.querySelector('#newpost-content');
+        var signupContent = document.querySelector('#signup-content');
+
         hideElement(loginContent);
         hideElement(newpostContent);
+        hideElement(signupContent);
         showElement(globalContent);
         loadItems();
     }
@@ -44,6 +49,8 @@
         var loginContent = document.querySelector('#login-content');
         var globalContent = document.querySelector('#globalstream-content');
         var newpostContent = document.querySelector('#newpost-content');
+        var signupContent = document.querySelector('#signup-content');
+        hideElement(signupContent);
         hideElement(globalContent);
         hideElement(newpostContent);
         showElement(loginContent);
@@ -57,23 +64,25 @@
         var displayStyle = style ? style : 'block';
         element.style.display = displayStyle;
     }
-    
-    function newpost(){
-    	hideElement(document.querySelector('#login-content'));
-    	hideElement(document.querySelector('#globalstream-content'));
-    	showElement(document.querySelector('#newpost-content'));
+
+    function newpost() {
+        hideElement(document.querySelector('#signup-content'));
+        hideElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#globalstream-content'));
+        showElement(document.querySelector('#newpost-content'));
     }
-    
-    function sendNewPost(){
-    	var head = document.querySelector('#txtnewpost-headline').value;
+
+    function sendNewPost() {
+        var head = document.querySelector('#txtnewpost-headline').value;
         var content = document.querySelector('#txtnewpost-content').value;
-        if(head==''||content==''){
-        	hideElement(document.querySelector('#login-content'));
-        	hideElement(document.querySelector('#globalstream-content'));
-        	showElement(document.querySelector('#newpost-content'));
-        	alert("write something!");
-        } else{
-        	var url = './main';
+        if (head == '' || content == '') {
+            hideElement(document.querySelector('#login-content'));
+            hideElement(document.querySelector('#globalstream-content'));
+            showElement(document.querySelector('#newpost-content'));
+            hideElement(document.querySelector('#signup-content'));
+            alert("write something!");
+        } else {
+            var url = './main';
             var req = JSON.stringify({
                 user_id: currentUser,
                 name: head,
@@ -83,19 +92,18 @@
 
             console.log(req);
             fetch(url, {
-                    method: 'POST',
-                    body: req
-                }).then(res => {
-                    console.log(res);
-                })                
-         }
+                method: 'POST',
+                body: req
+            }).then(res => {
+                console.log(res);
+            })
+        }
     }
 
     function login() {
         var username = document.querySelector('#txtUserName').value;
         var password = document.querySelector('#txtPassword').value;
-        // password = md5(username + md5(password));
-
+        password = md5(username + md5(password));
         // The request parameters
         var url = './login';
         var req = JSON.stringify({
@@ -128,6 +136,27 @@
                 alert("Login error!");
                 console.log("not 200 error!");
             })
+        document.getElementById('txtUserName').value = "";
+        document.getElementById('txtPassword').value = "";
+    }
+
+    function logout() {
+        var url = './logout';
+        var req = JSON.stringify({
+            logout: "",
+        });
+        fetch(url, {
+            method: 'POST',
+            body: req
+        }).then(res => {
+            if (res.status === 200) {
+                validateSession();
+            }
+        })
+    }
+
+    function register() {
+        alert("username: 111, password 1234\n username: 222, password 5678");
     }
 
     function loadItems() {
@@ -153,8 +182,8 @@
     }
 
     /**
-	 * render all the items on the web page.
-	 */
+     * render all the items on the web page.
+     */
     function listItems(items) {
         var itemList = document.querySelector('#item-list');
         itemList.innerHTML = ''; // clear current results
@@ -165,11 +194,11 @@
     }
 
     /**
-	 * render one item on the web page.
-	 */
+     * render one item on the web page.
+     */
     function addItem(itemList, item) {
-        var s = "<div id=\"post-%s\" class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>%s</a><span>%s</span></div></div></div></div>"
-        s = s.format(item.item_id, item.name, item.content, item.user_id," time");
+        var s = "<div id=\"post-%s\" class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>Author: %s</a><span>%s</span></div></div></div></div>"
+        s = s.format(item.item_id, item.name, item.content, item.user_id, "");
 
         var child = document.createElement('div');
         child.innerHTML = s;
@@ -181,7 +210,7 @@
             for (var i = 0; i < item.comments.length; i++) {
                 var child3 = document.createElement('div');
                 var s2 = "<li id='comment_%s'><blockquote class='blockquote'><h6 class='mb-0'>%s </h6><footer class='blockquote-footer'>by <a href='#'>%s</a>&nbsp·&nbsp<span>%s</span></footer></blockquote></li>";
-                s2 = s2.format(item.comments[i].comment_id, item.comments[i].content, item.comments[i].user_id," time");
+                s2 = s2.format(item.comments[i].comment_id, item.comments[i].content, item.comments[i].user_id, "");
                 child3.innerHTML = s2;
                 itemList.appendChild(child3);
             }
@@ -190,41 +219,41 @@
 
         var s4 = " <div class=\"row\"><div class=\"col-xs-10\"><input type=\"text\" class=\"form-control\" name=\"comment_content\"id=\"comment-input-%s\" placeholder=\"Please comment here\" required></div><div class=\"col-xs-1\"><button id=\"post-comment-btn-%s\" type=\"submit\" class=\"btn btn-primary\">Comment</button></div><div class=\"col-xs-1\"><button type=\"submit\" class=\"btn btn-warning\">BullyReport</button></div><br><br><br><br>";
         var child4 = document.createElement('div');
-        s4 = s4.format(item.item_id,item.item_id);
+        s4 = s4.format(item.item_id, item.item_id);
         child4.innerHTML = s4;
         itemList.appendChild(child4);
-        var comment_txt = "#comment-input-"+item.item_id;
+        var comment_txt = "#comment-input-" + item.item_id;
         var comment_btn = "#post-comment-btn-%s";
-        comment_btn=comment_btn.format(item.item_id);
-        document.querySelector(comment_btn).addEventListener('click', function(){        	
-        	console.log(comment_txt);
-        	console.log(item.item_id);
+        comment_btn = comment_btn.format(item.item_id);
+        document.querySelector(comment_btn).addEventListener('click', function() {
+            console.log(comment_txt);
+            console.log(item.item_id);
             var comment = document.querySelector(comment_txt).value;
-            if(comment===''){
-            	
-            }else{
-            var url = './main';
-            var req = JSON.stringify({
-                user_id: currentUser,
-                item_id: item.item_id,
-                content: comment,
-            });
-    
-            console.log(req);
-            fetch(url, {
-                    method: 'POST',
-                    body: req
-                }).then(res => {
-                	console.log(res);
-                	if(res.status === 200){
-                		alert("Success!");
-                        validateSession();
-                	}
-                    return res.json();
-                })
-                .catch(err => {
-                    console.error(err); // print error
-                })
+            if (comment === '') {
+
+            } else {
+                var url = './main';
+                var req = JSON.stringify({
+                    user_id: currentUser,
+                    item_id: item.item_id,
+                    content: comment,
+                });
+
+                console.log(req);
+                fetch(url, {
+                        method: 'POST',
+                        body: req
+                    }).then(res => {
+                        console.log(res);
+                        if (res.status === 200) {
+                            alert("Comment successfully!");
+                            validateSession();
+                        }
+                        return res.json();
+                    })
+                    .catch(err => {
+                        console.error(err); // print error
+                    })
             }
         });
     }
