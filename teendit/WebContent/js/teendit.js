@@ -114,6 +114,7 @@
             }).then(res => {
                 console.log(res);
             })
+            validateSession();
         }
     }
 

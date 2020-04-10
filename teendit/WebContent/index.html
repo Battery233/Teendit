@@ -50,7 +50,8 @@
                      </a>
                   </li>
                </ul>
-               <button id="logout-btn">Logout</button>
+
+               <button id="logout-btn" class="btn btn-secondary" style = "margin-top: 9px; float: right">Logout</button>
             </div>
             <!-- /.navbar-collapse -->
          </div>
@@ -77,10 +78,11 @@
                <label for="password">Password</label>
             </h1>
             <input id="txtPassword" name="password" type="password">
+            <br><br>
             <div id="wrapper">
-               <button id="register-form-btn">New User? Register</button>
-               <button id="login-btn">Login</button>
-               <button id="data-notice-btn">The Data Use Policy</button>
+               <button class="btn btn-primary" id="register-form-btn">New User? Register</button>
+               <button class="btn btn-primary" id="login-btn">Login</button>
+               <button class="btn btn-primary" id="data-notice-btn">The Data Use Policy</button>
             </div>
             <div id="login-error"></div>
          </div>
@@ -144,7 +146,7 @@
                   <li><a href="#">Hotspots</a></li>
                   <li class="active">Post</li>
                </ol>
-               <form action="#" method="post">
+            
                   <h4>Headline</h4>
                   <input id="txtnewpost-headline" type="text" name="headline" class="form-control"
                      placeholder="Text input" style="margin-bottom: 20px">
@@ -155,7 +157,7 @@
                   <button id="new-post-btn" type="submit" class="btn btn-primary">POST</button>
                   <button id="return-btn" class="btn btn-warning">Return</button>
                   <br> <br> <br> <br>
-               </form>
+             
             </div>
          </div>
       </div>
@@ -170,8 +172,7 @@
          <div class="container-fluid">
             <div class="row">
                <div class="col-sm-7">
-                  <form class="form-horizontal" role="form" method="post" id="form"
-                     action="#">
+                  <form class="form-horizontal" role="form" method="post" id="form">
                      <div class="form-group">
                         <label for="uname" class="col-sm-2 control-label">Username*</label>
                         <div class="col-sm-6">
