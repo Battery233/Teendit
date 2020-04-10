@@ -78,6 +78,7 @@
                 user_id: currentUser,
                 name: head,
                 content: content,
+                category: "default",
             });
 
             console.log(req);
@@ -168,7 +169,7 @@
 	 */
     function addItem(itemList, item) {
         var s = "<div id=\"post-%s\" class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>%s</a><span>%s</span></div></div></div></div>"
-        s = s.format(item.item_id, "Post" + item.item_id + "Title", item.content, item.user_id," time");
+        s = s.format(item.item_id, item.name, item.content, item.user_id," time");
 
         var child = document.createElement('div');
         child.innerHTML = s;
