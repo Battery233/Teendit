@@ -187,11 +187,47 @@
         }
 
 
-        var s4 = " <div class=\"row\"><div class=\"col-xs-10\"><input type=\"text\" class=\"form-control\" name=\"comment_content\"id=\"comment_input\" placeholder=\"Please comment here\" required></div><div class=\"col-xs-1\"><button type=\"submit\" class=\"btn btn-primary\">Comment</button></div><div class=\"col-xs-1\"><button type=\"submit\" class=\"btn btn-warning\">BullyReport</button></div><br><br><br><br>";
+        var s4 = " <div class=\"row\"><div class=\"col-xs-10\"><input type=\"text\" class=\"form-control\" name=\"comment_content\"id=\"comment-input-%s\" placeholder=\"Please comment here\" required></div><div class=\"col-xs-1\"><button id=\"post-comment-btn-%s\" type=\"submit\" class=\"btn btn-primary\">Comment</button></div><div class=\"col-xs-1\"><button type=\"submit\" class=\"btn btn-warning\">BullyReport</button></div><br><br><br><br>";
         var child4 = document.createElement('div');
+        s4 = s4.format(item.item_id,item.item_id);
         child4.innerHTML = s4;
         itemList.appendChild(child4);
+        var comment_txt = "#comment-input-"+item.item_id;
+        var comment_btn = "#post-comment-btn-%s";
+        comment_btn=comment_btn.format(item.item_id);
+        document.querySelector(comment_btn).addEventListener('click', function(){        	
+        	console.log(comment_txt);
+        	console.log(item.item_id);
+            var comment = document.querySelector(comment_txt).value;
+            if(comment===''){
+            	
+            }else{
+            var url = './main';
+            var req = JSON.stringify({
+                user_id: currentUser,
+                item_id: item.item_id,
+                content: comment,
+            });
+    
+            console.log(req);
+            fetch(url, {
+                    method: 'POST',
+                    body: req
+                }).then(res => {
+                	console.log(res);
+                	if(res.status === 200){
+                		alert("Success!");
+                        validateSession();
+                	}
+                    return res.json();
+                })
+                .catch(err => {
+                    console.error(err); // print error
+                })
+            }
+        });
     }
+
 
     String.prototype.format = function() {
         var args = Array.prototype.slice.call(arguments);
