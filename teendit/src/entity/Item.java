@@ -13,6 +13,7 @@ public class Item {
 	private String itemId;
 	private String userId;
 	private String name;
+	private String category;
 	private String content;
 	
 	/**
@@ -22,6 +23,7 @@ public class Item {
 		this.itemId = builder.itemId;
 		this.userId = builder.userId;
 		this.name = builder.name;
+		this.category = builder.category;
 		this.content = builder.content;
 		//this.time = builder.time;
 		//this.checked = builder.checked;
@@ -38,6 +40,10 @@ public class Item {
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getCategory() {
+		return category;
 	}
 
 	public String getContent() {
@@ -58,7 +64,8 @@ public class Item {
 		try {
 			obj.put("item_id", itemId);
 			obj.put("user_id", userId);
-//			obj.put("name", name);
+			obj.put("name", name);
+			obj.put("category", category);
 			obj.put("content", content);
 //			obj.put("time", time);
 //			obj.put("checked", checked);
@@ -73,6 +80,7 @@ public class Item {
 		private String itemId;
 		private String userId;
 		private String name;
+		private String category;
 		private String content;
 		//private String time;
 //		private int checked;
@@ -88,6 +96,10 @@ public class Item {
 		}
 		public ItemBuilder setName(String name) {
 			this.name = name;
+			return this;
+		}
+		public ItemBuilder setCategory(String category) {
+			this.category = category;
 			return this;
 		}
 		public ItemBuilder setContent(String content) {

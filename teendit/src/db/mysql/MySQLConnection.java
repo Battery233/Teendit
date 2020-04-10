@@ -54,12 +54,13 @@ public class MySQLConnection implements DBConnection {
 	  		return;
 		}
 		try {
-	  		 String sql = "INSERT IGNORE INTO items VALUES (?, ?, ?, ?)";
+	  		 String sql = "INSERT IGNORE INTO items VALUES (?, ?, ?, ?, ?)";
 	  		 PreparedStatement ps = conn.prepareStatement(sql);
 	  		 ps.setString(1, null);
 	  		 ps.setString(2, item.getUserId());
 	  		 ps.setString(3, item.getName());
-	  		 ps.setString(4, item.getContent());
+	  		ps.setString(4, item.getCategory());
+	  		 ps.setString(5, item.getContent());
 	  		 //ps.setString(5, item.getTime());
 	  		 //ps.setInt(4, item.isChecked());
 	  		 ps.execute();
@@ -290,7 +291,8 @@ public class MySQLConnection implements DBConnection {
 			while (rs.next()) {
 				builder.setItemId(rs.getString("item_id"));
 				builder.setUserId(rs.getString("user_id"));
-				//builder.setName(rs.getString("name"));
+				builder.setName(rs.getString("name"));
+				builder.setCategory(rs.getString("category"));
 				builder.setContent(rs.getString("content"));
 				//builder.setTime(rs.getString("time"));
 				//builder.setChecked(rs.getInt("checked"));

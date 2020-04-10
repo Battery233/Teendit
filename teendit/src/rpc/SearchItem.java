@@ -109,6 +109,7 @@ public class SearchItem extends HttpServlet {
 	  			 ItemBuilder builder = new ItemBuilder();
 	  			 builder.setUserId(input.getString("user_id"));
 				 builder.setName(input.getString("name"));
+				 builder.setCategory(input.getString("category"));
 				 builder.setContent(input.getString("content"));
 				 Item item = builder.build();
 				 connection.addItems(item);
