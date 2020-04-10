@@ -93,7 +93,7 @@
 			body: req
 		})
 			.then(res => {
-				if (res.status !== 200) {
+				if (res.status === 401) {
 					console.log(res);
 					console.log("RETURN VALUE NOT 200!");
 					throw new Error("not 200");
@@ -106,11 +106,10 @@
 			.then(res => {
 				if (res.status === 'OK') {
 					onSessionValid(res);
-				} else{
-					alert("Login error!");
 				}
 			})
 			.catch(err => {
+				alert("Login error!");
 				console.log("not 200 error!");
 			})
 	}
@@ -119,7 +118,7 @@
 		var url = './main';
 		var data = null;
 		// get the JSON array from the server.
-		fetch(url + '?' + params, {
+		fetch(url, {
 			method: 'GET',
 		})
 		.then(res => {
