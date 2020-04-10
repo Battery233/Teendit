@@ -45,6 +45,7 @@ public class MySQLTableCreation {
 					+ "item_id INT NOT NULL AUTO_INCREMENT,"
 					+ "user_id VARCHAR(255) NOT NULL,"
 					+ "name VARCHAR(255),"
+					+ "category VARCHAR(255),"
 					+ "content VARCHAR(255),"
 					+ "PRIMARY KEY (item_id)"
 					+ ")";
