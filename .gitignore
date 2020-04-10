@@ -1,6 +1,9 @@
 .metadata/
+.settings/
 teendit/build/
 *.class
 **/.DS_Store
 RemoteSystemsTempFiles/.project
 /bin/
+.project
+.classpath

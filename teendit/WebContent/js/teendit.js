@@ -7,7 +7,7 @@
     function init() {
         //add button listeners
         document.querySelector('#login-btn').addEventListener('click', login);
-        document.querySelector('#new-post').addEventListener('click', newpost);
+        document.querySelector('#new-post').addEventListener('click', showPostingPage);
         document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
         document.querySelector('#return-btn').addEventListener('click', validateSession);
         document.querySelector('#logout-btn').addEventListener('click', logout);
@@ -18,7 +18,7 @@
     }
 
     function validateSession() {
-        onSessionInvalid();
+        showLoginPage();
         // The request parameters
         var url = './login';
         var req = JSON.stringify({});
@@ -39,29 +39,35 @@
     function onSessionValid(res) {
         //setup the page for the logged in user
         currentUser = res.user_id;
-        var loginContent = document.querySelector('#login-content');
-        var globalContent = document.querySelector('#globalstream-content');
-        var newpostContent = document.querySelector('#newpost-content');
-        var signupContent = document.querySelector('#signup-content');
-
         //show the global stream posts only
-        hideElement(loginContent);
-        hideElement(newpostContent);
-        hideElement(signupContent);
-        showElement(globalContent);
+        showGlobalPage();
         loadItems();
     }
+    
+    function showGlobalPage(){
+    	hideElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#signup-content'));
+        showElement(document.querySelector('#logout-btn'));
+        showElement(document.querySelector('#globalstream-content'));
+    }
 
-    function onSessionInvalid() {
+    function showLoginPage() {
         //if the session is invalid, go to the login page
-        var loginContent = document.querySelector('#login-content');
-        var globalContent = document.querySelector('#globalstream-content');
-        var newpostContent = document.querySelector('#newpost-content');
-        var signupContent = document.querySelector('#signup-content');
-        hideElement(signupContent);
-        hideElement(globalContent);
-        hideElement(newpostContent);
-        showElement(loginContent);
+        hideElement(document.querySelector('#signup-content'));
+        hideElement(document.querySelector('#globalstream-content'));
+        hideElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#logout-btn'));
+        showElement(document.querySelector('#login-content'));
+    }
+    
+    function showPostingPage() {
+        //set up the page to new post editing page
+        hideElement(document.querySelector('#signup-content'));
+        hideElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#globalstream-content'));
+        showElement(document.querySelector('#logout-btn'));
+        showElement(document.querySelector('#newpost-content'));
     }
 
     //tool functions for hide and show elements in the page
@@ -79,24 +85,14 @@
         alert("For teenage users, by creating this account, we will store users’ ID (user name), password, birthday, browsing time and email address. Your user name, password, and birthday is used to maintain your account, post history, and posts comments. All the information would be securely encrypted and used only for sending account reset information. The birthday data would only be used to determine whether you are the teenage group. For teenage parents, we will store parents’ correlation with their teenage children just to maintain the account. We will temporarily store the ID documents for manually ID verification and will delete them immediately after the verification process. We understand that ID documents are extremely important, we would encrypt them while we are storing them and transferring them. Not all the employees in Teendit can open the ID documents in the database, private keys would be needed. Your data will not be shared with any third party or used for any other purposes that are not directly related to Teendit.");
     }
 
-    function newpost() {
-        //set up the page to new post editing page
-        hideElement(document.querySelector('#signup-content'));
-        hideElement(document.querySelector('#login-content'));
-        hideElement(document.querySelector('#globalstream-content'));
-        showElement(document.querySelector('#newpost-content'));
-    }
-
+    
     function sendNewPost() {
         //read the content of the post inputs
         var head = document.querySelector('#txtnewpost-headline').value;
         var content = document.querySelector('#txtnewpost-content').value;
         if (head == '' || content == '') {
             //make sure input is valid
-            hideElement(document.querySelector('#login-content'));
-            hideElement(document.querySelector('#globalstream-content'));
-            showElement(document.querySelector('#newpost-content'));
-            hideElement(document.querySelector('#signup-content'));
+        	showPostingPage();
             alert("write something!");
         } else {
             //send post
