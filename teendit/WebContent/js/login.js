@@ -153,38 +153,26 @@
 	 * render one item on the web page.
 	 */
 	function addItem(itemList, item) {
-		var item_id = item.item_id;
-		
-		// create a new <li> tag.
-		var li = $create('li', {
-		      id: 'item-' + item_id,
-		      className: 'item'
-		    });
-		
-		li.dataset.item_id = item_id; // set id
-	    
-		// set edit and delete icons.
-	    var edit_section = $create('span', {
-	    	className: 'edit'
-	      });
-	    var edit = $create('i', {
-	        className: 'fa fa-edit'
-	      });
-	    edit_section.appendChild(edit);
-	    var trash_section = $create('span', {
-	    	className: 'delete'
-	      });
-	    var trash = $create('i', {
-	        className: 'fa fa-trash-o'
-	      });
-	    trash_section.appendChild(trash);
-	    li.innerHTML = item.content;
-	    
-	    // append edit and delete icons.
-	    li.appendChild(edit_section);
-	    li.appendChild(trash_section);
-	    itemList.appendChild(li);
+        var s="<div class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>%s</a><span>%s</span></div></div></div></div>"
+        	s=s.format("Title"+item.item_id,item.content,item.user_id,"fake date");
+        
+        var child = document.createElement('div');
+        child.innerHTML = s;
+        child = child.firstChild;
+        itemList.appendChild(child);
+
 	}
+	
+	String.prototype.format= function(){
+		    //将arguments转化为数组（ES5中并非严格的数组）
+		    var args = Array.prototype.slice.call(arguments);
+		    var count=0;
+		    //通过正则替换%s
+		    return this.replace(/%s/g,function(s,i){
+		        return args[count++];
+		    });
+		}
+
 
 	init();
 }) ();
