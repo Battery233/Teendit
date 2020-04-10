@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Global Stream</title>
+<title>Teendit</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="css/bootstrap-3.3.7-dist 2/css/bootstrap.css">
 <link rel="stylesheet" href="css/mystyle.css">
-<script type="text/javascript" src="js/globalstream.js"></script>
-
 </head>
+
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
@@ -50,16 +49,92 @@
 					<li><a href="#"> &nbsp&nbsp&nbsp&nbsp&nbsp Newsflash
 							&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
 				</ul>
-				</li>
-				</ul>
+				<!--       <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="button" class="btn btn-default btn-md">
+  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
+</button>   
+      </form> -->
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<br>
-	<br>
-	<div id= "globalstream-content" class="container-fluid">
+
+	<div id="login-content" class="content" style="display:none">
+		<div class="jumbotron">
+			<div class="container">
+				<div align="center">
+					<br /> <br /> <img src="images/teendit_logo.png" alt="teendit"
+						height="110" width="320">
+				</div>
+				<br />
+
+				<!-- <h1 class="text-center">Teendit</h1> -->
+				<p class="text-center">Share More, Live Better</p>
+			</div>
+		</div>
+		<div class="col-xs-7 col-md-6 col-center-block">
+		<h1><label for="username">Username</label></h1>
+        <input id="txtUserName" name="username" type="text">
+        <h1><label for="password">Password</label></h1>
+        <input id="txtPassword" name="password" type="password">
+        
+        <div id = "wrapper"><button id="register-form-btn">New User? Register</button>
+        <button id="login-btn">Login</button></div>
+        <div id="login-error"></div>
+			<!-- form class="form-horizontal col-center-block" role="form"
+				method="POST" id="form" >
+			
+				<div class="form-group">
+					<label for="uname" class="col-sm-3 control-label"></label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="txtUserName"
+							name="username" placeholder="Mobile number, email or username "
+							required> <span id="username.info" style="color: red"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="passwd" class="col-sm-3 control-label"></label>
+					<div class="col-sm-6">
+						<input type="password" class="form-control" name="password"
+							id="txtPassword" placeholder="Password" required> <span
+							id="password.info" style="color: red"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<label class="form-check-label"> <input type="checkbox"
+							name="login_identity" class="form-check-input"><span
+							style="color: #CCCCCC"> &nbspI am a parent</span>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<button id="login-btn" type="submit" class="btn btn-primary">Log
+							In</button>
+						<div>
+							<a href="#">Forget Password?</a>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<a href="#" role="button">New? Sign Up</a>
+
+					</div>
+				</div>
+				<div></div>
+			</form -->
+		</div>
+	</div>
+	<div id="globalstream-content" class="container-fluid" style="display:none">
+	<br><br><br><br><br>
 		<div class="row" style="word-break: break-all; word-wrap: break-word;">
 			<div class="col-sm-2">
 				<div class="list-group">
@@ -80,13 +155,10 @@
 
 			<div class="col-sm-7">
 
-				<div class="news-list">
+				<div id="item-list" class="news-list">
 					<div class="news-list-item clearfix"
 						style="padding-bottom: 20px; border-bottom: 1px solid #eee">
 						<div class="row">
-							<div class="col-xs-4">
-								<img src="images/news.jpg">
-							</div>
 							<div class="col-xs-8">
 								<div>
 									<a href="#" class="title"
@@ -96,7 +168,7 @@
 								<div class="info" style="color: #888;">
 									<span><span class="avatar"><img
 											src="images/avatar.jpeg"> </span><a href="#"
-										style="color: #000000">username</a> </span>· <span>3/25/2020</span>
+										style="color: #000000">username</a> </span> <span>3/25/2020</span>
 								</div>
 							</div>
 						</div>
@@ -106,9 +178,8 @@
 						<li id='comment_id'><blockquote class='blockquote'>
 								<h6 class='mb-0'>useful post!</h6>
 								<footer class='blockquote-footer'>
-									by</span><cite title='Source Title'> <span class='avatar'><img
-											src="images/avatar.jpeg"><a href='#'>username</a>&nbsp·&nbsp
-											<span>03-25-2020&nbsp13:18</span></cite>
+									by <a href='#'>username</a>&nbsp·&nbsp
+											<span>03-25-2020&nbsp13:18</span>
 								</footer>
 							</blockquote></li>
 					</div>
@@ -127,18 +198,11 @@
 					</div>
 					<br>
 				</div>
+				
+				
 			</div>
-			<div class="col-sm-3">
-				<h3>Top Search Queries</h3>
-				<ol>
-					<li><a href="#" style="color: #000000">Yasmin Karachiwala</li>
-					<li><a href="#" style="color: #000000">NBA</li>
-					<li><a href="#" style="color: #000000">Game of Thrones</li>
-					<li><a href="#" style="color: #000000">Yasmin Karachiwala</li>
-					<li><a href="#" style="color: #000000">NBA</li>
-					<li><a href="#" style="color: #000000">Game of Thrones</li>
-				</ol>
-				<div>
+				
+				
 					<a href="#" style="color: #FFFFFF">
 						<button type="submit" class="btn btn-primary"
 							style="margin-left: 30px; margin-top: 20px;">I want to
@@ -147,37 +211,41 @@
 				</div>
 			</div>
 		</div>
-		</div>
-		<footer class="footer">
-			<div class="row" style="color: #CCCCCC">
-				<div class="col-md-2">
-					<strong>&nbsp&nbsp&nbspCompany</strong> <br>&nbsp&nbsp&nbsp<a
-						href="#" style="color: #AAAAAA">About</a> <br>&nbsp&nbsp&nbsp<a
-						href="#" style="color: #AAAAAA">Career</a>
-				</div>
-				<div class="col-md-2">
-					<strong>Community</strong> <br> <a href="#"
-						style="color: #AAAAAA">Guidelines</a> <br> <a href="#"
-						style="color: #AAAAAA">Support</a>
-				</div>
-				<div class="col-md-2">
-					<strong>Legal</strong> <br> <a href="#" style="color: #AAAAAA">Privacy</a>
-					<br> <a href="#" style="color: #AAAAAA">Terms</a>
-				</div>
-				<div class="col-md-2">
-					<strong>Contact</strong> <br> <a href="#"
-						style="color: #AAAAAA">Brands</a>
-				</div>
-				<div class="col-md-4 text-right">
-					<br>©TEENDIT 2020. All rights
-					reserved.&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-				</div>
+	</div>
 
+	<footer class="footer">
+		<div class="row" style="color: #CCCCCC">
+			<div class="col-md-2">
+				<strong>&nbsp&nbsp&nbspCompany</strong> <br>&nbsp&nbsp&nbsp<a
+					href="#" style="color: #AAAAAA">About</a> <br>&nbsp&nbsp&nbsp<a
+					href="#" style="color: #AAAAAA">Career</a>
 			</div>
-		</footer>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="js/jquery-3.3.1.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
+			<div class="col-md-2">
+				<strong>Community</strong> <br> <a href="#"
+					style="color: #AAAAAA">Guidelines</a> <br> <a href="#"
+					style="color: #AAAAAA">Support</a>
+			</div>
+			<div class="col-md-2">
+				<strong>Legal</strong> <br> <a href="#" style="color: #AAAAAA">Privacy</a>
+				<br> <a href="#" style="color: #AAAAAA">Terms</a>
+			</div>
+			<div class="col-md-2">
+				<strong>Contact</strong> <br> <a href="#"
+					style="color: #AAAAAA">Brands</a>
+			</div>
+			<div class="col-md-4 text-right">
+				<br>©TEENDIT 2020. All rights
+				reserved.&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			</div>
+
+		</div>
+	</footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="css/bootstrap-3.3.7-dist 2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
+
 </body>
 </html>
