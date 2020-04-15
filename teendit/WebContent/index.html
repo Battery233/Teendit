@@ -46,61 +46,13 @@
                         <li><a href="#">New? Sign Up</a></li>
                      </ul>
                   </li>
-
                </ul>
-
                <button id="logout-btn" class="btn btn-secondary" style = "margin-top: 9px; float: right">Logout</button>
             </div>
             <!-- /.navbar-collapse -->
          </div>
          <!-- /.container-fluid -->
       </nav>
-      
-      <!-- <nav id = "nav-after-login" class="navbar navbar-inverse navbar-fixed-top">
-         <div class="container-fluid">
-            Brand and toggle get grouped for better mobile display
-            <div class="navbar-header">
-               <button type="button" class="navbar-toggle collapsed"
-                  data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                  aria-expanded="false">
-               <span class="sr-only">Toggle navigation</span> <span
-                  class="icon-bar"></span> <span class="icon-bar"></span> <span
-                  class="icon-bar"></span>
-               </button>
-               <a class="navbar-brand" href="#"><img
-                  src="images/teendit_logo.png" alt="teendit" height="45" width="120"
-                  style="margin-top: -13px"></a>
-            </div>
-            Collect the nav links, forms, and other content for toggling
-            <div class="collapse navbar-collapse"
-               id="bs-example-navbar-collapse-1">
-               <ul class="nav navbar-nav">
-                  <li><a href="#"><span
-                     class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
-                     <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class=" active dropdown">
-                     <a href="#"
-                        class="dropdown-toggle" data-toggle="dropdown" role="button"
-                        aria-haspopup="true" aria-expanded="false">
-                     <span class="glyphicon glyphicon-user"
-                        aria-hidden="true"></span> Account <span
-                        class="caret"></span>
-                     </a>
-                     <ul class="dropdown-menu">
-                        <li><a href="#">My Profile</a></li>
-                        <li><a href="#">Log out</a></li>
-                     </ul>
-                  </li>
-               </ul>
-               <button id="logout-btn" class="btn btn-secondary" style = "margin-top: 9px; float: right">Logout</button>
-            </div>
-            /.navbar-collapse
-         </div>
-         /.container-fluid
-      </nav> 
-       -->
-       
       <div id="login-content" class="content" style="display: none">
          <div class="jumbotron">
             <div class="container">
@@ -151,8 +103,9 @@
                   <a href="#" class="list-group-item"
                      style="border: none; border-radius: 3px">Shopping</a>
                </div>
-               <div><div id="timer"></div> </div>
-               
+               <div>
+                  <div id="timer"></div>
+               </div>
             </div>
             <a href="#" style="color: #FFFFFF">
                <!-- the new button for creating a new post -->
@@ -160,12 +113,10 @@
                   style="margin-left: 30px; margin-top: 20px;">I want to
                post something...</button>
             </a>
-            
             <div class="col-sm-7">
                <div id="item-list" class="news-list">
                   <!-- the content of the post will be created by js here -->
                </div>
-                
             </div>
          </div>
       </div>
@@ -194,18 +145,16 @@
                   <li><a href="#">Hotspots</a></li>
                   <li class="active">Post</li>
                </ol>
-            
-                  <h4>Headline</h4>
-                  <input id="txtnewpost-headline" type="text" name="headline" class="form-control"
-                     placeholder="Text input" style="margin-bottom: 20px">
-                  <h4>Content</h4>
-                  <textarea id = "txtnewpost-content" class="form-control" name="content"
-                     placeholder="Text input" rows="12" style="margin-bottom: 20px"></textarea>
-                  <br> <br>
-                  <button id="new-post-btn" type="submit" class="btn btn-primary">POST</button>
-                  <button id="return-btn" class="btn btn-warning">Return</button>
-                  <br> <br> <br> <br>
-             
+               <h4>Headline</h4>
+               <input id="txtnewpost-headline" type="text" name="headline" class="form-control"
+                  placeholder="Text input" style="margin-bottom: 20px">
+               <h4>Content</h4>
+               <textarea id = "txtnewpost-content" class="form-control" name="content"
+                  placeholder="Text input" rows="12" style="margin-bottom: 20px"></textarea>
+               <br> <br>
+               <button id="new-post-btn" type="submit" class="btn btn-primary">POST</button>
+               <button id="return-btn" class="btn btn-warning">Return</button>
+               <br> <br> <br> <br>
             </div>
          </div>
       </div>
@@ -292,28 +241,28 @@
       </div>
       <!-- the footer bar of the application, which contains some website information -->
       <div id="upload-file-content" class="container-fluid">
-      <h3>Identification File Upload</h3>
-      <form class="md-form" method="post" action="/children/uploadfile" enctype="multipart/form-data">
-      Please upload the identification document as an image format:
-      
-        <div style="position:relative;">
-        <br>
-		<a class='btn btn-default' href='javascript:;'>
-			Choose File...
-			<input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
-		</a>
-		<span class='label label-info' id="upload-file-info"></span>
-	   </div>
-	   <br>
-	   <input class='btn btn-primary' type="submit" value="upload" />
-      </form>
-      <br>
-    </div>
+         <h3>Identification File Upload</h3>
+         <form class="md-form" method="post" action="/children/uploadfile" enctype="multipart/form-data">
+            Please upload the identification document as an image format:
+            <div style="position:relative;">
+               <br>
+               <a class='btn btn-default' href='javascript:;'>
+               Choose File...
+               <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+               </a>
+               <span class='label label-info' id="upload-file-info"></span>
+            </div>
+            <br>
+            <input class='btn btn-primary' type="submit" value="upload" />
+         </form>
+         <br>
+      </div>
       <footer class="footer">
          <div class="row" style="color: #CCCCCC">
             <div class="col-md-2">
                <strong>Company</strong> <br><a
-                  href="#" style="color: #AAAAAA">About</a> <br>
+                  href="#" style="color: #AAAAAA">About</a> <br> <a
+                  href="#" style="color: #AAAAAA">Career</a>
             </div>
             <div class="col-md-2">
                <strong>Community</strong> <br> <a href="#"

@@ -43,9 +43,9 @@
         showGlobalPage();
         loadItems();
     }
-    
-    function showGlobalPage(){
-    	hideElement(document.querySelector('#login-content'));
+
+    function showGlobalPage() {
+        hideElement(document.querySelector('#login-content'));
         hideElement(document.querySelector('#newpost-content'));
         hideElement(document.querySelector('#signup-content'));
         showElement(document.querySelector('#logout-btn'));
@@ -60,7 +60,7 @@
         hideElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#login-content'));
     }
-    
+
     function showPostingPage() {
         //set up the page to new post editing page
         hideElement(document.querySelector('#signup-content'));
@@ -85,14 +85,14 @@
         alert("For teenage users, by creating this account, we will store users’ ID (user name), password, birthday, browsing time and email address. Your user name, password, and birthday is used to maintain your account, post history, and posts comments. All the information would be securely encrypted and used only for sending account reset information. The birthday data would only be used to determine whether you are the teenage group. For teenage parents, we will store parents’ correlation with their teenage children just to maintain the account. We will temporarily store the ID documents for manually ID verification and will delete them immediately after the verification process. We understand that ID documents are extremely important, we would encrypt them while we are storing them and transferring them. Not all the employees in Teendit can open the ID documents in the database, private keys would be needed. Your data will not be shared with any third party or used for any other purposes that are not directly related to Teendit.");
     }
 
-    
+
     function sendNewPost() {
         //read the content of the post inputs
         var head = document.querySelector('#txtnewpost-headline').value;
         var content = document.querySelector('#txtnewpost-content').value;
         if (head == '' || content == '') {
             //make sure input is valid
-        	showPostingPage();
+            showPostingPage();
             alert("write something!");
         } else {
             //send post
@@ -217,7 +217,7 @@
      * render one item on the web page.
      */
     function addItem(itemList, item) {
-    
+
         //add the post content by adding html elements
         var s = "<div id=\"post-%s\" class=\"news-list-item clearfix\"style=\"padding-bottom: 20px; border-bottom: 1px solid #eee\"><div class\=\"row\"><div class=\"col-xs-8\"><div><a href=\"#\" class=\"title\"style=\"display: block; color: #444; font-size: 18px; font-weight: bold; margin-bottom: 5px; line-height: 1.5\">%s</a></div><p>%s</p><div class=\"info\"><a>Author: %s</a><span>%s</span></div></div></div></div>"
         s = s.format(item.item_id, item.name, item.content, item.user_id, "");
@@ -286,7 +286,7 @@
             }
         });
     }
-    
+
 
     //tool function for string formatting
     String.prototype.format = function() {
