@@ -291,12 +291,29 @@
          </div>
       </div>
       <!-- the footer bar of the application, which contains some website information -->
+      <div id="upload-file-content" class="container-fluid">
+      <h3>Identification File Upload</h3>
+      <form class="md-form" method="post" action="/children/uploadfile" enctype="multipart/form-data">
+      Please upload the identification document as an image format:
+      
+        <div style="position:relative;">
+        <br>
+		<a class='btn btn-default' href='javascript:;'>
+			Choose File...
+			<input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+		</a>
+		<span class='label label-info' id="upload-file-info"></span>
+	   </div>
+	   <br>
+	   <input class='btn btn-primary' type="submit" value="upload" />
+      </form>
+      <br>
+    </div>
       <footer class="footer">
          <div class="row" style="color: #CCCCCC">
             <div class="col-md-2">
                <strong>Company</strong> <br><a
-                  href="#" style="color: #AAAAAA">About</a> <br><a
-                  href="#" style="color: #AAAAAA">Career</a>
+                  href="#" style="color: #AAAAAA">About</a> <br>
             </div>
             <div class="col-md-2">
                <strong>Community</strong> <br> <a href="#"
