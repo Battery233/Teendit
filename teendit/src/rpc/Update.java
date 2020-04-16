@@ -9,21 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import Email.SendEmail;
 import db.DBConnection;
 import db.DBConnectionFactory;
 
 /**
- * Servlet implementation class Register
+ * Servlet implementation class Update
  */
-@WebServlet("/register")
-public class Register extends HttpServlet {
+@WebServlet("/update")
+public class Update extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Register() {
+    public Update() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,19 +34,34 @@ public class Register extends HttpServlet {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			String userId = input.getString("user_id");
-			String password = input.getString("password");
-			String email = input.getString("email");
-			String parentEmail = input.getString("parent_email");
+			String userId;
+			boolean isChildren = false;
+			if (input.has("user_id")) {
+				userId = input.getString("user_id");
+				isChildren = true;
+			} else {
+				userId = input.getString("parent_email");
+			}
+			
+			if (input.has("password")) {
+				String password = input.getString("password");
+				connection.updatePassword(userId, password, isChildren);
+			}
+			
+			if (input.has("email")) {
+				String email = input.getString("email");
+				connection.updateEmail(userId, email);
+			}
+			
+			if (input.has("time_to_view")) {
+				int timeView = input.getInt("time_to_view");
+				connection.updateTimeToView(userId, timeView);
+			}
 			
 			JSONObject obj = new JSONObject();
-			if (connection.registerUser(userId, password, email, parentEmail) && connection.registerParent(parentEmail, userId)) {
-				SendEmail.send(parentEmail, "<h2>Dear Parent,</h2><br><br><p>This is the link:</p><br><p>https://123.com</p>");
-				obj.put("status", "OK");
-			} else {
-				obj.put("status", "User or Parent Already Exists");
-			}
+			obj.put("status", "OK");
 			RpcHelper.writeJsonObject(response, obj);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
