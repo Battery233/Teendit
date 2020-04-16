@@ -96,9 +96,10 @@ public interface DBConnection {
 	 * 
 	 * @param userId
 	 * @param password
+	 * @param isChildren
 	 * @return boolean
 	 */
-	public boolean verifyLogin(String userId, String password);
+	public boolean verifyLogin(String userId, String password, boolean isChildren);
 	
 	/**
 	 * Register one user
@@ -157,5 +158,54 @@ public interface DBConnection {
 	 * @return  the time limit number
 	 */
 	public int getTime(String userId);
-
+	
+	/**
+	 * Get the time the user view today
+	 * @param userId
+	 * @return
+	 */
+	public int getTimeViewed(String userId);
+	
+	/**
+	 * Add the random file name in the database
+	 * @param parentId
+	 * @param name
+	 */
+	public void addFileName(String parentId, String name);
+	
+	/**
+	 * Delete all the account info of the user
+	 * @param userId
+	 */
+	public void deleteAccount(String userId);
+	
+	/**
+	 * Update the password for the child or the parent
+	 * @param userId
+	 * @param password
+	 * @param isChildren
+	 */
+	public void updatePassword(String userId, String password, boolean isChildren);
+	
+	/**
+	 * Update the email address for the child
+	 * @param userId
+	 * @param email
+	 */
+	public void updateEmail(String userId, String email);
+	
+	/**
+	 * Change the time limit for viewing web sites
+	 * @param userId
+	 * @param timeView
+	 */
+	public void updateTimeToView(String userId, int timeView);
+	
+	/**
+	 * Change the time of viewing for each day
+	 * @param userId
+	 * @param timeViewed
+	 */
+	public void updateTimeViewed(String userId, int timeViewed);
+	
 }

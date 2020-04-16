@@ -75,6 +75,7 @@ public class MySQLTableCreation {
 					+ "email VARCHAR(255) NOT NULL,"
 					+ "parent_email VARCHAR(255),"
 					+ "time_to_view INT,"
+					+ "time_viewed INT,"
 					+ "PRIMARY KEY (user_id)"
 					+ ")";
 			statement.executeUpdate(sql);
@@ -84,6 +85,7 @@ public class MySQLTableCreation {
 					+ "password VARCHAR(255) NOT NULL,"
 					+ "user_id VARCHAR(255),"
 					+ "time_to_view INT,"
+					+ "file_name VARCHAR(255),"
 					+ "PRIMARY KEY (parent_email)"
 					+ ")";
 			statement.executeUpdate(sql);

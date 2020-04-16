@@ -14,48 +14,43 @@ import db.DBConnection;
 import db.DBConnectionFactory;
 
 /**
- * Servlet implementation class Logout
+ * Servlet implementation class DeleteAccount
  */
-@WebServlet("/logout")
-public class Logout extends HttpServlet {
+@WebServlet("/deleteaccount")
+public class DeleteAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public DeleteAccount() {
         super();
         // TODO Auto-generated constructor stub
     }
-
+	
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
+		if (session == null) {
+			response.setStatus(403);
+			return;
 		}
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
 	  		 JSONObject input = RpcHelper.readJSONObject(request);
-	  		 String userId = input.getString("user_id");
-	  		 int timeViewed = input.getInt("time_viewed");
-	  		 connection.updateTimeViewed(userId, timeViewed);
+	  		 String toDeleteId = input.getString("user_id");
+	  		 connection.deleteAccount(toDeleteId);
+	  		 session.invalidate();
+	  		
+	  		 response.sendRedirect("index.html");
 	  		
 	  	 } catch (Exception e) {
 	  		 e.printStackTrace();
 	  	 } finally {
 	  		 connection.close();
 	  	 }
-		response.sendRedirect("index.html");
 	}
 
 }

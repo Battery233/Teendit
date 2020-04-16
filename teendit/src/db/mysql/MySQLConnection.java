@@ -453,21 +453,36 @@ public class MySQLConnection implements DBConnection {
 	}
 
 	@Override
-	public boolean verifyLogin(String userId, String password) {
+	public boolean verifyLogin(String userId, String password, boolean isChildren) {
 		if (conn == null) {
 			return false;
 		}
-		try {
-			String sql = "SELECT user_id FROM users WHERE user_id = ? AND password = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, userId);
-			stmt.setString(2, password);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				return true;
+		if (isChildren) {
+			try {
+				String sql = "SELECT user_id FROM users WHERE user_id = ? AND password = ?";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, userId);
+				stmt.setString(2, password);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					return true;
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
 			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} else {
+			try {
+				String sql = "SELECT parent_email FROM parents WHERE parent_email = ? AND password = ?";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, userId);
+				stmt.setString(2, password);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					return true;
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 		return false;
 	}
@@ -480,13 +495,14 @@ public class MySQLConnection implements DBConnection {
 		}
 
 		try {
-			String sql = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
 			ps.setString(2, password);
 			ps.setString(3, email);
 			ps.setString(4, parentEmail);
 			ps.setInt(5, -1);
+			ps.setInt(6, 0);
 			
 			return ps.executeUpdate() == 1;
 		} catch (Exception e) {
@@ -503,13 +519,15 @@ public class MySQLConnection implements DBConnection {
 		}
 
 		try {
-			String sql = "INSERT IGNORE INTO parents VALUES (?, ?, ?, ?)";
+			String sql = "INSERT IGNORE INTO parents VALUES (?, ?, ?, ?, ?)";
 			String password = generateRandomString(13);
+			String fileName = "No File Uploaded";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, parentEmail);
 			ps.setString(2, password);
 			ps.setString(3, userId);
 			ps.setInt(4, -1);
+			ps.setString(5, fileName);
 			
 			return ps.executeUpdate() == 1;
 		} catch (Exception e) {
@@ -568,4 +586,176 @@ public class MySQLConnection implements DBConnection {
 		return time;
 	}
 	
+	@Override
+	public int getTimeViewed(String userId) {
+		if (conn == null) {
+			return 0;
+		}
+		int time = 0;
+		try {
+			String sql = "SELECT time_viewed FROM users WHERE user_id = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				time = rs.getInt("time_viewed");
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return time;
+	}
+	
+	@Override
+	public void addFileName(String parentId, String name) {
+		if (conn == null) {
+			return;
+		}
+		try {
+			String sql = "UPDATE parents SET file_name = ? WHERE parent_email = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, name);
+			ps.setString(2, parentId);
+			ps.execute();		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	@Override
+	public void deleteAccount(String userId) {
+		if (conn == null) {
+			return;
+		}
+		try {
+			String sql = "DELETE FROM users WHERE user_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.execute();	
+			
+			sql = "DELETE FROM parents WHERE user_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.execute();
+			
+			sql = "DELETE FROM items WHERE user_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.execute();
+			
+			sql = "DELETE FROM comments WHERE user_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.execute();
+			
+			sql = "DELETE FROM replies WHERE user_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.execute();
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	@Override
+	public void updatePassword(String userId, String password, boolean isChildren) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+		}
+		if (isChildren) {
+			try {
+		  		 String sql = "UPDATE users SET password = ? WHERE user_id = ?";
+		  		 PreparedStatement ps = conn.prepareStatement(sql);
+		  		 ps.setString(1, password);
+		  		 ps.setString(2, userId);
+		  		 ps.executeUpdate();
+		  		
+		  	 } catch (Exception e) {
+		  		 e.printStackTrace();
+		  	 }
+		} else {
+			try {
+		  		 String sql = "UPDATE parents SET password = ? WHERE parent_email = ?";
+		  		 PreparedStatement ps = conn.prepareStatement(sql);
+		  		 ps.setString(1, password);
+		  		 ps.setString(2, userId);
+		  		 ps.executeUpdate();
+		  		
+		  	 } catch (Exception e) {
+		  		 e.printStackTrace();
+		  	 }
+		}
+	}
+	
+	@Override
+	public void updateEmail(String userId, String email) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+		}
+		
+		try {
+	  		 String sql = "UPDATE users SET email = ? WHERE user_id = ?";
+	  		 PreparedStatement ps = conn.prepareStatement(sql);
+	  		 ps.setString(1, email);
+	  		 ps.setString(2, userId);
+	  		 ps.executeUpdate();
+	  		
+	  	 } catch (Exception e) {
+	  		 e.printStackTrace();
+	  	 }	
+	}
+	
+	@Override
+	public void updateTimeToView(String userId, int timeView) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+		}
+		try {
+	  		 String sql = "UPDATE parents SET time_to_view = ? WHERE parent_email = ?";
+	  		 PreparedStatement ps = conn.prepareStatement(sql);
+	  		 ps.setInt(1, timeView);
+	  		 ps.setString(2, userId);
+	  		 ps.executeUpdate();
+	  		 
+	  		 String childId = null;
+	  		 sql = "SELECT user_id FROM parents WHERE parent_email = ?";
+			 PreparedStatement stmt = conn.prepareStatement(sql);
+			 stmt.setString(1, userId);
+			 ResultSet rs = stmt.executeQuery();
+			 if (rs.next()) {
+				 childId = rs.getString("user_id");
+			 }
+			 
+			 sql = "UPDATE users SET time_to_view = ? WHERE user_id = ?";
+			 PreparedStatement preS = conn.prepareStatement(sql);
+			 preS.setInt(1, timeView);
+			 preS.setString(2, childId);
+			 preS.executeUpdate();
+	  		 
+	  	 } catch (Exception e) {
+	  		 e.printStackTrace();
+	  	 }
+	}
+	
+	@Override
+	public void updateTimeViewed(String userId, int timeViewed) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+		}
+		try {
+	  		 String sql = "UPDATE users SET time_viewed = ? WHERE user_id = ?";
+	  		 PreparedStatement ps = conn.prepareStatement(sql);
+	  		 ps.setInt(1, timeViewed);
+	  		 ps.setString(2, userId);
+	  		 ps.executeUpdate();
+	  		 
+	  	 } catch (Exception e) {
+	  		 e.printStackTrace();
+	  	 }
+	}
 }

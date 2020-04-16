@@ -58,15 +58,36 @@ public class Login extends HttpServlet {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			String userId = input.getString("user_id");
+			String userId;
+			boolean isChildren = false;
+			if (input.has("user_id")) {
+				userId = input.getString("user_id");
+				isChildren = true;
+			} else {
+				userId = input.getString("parent_email");
+			}
 			String password = input.getString("password");
 			
 			JSONObject obj = new JSONObject();
-			if (connection.verifyLogin(userId, password)) {
+			if ((isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getTime(userId) != -1) || (!isChildren && connection.verifyLogin(userId, password, isChildren))) {
 				HttpSession session = request.getSession();
-				session.setAttribute("user_id", userId);
+				if (isChildren) {
+					session.setAttribute("user_id", userId);
+				} else {
+					session.setAttribute("parent_email", userId);
+				}
 				session.setMaxInactiveInterval(600);
-				obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId));
+				if (isChildren) {
+					obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId));
+				} else {
+					obj.put("status", "OK").put("parent_email", userId);
+				}
+			} else if (isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getTime(userId) == -1) {
+				obj.put("status", "User Haven't been verified");
+				response.setStatus(401);
+			} else if (isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getTime(userId) <= connection.getTimeViewed(userId)) {
+				obj.put("status", "You don't have any time to view for today");
+				response.setStatus(401);
 			} else {
 				obj.put("status", "User Doesn't Exist");
 				response.setStatus(401);
