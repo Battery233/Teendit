@@ -168,10 +168,10 @@ public interface DBConnection {
 	
 	/**
 	 * Add the random file name in the database
-	 * @param parentId
+	 * @param token
 	 * @param name
 	 */
-	public void addFileName(String parentId, String name);
+	public void addFileName(String token, String name);
 	
 	/**
 	 * Delete all the account info of the user
@@ -207,5 +207,7 @@ public interface DBConnection {
 	 * @param timeViewed
 	 */
 	public void updateTimeViewed(String userId, int timeViewed);
+	
+	public void setToken(String parentEmail, String token);
 	
 }

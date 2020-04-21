@@ -67,7 +67,7 @@ public class Cryptography {
 
 	public static void main(String[] args) throws Exception {
 		Cryptography test = new Cryptography("aaa");
-		test.encrypt("/Users/wyg/Desktop/upload/3c5ce7cf-55de-4a49-8f5c-7f56a14e3d4e.jpg", "/Users/wyg/Desktop/upload/test.jpg");
-		test.decrypt("/Users/wyg/Desktop/upload/test.jpg", "/Users/wyg/Desktop/upload/real.jpg");
+		//test.encrypt("/Users/wyg/Desktop/upload/0701_1.jpg", "/Users/wyg/Desktop/upload/test.jpg");
+		test.decrypt("/Users/wyg/Desktop/encryption/3cf8fe81-fd9a-4d7d-b23c-91fd0f478b84.jpg", "/Users/wyg/Desktop/encryption/real.jpg");
 	}
 }
