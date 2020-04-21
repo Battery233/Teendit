@@ -10,14 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
-import org.json.JSONObject;
 
 import Encryption.Cryptography;
 import db.DBConnection;
@@ -68,30 +66,32 @@ public class UploadFile extends HttpServlet {
 	                    System.out.println(fileName + "->" + value);
 	                } else {
 	                    // control for file uploaded
-	                    String RandomName = UUID.randomUUID().toString()+"."+FilenameUtils.getExtension(item.getName());
+	                    String randomName = UUID.randomUUID().toString()+"."+FilenameUtils.getExtension(item.getName());
 	                    System.out.println(fileName + "->" + FilenameUtils.getName(item.getName()));
 	                    String path = "/Users/wyg/Desktop/upload/";  // To change later!!!
 	                    String encryPath = "/Users/wyg/Desktop/encryption/";  // To change later!!!
 	                    System.out.println(path);
-	                    item.write(new File(path, RandomName)); // Store the temporary file	
+	                    item.write(new File(path, randomName)); // Store the temporary file	
 	                    
-	                    String newFileName = path + RandomName;
+	                    String newFileName = path + randomName;
 	                    Cryptography crypt = new Cryptography("aaa");  // Key which will be changed periodically.
-	                    crypt.encrypt(newFileName, encryPath + RandomName);
+	                    crypt.encrypt(newFileName, encryPath + randomName);
 	                    File oriFile = new File(newFileName);
 	                    oriFile.delete();
 	        			
-	                    HttpSession session = request.getSession(false);
-	        			JSONObject obj = new JSONObject();
-	        			//String parentId = "456@123.com"; // To change later!!!
-	        			if (session != null) {
-	        				String parentId = session.getAttribute("parent_email").toString();
-	        				connection.addFileName(parentId, RandomName);
-	        				obj.put("status", "OK");
-	        			} else {
-	        				obj.put("status", "Invalid Session");
-	        				response.setStatus(403);
-	        			}	        				        			
+//	                    HttpSession session = request.getSession(false);
+//	        			JSONObject obj = new JSONObject();
+//	        			if (session != null) {
+//	        				String parentId = session.getAttribute("parent_email").toString();
+//	        				connection.addFileName(parentId, RandomName);
+//	        				obj.put("status", "OK");
+//	        			} else {
+//	        				obj.put("status", "Invalid Session");
+//	        				response.setStatus(403);
+//	        			}
+	                    
+	                    String token = "om&XjrxkaBDd2BTyffZC";  // To change later!!!
+	                    connection.addFileName(token, randomName);
 	                }
 	            }
 	          } catch (Exception e){

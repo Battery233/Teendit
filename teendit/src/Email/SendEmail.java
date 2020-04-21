@@ -16,20 +16,20 @@ public class SendEmail {
 	public static final String HOST = "smtp.gmail.com";
     public static final String PROTOCOL = "smtp";   
     public static final int PORT = 587;
-    public static final String FROM = "teendit@gmail.com";// sender's email
-    public static final String PWD = "Teendit17";// password
+    public static final String FROM = "teendit@gmail.com";//发件人的email
+    public static final String PWD = "Teendit17";//发件人密码(授权密码)
      
     /**
-     * Get the session
+     * 获取Session
      * @return
      */
     private static Session getSession() {
         Properties props = new Properties();
-        props.put("mail.smtp.host", HOST);// host address
-        props.put("mail.store.protocol" , PROTOCOL);
-        props.put("mail.smtp.port", PORT);
+        props.put("mail.smtp.host", HOST);//设置服务器地址
+        props.put("mail.store.protocol" , PROTOCOL);//设置协议
+        props.put("mail.smtp.port", PORT);//设置端口
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.auth" , "true");
+        props.put("mail.smtp.auth" , "true");//身份认证
          
         Authenticator authenticator = new Authenticator() {
  
@@ -67,8 +67,8 @@ public class SendEmail {
         }
     }
     
-    // public static void main(String[] args) {
-    // 	//SendEmail test = new SendEmail();
-    // 	SendEmail.send("yigengw@gmail.com", "<h2>Dear Parent,</h2><br><br><p>This is the link:</p><br><p>https://123.com</p>");
-    // }
+    public static void main(String[] args) {
+    	//SendEmail test = new SendEmail();
+    	SendEmail.send("yigengw@gmail.com", "<h2>Dear Parent,</h2><br><br><p>This is the link:</p><br><p>https://123.com</p>");
+    }
 }

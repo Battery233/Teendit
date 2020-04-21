@@ -57,11 +57,15 @@ public class SearchItem extends HttpServlet {
 				List<Comment> comments = connection.getComments(userId, item.getItemId());
 				for (Comment comment : comments) {
 					JSONObject comObj = comment.toJSONObject();
+					
+					// To delete
 					List<Reply> replies = connection.getReplies(userId, comment.getCommentId());
 					for (Reply reply : replies) {
 						JSONObject repObj = reply.toJSONObject();
 						comObj.append("replies", repObj);
 					}
+					// To delete
+				
 					obj.append("comments", comObj);
 				}
 				array.put(obj);

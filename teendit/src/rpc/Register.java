@@ -42,6 +42,8 @@ public class Register extends HttpServlet {
 			
 			JSONObject obj = new JSONObject();
 			if (connection.registerUser(userId, password, email, parentEmail) && connection.registerParent(parentEmail, userId)) {
+				String token = generateRandomString(20);
+				connection.setToken(parentEmail, token);
 				SendEmail.send(parentEmail, "<h2>Dear Parent,</h2><br><br><p>This is the link:</p><br><p>https://123.com</p>");
 				obj.put("status", "OK");
 			} else {
@@ -53,6 +55,36 @@ public class Register extends HttpServlet {
 		} finally {
 			connection.close();
 		}
+	}
+	
+	/**
+	 * Generate a random sequence for random token
+	 * @param n   the length of the random sequence
+	 * @return    a random string
+	 */
+	private String generateRandomString(int n) {
+		// chose a Character random from this String 
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    + "0123456789!@#$%&*"
+                                    + "abcdefghijklmnopqrstuvxyz"; 
+  
+        // create StringBuilder size of AlphaNumericString 
+        StringBuilder sb = new StringBuilder(n); 
+  
+        for (int i = 0; i < n; i++) { 
+  
+            // generate a random number between 
+            // 0 to AlphaNumericString variable length 
+            int index 
+                = (int)(AlphaNumericString.length() 
+                        * Math.random()); 
+  
+            // add Character one by one in end of sb 
+            sb.append(AlphaNumericString 
+                          .charAt(index)); 
+        } 
+  
+        return sb.toString();
 	}
 
 }

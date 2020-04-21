@@ -519,15 +519,16 @@ public class MySQLConnection implements DBConnection {
 		}
 
 		try {
-			String sql = "INSERT IGNORE INTO parents VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT IGNORE INTO parents VALUES (?, ?, ?, ?, ?, ?)";
 			String password = generateRandomString(13);
 			String fileName = "No File Uploaded";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, parentEmail);
 			ps.setString(2, password);
 			ps.setString(3, userId);
-			ps.setInt(4, -1);
-			ps.setString(5, fileName);
+			ps.setString(4, "Unset");
+			ps.setInt(5, -1);
+			ps.setString(6, fileName);
 			
 			return ps.executeUpdate() == 1;
 		} catch (Exception e) {
@@ -607,15 +608,15 @@ public class MySQLConnection implements DBConnection {
 	}
 	
 	@Override
-	public void addFileName(String parentId, String name) {
+	public void addFileName(String token, String name) {
 		if (conn == null) {
 			return;
 		}
 		try {
-			String sql = "UPDATE parents SET file_name = ? WHERE parent_email = ?";
+			String sql = "UPDATE parents SET file_name = ? WHERE token = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
-			ps.setString(2, parentId);
+			ps.setString(2, token);
 			ps.execute();		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -752,6 +753,24 @@ public class MySQLConnection implements DBConnection {
 	  		 PreparedStatement ps = conn.prepareStatement(sql);
 	  		 ps.setInt(1, timeViewed);
 	  		 ps.setString(2, userId);
+	  		 ps.executeUpdate();
+	  		 
+	  	 } catch (Exception e) {
+	  		 e.printStackTrace();
+	  	 }
+	}
+	
+	@Override
+	public void setToken(String parentEmail, String token) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+		}
+		try {
+	  		 String sql = "UPDATE parents SET token = ? WHERE parent_email = ?";
+	  		 PreparedStatement ps = conn.prepareStatement(sql);
+	  		 ps.setString(1, token);
+	  		 ps.setString(2, parentEmail);
 	  		 ps.executeUpdate();
 	  		 
 	  	 } catch (Exception e) {
