@@ -210,4 +210,8 @@ public interface DBConnection {
 	
 	public void setToken(String parentEmail, String token);
 	
+	public String getParentEmail(String token);
+	
+	public void deleteToken(String parentEmail);
+	
 }

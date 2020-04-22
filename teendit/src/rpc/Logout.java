@@ -41,20 +41,20 @@ public class Logout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
+			String userId = session.getAttribute("user_id").toString();
 			session.invalidate();
+			DBConnection connection = DBConnectionFactory.getConnection();
+			try {
+		  		 JSONObject input = RpcHelper.readJSONObject(request);
+		  		 int timeViewed = input.getInt("time_viewed");
+		  		 connection.updateTimeViewed(userId, timeViewed);
+		  		
+		  	 } catch (Exception e) {
+		  		 e.printStackTrace();
+		  	 } finally {
+		  		 connection.close();
+		  	 }
 		}
-		DBConnection connection = DBConnectionFactory.getConnection();
-		try {
-	  		 JSONObject input = RpcHelper.readJSONObject(request);
-	  		 String userId = input.getString("user_id");
-	  		 int timeViewed = input.getInt("time_viewed");
-	  		 connection.updateTimeViewed(userId, timeViewed);
-	  		
-	  	 } catch (Exception e) {
-	  		 e.printStackTrace();
-	  	 } finally {
-	  		 connection.close();
-	  	 }
 		response.sendRedirect("index.html");
 	}
 

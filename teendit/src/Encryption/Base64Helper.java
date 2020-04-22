@@ -3,6 +3,7 @@ package Encryption;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.UUID;
 
 import Decoder.BASE64Decoder;
 import Decoder.BASE64Encoder;
@@ -40,7 +41,16 @@ public class Base64Helper {
 	
     public static void main(String[] args) {
     	String s = Base64Helper.fileToBase64("/Users/wyg/Desktop/upload/0701_1.jpg");
-    	Base64Helper.base64ToFile(s, "/Users/wyg/Desktop/upload/real.jpg");
-    	System.out.println(s);
+    	//String er = Crypto.encrypt(s);
+    	try {
+    		String format = "jpg";
+			String filePath = "/Users/wyg/Desktop/upload/" + UUID.randomUUID().toString()+"( " + format + " )"+".txt";
+            FileOutputStream fos = new FileOutputStream(filePath);
+            fos.write(s.getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	//System.out.println(s);
     }
 }
