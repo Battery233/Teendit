@@ -777,4 +777,43 @@ public class MySQLConnection implements DBConnection {
 	  		 e.printStackTrace();
 	  	 }
 	}
+	
+	@Override
+	public String getParentEmail(String token) {
+		if (conn == null) {
+			return "";
+		}
+		String email = "";
+		try {
+			String sql = "SELECT parent_email FROM parents WHERE token = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, token);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				email = rs.getString("parent_email");
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return email;
+	}
+	
+	@Override
+	public void deleteToken(String parentEmail) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+	  		return;
+		}
+		try {
+	  		 String sql = "UPDATE parents SET token = ? WHERE parent_email = ?";
+	  		 PreparedStatement ps = conn.prepareStatement(sql);
+	  		 String token = "Expired";
+	  		 ps.setString(1, token);
+	  		 ps.setString(2, parentEmail);
+	  		 ps.executeUpdate();
+	  		 
+	  	 } catch (Exception e) {
+	  		 e.printStackTrace();
+	  	 }
+	}
 }

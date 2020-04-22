@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
 			JSONObject obj = new JSONObject();
 			if (session != null) {
 				String userId = session.getAttribute("user_id").toString();
-				obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId));
+				obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
 			} else {
 				obj.put("status", "Invalid Session");
 				response.setStatus(403);
@@ -78,7 +78,7 @@ public class Login extends HttpServlet {
 				}
 				session.setMaxInactiveInterval(600);
 				if (isChildren) {
-					obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId));
+					obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
 				} else {
 					obj.put("status", "OK").put("parent_email", userId);
 				}

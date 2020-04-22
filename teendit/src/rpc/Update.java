@@ -34,12 +34,12 @@ public class Update extends HttpServlet {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			String userId;
+			String userId = ""; 
 			boolean isChildren = false;
 			if (input.has("user_id")) {
 				userId = input.getString("user_id");
 				isChildren = true;
-			} else {
+			} else if (input.has("parent_email")){
 				userId = input.getString("parent_email");
 			}
 			
