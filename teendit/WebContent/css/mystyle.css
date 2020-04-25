@@ -83,7 +83,7 @@ img{
 .card .card-body .heading{ display: block;  }
 .card .card-body .heading:last-child{ margin-bottom: 0; }
 
-.card .card-body .lead{ text-align: center; }
+.card .card-body .lead{ text-align: left; }
 
 @media( min-width: 768px ){
   .card .card-left{ float: left; padding: 0 8px 0 0; }
