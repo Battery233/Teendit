@@ -93,6 +93,9 @@ public class Login extends HttpServlet {
 			} else if (isChildren && connection.verifyLogin(userId, password, isChildren) && !connection.getFileName(parent_email).equals("Checked")) {
 				obj.put("status", "User Haven't been verified");
 				response.setStatus(401);
+			} else if (!connection.verifyLogin(userId, password, isChildren)) {
+				obj.put("status", "Wrong User Name or Password");
+				response.setStatus(401);
 			} else {
 				obj.put("status", "User Doesn't Exist");
 				response.setStatus(401);
