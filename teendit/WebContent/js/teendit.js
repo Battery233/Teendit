@@ -10,8 +10,10 @@
         document.querySelector('#new-post').addEventListener('click', showPostingPage);
         document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
         document.querySelector('#return-btn').addEventListener('click', validateSession);
+        document.querySelector('#return-btn-signup').addEventListener('click', validateSession);
         document.querySelector('#logout-btn').addEventListener('click', logout);
-        document.querySelector('#register-form-btn').addEventListener('click', register);
+        document.querySelector('#register-form-btn').addEventListener('click', showRegisteringPage);
+        document.querySelector('#btn-signup').addEventListener('click', register);
         document.querySelector('#data-notice-btn').addEventListener('click', policy);
         //check the login status and show the components needs to be shown.
         validateSession();
@@ -50,6 +52,8 @@
         hideElement(document.querySelector('#signup-content'));
         showElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#globalstream-content'));
+        hideElement(document.querySelector('#upload-file-content'));
+
     }
 
     function showLoginPage() {
@@ -59,6 +63,7 @@
         hideElement(document.querySelector('#newpost-content'));
         hideElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#upload-file-content'));
     }
 
     function showPostingPage() {
@@ -68,6 +73,17 @@
         hideElement(document.querySelector('#globalstream-content'));
         showElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#upload-file-content'));
+    }
+
+    function showRegisteringPage() {
+        //set up the page to new post editing page
+        showElement(document.querySelector('#signup-content'));
+        hideElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#globalstream-content'));
+        hideElement(document.querySelector('#logout-btn'));
+        hideElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#upload-file-content'));
     }
 
     //tool functions for hide and show elements in the page
@@ -108,6 +124,8 @@
                 method: 'POST',
                 body: req
             }).then(res => {
+                return res.json();
+            }).then(res => {
                 console.log(res);
             })
             validateSession();
@@ -132,6 +150,9 @@
                 body: req
             })
             .then(res => {
+                return res.json();
+            })
+            .then(res => {
                 //status = 401 if the password does not match
                 if (res.status === 401) {
                     console.log(res);
@@ -149,7 +170,7 @@
                 }
             })
             .catch(err => {
-                alert("Login error!");
+                alert("Login error! Wrong email/password or account not activated!");
             })
         //clear the input boxes
         document.getElementById('txtUserName').value = "";
@@ -166,6 +187,8 @@
             method: 'POST',
             body: req
         }).then(res => {
+            return res.json();
+        }).then(res => {
             if (res.status === 200) {
                 validateSession();
             }
@@ -173,8 +196,44 @@
     }
 
     function register() {
-        //hard coded user info for now
-        alert("username: 111, password 1234\n username: 222, password 5678");
+        //get the user name & password and hash the content
+        var username = document.querySelector('#txtUserName-su').value;
+        var email = document.querySelector('#txtEmail-u').value;
+        var parentemail = document.querySelector('#txtEmail-p').value;
+        var password = document.querySelector('#txtRepeatPass').value;
+        document.querySelector('#btn-signup').disabled = true;
+        alert("Sending request! This might take up to one minute!");
+
+        password = md5(username + md5(password));
+        // The request parameters
+        var url = './register';
+        var req = JSON.stringify({
+            user_id: username,
+            password: password,
+            email: email,
+            parent_email: parentemail
+        });
+        console.log(req);
+        fetch(url, {
+                method: 'POST',
+                body: req
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(res => {
+                if (res.status === 'User or Parent Already Exists') {
+                    alert("Account already exist!");
+                    document.querySelector('#btn-signup').disabled = false;
+                } else if (res.status === 'OK') {
+                    alert("Signup request sent!");
+                }
+            })
+            .catch(err => {
+                alert("signup error!");
+            })
+        //clear the input boxes
+        document.getElementById('txtRepeatPass').value = "";
     }
 
     //function for list all the posts in the global stream
@@ -271,6 +330,8 @@
                 fetch(url, {
                         method: 'POST',
                         body: req
+                    }).then(res => {
+                        return res.json();
                     }).then(res => {
                         console.log(res);
                         if (res.status === 200) {
