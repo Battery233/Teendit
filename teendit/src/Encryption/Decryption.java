@@ -29,7 +29,7 @@ public class Decryption {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Decryption.decrypt("/Users/wyg/Desktop/encryption/4f1f1678-0965-4468-951b-ab58855ce373(jpg).txt", "/Users/wyg/Desktop/encryption/real.jpg");
+		Decryption.decrypt("/Users/wyg/Desktop/encryption/2b506e33-c505-4d49-ab45-218d48133c2b(jpg).txt", "/Users/wyg/Desktop/encryption/real.jpg");
 	}
 
 }

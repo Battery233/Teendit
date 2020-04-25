@@ -4,7 +4,6 @@ import java.util.List;
 
 import entity.Comment;
 import entity.Item;
-import entity.Reply;
 
 /**
  * The tool interface for establishing connections with databases.
@@ -23,8 +22,6 @@ public interface DBConnection {
 	public void addItems(Item item);
 	
 	public void addComments(Comment comment);
-	
-	public void addReplies(Reply reply);
 	
 	/**
 	 * Update a item for a user.
@@ -47,13 +44,6 @@ public interface DBConnection {
 	 */
 	public void deleteComments(String commentId);
 	
-	/**
-	 * Delete a reply for a user.
-	 * 
-	 * @param replyId
-	 */
-	public void deleteReplies(String replyId);
-	
 //	/**
 //	 * Check if the item exists under the user
 //	 * 
@@ -62,6 +52,8 @@ public interface DBConnection {
 //	 * @return true or false
 //	 */
 //	public boolean containsItem(String userId, String itemId);
+	
+	public String getEmail(String userId);
 	
 	/**
 	 * Gets item id based on user id
@@ -78,6 +70,10 @@ public interface DBConnection {
 	 * @return set of item
 	 */
 	public List<Item> getItems(String userId);
+	
+	public List<Integer> getUserCommentIds(String userId);
+	
+	public List<Comment> getUserComment(String userId);
 	
 	public List<Item> getAllItems();
 
@@ -135,22 +131,6 @@ public interface DBConnection {
 	 * @return list of comments
 	 */
 	public List<Comment> getComments(String userId, String itemId);
-	
-	/**
-	 * Get reply id based on comment id
-	 * @param userId
-	 * @param commentId
-	 * @return  list of reply IDs
-	 */
-	public List<Integer> getReplyIds (String userId, String commentId);
-	
-	/**
-	 * Get reply based on comment id
-	 * @param userId
-	 * @param commentId
-	 * @return  list of replies
-	 */
-	public List<Reply> getReplies(String userId, String commentId);
 	
 	/**
 	 * Get the time limit for viewing web sites
