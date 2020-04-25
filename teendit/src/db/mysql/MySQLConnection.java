@@ -13,8 +13,6 @@ import db.DBConnection;
 import entity.Comment;
 import entity.Comment.CommentBuilder;
 import entity.Item;
-import entity.Reply;
-import entity.Reply.ReplyBuilder;
 import entity.Item.ItemBuilder;
 
 /**
@@ -91,30 +89,6 @@ public class MySQLConnection implements DBConnection {
 	}
 	
 	@Override
-	public void addReplies(Reply reply) {
-		if (conn == null) {
-			System.err.println("DB connection failed");
-	  		return;
-		}
-		try {
-	  		 String sql = "INSERT IGNORE INTO replies VALUES (?, ?, ?, ?)";
-	  		 PreparedStatement ps = conn.prepareStatement(sql);
-	  		 ps.setString(1, null);
-	  		 ps.setString(2, reply.getUserId());
-	  		 //ps.setString(3, item.getName());
-	  		 ps.setString(3, reply.getCommentId());
-	  		 ps.setString(4, reply.getContent());
-	  		 //ps.setString(5, item.getTime());
-	  		 //ps.setInt(4, item.isChecked());
-	  		 ps.execute();
-	  		
-	  	 } catch (Exception e) {
-	  		 e.printStackTrace();
-	  	 }
-	}
-	
-	
-	@Override
 	public void updateItems(Item item) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -172,20 +146,23 @@ public class MySQLConnection implements DBConnection {
 	}
 	
 	@Override
-	public void deleteReplies(String replyId) {
+	public String getEmail(String userId) {
 		if (conn == null) {
-			System.err.println("DB connection failed");
-	  		return;
-	  	}
-		try {
-			String sql = "DELETE FROM replies WHERE reply_id = ?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Integer.parseInt(replyId));
-			ps.execute();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+			return "";
 		}
+		String email = "";
+		try {
+			String sql = "SELECT email FROM users WHERE user_id = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				email = rs.getString("email");
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return email;
 	}
 	
 //	@Override
@@ -271,6 +248,66 @@ public class MySQLConnection implements DBConnection {
 			e.printStackTrace();
 		}
 		return Items;
+	}
+	
+	@Override
+	public List<Integer> getUserCommentIds(String userId) {
+		if (conn == null) {
+			return new ArrayList<>();
+		}
+		List<Integer> comments = new ArrayList<>();
+		try {
+			String sql = "SELECT comment_id FROM comments WHERE user_id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userId);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Integer commentId = rs.getInt("comment_id");
+				comments.add(commentId);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Collections.sort(comments);
+		return comments;
+	}
+	
+	
+	@Override
+	public List<Comment> getUserComment(String userId) {
+		if (conn == null) {
+			return new ArrayList<>();
+		}
+		
+		List<Comment> comments = new ArrayList<>();
+		List<Integer> commentIds = getUserCommentIds(userId);
+		
+		try {
+			String sql = "SELECT * FROM comments WHERE comment_id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			for (int commentId : commentIds) {
+				stmt.setInt(1, commentId);
+				
+				ResultSet rs = stmt.executeQuery();
+				
+				CommentBuilder builder = new CommentBuilder();
+				
+				while (rs.next()) {
+					builder.setCommentId(rs.getString("comment_id"));
+					builder.setUserId(rs.getString("user_id"));
+					builder.setContent(rs.getString("content"));
+					
+					comments.add(builder.build());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return comments;
 	}
 	
 	@Override
@@ -367,70 +404,6 @@ public class MySQLConnection implements DBConnection {
 		}
 		return comments;
 	}
-
-	@Override
-	public List<Integer> getReplyIds (String userId, String commentId) {
-		if (conn == null) {
-			return new ArrayList<>();
-		}
-		List<Integer> replies = new ArrayList<>();
-		try {
-			String sql = "SELECT reply_id FROM replies WHERE comment_id = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, commentId);
-			
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				Integer replyId = rs.getInt("reply_id");
-				replies.add(replyId);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		Collections.sort(replies);
-		return replies;
-	}
-	
-	@Override
-	public List<Reply> getReplies(String userId, String commentId) {
-		if (conn == null) {
-			return new ArrayList<>();
-		}
-		
-		List<Reply> replies = new ArrayList<>();
-		List<Integer> replyIds = getReplyIds(userId, commentId);
-		
-		try {
-			String sql = "SELECT * FROM replies WHERE reply_id = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			for (int replyId : replyIds) {
-				stmt.setInt(1, replyId);
-				
-				ResultSet rs = stmt.executeQuery();
-				
-				ReplyBuilder builder = new ReplyBuilder();
-				
-				while (rs.next()) {
-					builder.setReplyId(rs.getString("reply_id"));
-					builder.setUserId(rs.getString("user_id"));
-					builder.setCommentId(rs.getString("comment_id"));
-					//builder.setName(rs.getString("name"));
-					builder.setContent(rs.getString("content"));
-					//builder.setTime(rs.getString("time"));
-					//builder.setChecked(rs.getInt("checked"));
-					
-					replies.add(builder.build());
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return replies;
-	}
-	
 	
 	@Override
 	public String getFullname(String userId) {
@@ -749,20 +722,20 @@ public class MySQLConnection implements DBConnection {
 	  		return;
 		}
 		try {
-			int time = 0;
-			String sql = "SELECT time_viewed FROM users WHERE user_id = ? ";
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, userId);
-			ResultSet rs = statement.executeQuery();
-			while (rs.next()) {
-				time = rs.getInt("time_viewed");
-			}
-			time += timeViewed;
-	  		sql = "UPDATE users SET time_viewed = ? WHERE user_id = ?";
-	  		PreparedStatement ps = conn.prepareStatement(sql);
-	  		ps.setInt(1, time);
-	  		ps.setString(2, userId);
-	  		ps.executeUpdate();
+			 int time = 0;
+			 String sql = "SELECT time_viewed FROM users WHERE user_id = ? ";
+			 PreparedStatement statement = conn.prepareStatement(sql);
+			 statement.setString(1, userId);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 time = rs.getInt("time_viewed");
+			 }
+			 time += timeViewed;
+	  		 sql = "UPDATE users SET time_viewed = ? WHERE user_id = ?";
+	  		 PreparedStatement ps = conn.prepareStatement(sql);
+	  		 ps.setInt(1, time);
+	  		 ps.setString(2, userId);
+	  		 ps.executeUpdate();
 	  		 
 	  	 } catch (Exception e) {
 	  		 e.printStackTrace();

@@ -19,8 +19,6 @@ import entity.Comment;
 import entity.Comment.CommentBuilder;
 import entity.Item;
 import entity.Item.ItemBuilder;
-import entity.Reply;
-import entity.Reply.ReplyBuilder;
 
 /**
  * Servlet implementation class SearchItem
@@ -57,15 +55,6 @@ public class SearchItem extends HttpServlet {
 				List<Comment> comments = connection.getComments(userId, item.getItemId());
 				for (Comment comment : comments) {
 					JSONObject comObj = comment.toJSONObject();
-					
-					// To delete
-					List<Reply> replies = connection.getReplies(userId, comment.getCommentId());
-					for (Reply reply : replies) {
-						JSONObject repObj = reply.toJSONObject();
-						comObj.append("replies", repObj);
-					}
-					// To delete
-				
 					obj.append("comments", comObj);
 				}
 				array.put(obj);
@@ -100,15 +89,6 @@ public class SearchItem extends HttpServlet {
 				 Comment comment = builder.build();
 				 connection.addComments(comment);
 				 
-	  		 } else if (input.has("comment_id")) {
-	  			 
-	  			 ReplyBuilder builder = new ReplyBuilder();
-				 builder.setUserId(input.getString("user_id"));
-				 builder.setCommentId(input.getString("comment_id"));
-				 builder.setContent(input.getString("content"));
-				 Reply reply = builder.build();
-				 connection.addReplies(reply);
-				 
 	  		 } else {
 	  			 ItemBuilder builder = new ItemBuilder();
 	  			 builder.setUserId(input.getString("user_id"));
@@ -141,9 +121,7 @@ public class SearchItem extends HttpServlet {
 		try {
 	  		 JSONObject input = RpcHelper.readJSONObject(request);
 	  		 String todeleteId;
-	  		 if (input.has("reply_id")) {
-	  			todeleteId = input.getString("reply_id");
-	  		 } else if (input.has("comment_id")) {
+	  		 if (input.has("comment_id")) {
 	  			todeleteId = input.getString("comment_id");
 	  		 } else {
 	  			todeleteId = input.getString("item_id");

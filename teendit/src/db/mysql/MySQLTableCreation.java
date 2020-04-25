@@ -59,15 +59,6 @@ public class MySQLTableCreation {
 					+ "PRIMARY KEY (comment_id)"
 					+ ")";
 			statement.executeUpdate(sql);
-			
-			sql = "CREATE TABLE replies ("
-					+ "reply_id INT NOT NULL AUTO_INCREMENT,"
-					+ "user_id VARCHAR(255) NOT NULL,"
-					+ "comment_id INT NOT NULL,"
-					+ "content VARCHAR(255),"
-					+ "PRIMARY KEY (reply_id)"
-					+ ")";
-			statement.executeUpdate(sql);
 
 			sql = "CREATE TABLE users ("
 					+ "user_id VARCHAR(255) NOT NULL,"
