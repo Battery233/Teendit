@@ -123,10 +123,6 @@
             fetch(url, {
                 method: 'POST',
                 body: req
-            }).then(res => {
-                return res.json();
-            }).then(res => {
-                console.log(res);
             })
             validateSession();
         }
@@ -150,16 +146,11 @@
                 body: req
             })
             .then(res => {
-                return res.json();
-            })
-            .then(res => {
                 //status = 401 if the password does not match
                 if (res.status === 401) {
                     console.log(res);
                     console.log("RETURN VALUE NOT 200!");
                     throw new Error("not 200");
-                } else {
-                    console.log(res);
                 }
                 return res.json()
             })
@@ -186,8 +177,6 @@
         fetch(url, {
             method: 'POST',
             body: req
-        }).then(res => {
-            return res.json();
         }).then(res => {
             if (res.status === 200) {
                 validateSession();
@@ -330,8 +319,6 @@
                 fetch(url, {
                         method: 'POST',
                         body: req
-                    }).then(res => {
-                        return res.json();
                     }).then(res => {
                         console.log(res);
                         if (res.status === 200) {
