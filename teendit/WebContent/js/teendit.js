@@ -1,6 +1,9 @@
 (function() {
     //id for the current user
     var currentUser;
+    
+    //call the init function when the page is loaded
+    init();
     /**
      * Initialize major event handlers
      */
@@ -156,6 +159,8 @@
             })
             .then(res => {
                 if (res.status === 'OK') {
+                	minutesLeft = res.time - res.time_viewed;
+                	alert("You have "+ minutesLeft+" minutes left today!\nRemember to use logout button, else your timer won't stop!");
                     //login successfully
                     onSessionValid(res);
                 }
@@ -172,7 +177,7 @@
         //logout and get the index page from server
         var url = './logout';
         var req = JSON.stringify({
-            logout: "",
+        	time_viewed: 0
         });
         fetch(url, {
             method: 'POST',
@@ -344,7 +349,4 @@
             return args[count++];
         });
     }
-
-    //call the init function when the page is loaded
-    init();
 })();
