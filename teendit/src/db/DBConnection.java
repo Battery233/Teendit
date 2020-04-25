@@ -214,4 +214,8 @@ public interface DBConnection {
 	
 	public void deleteToken(String parentEmail);
 	
+	public String findParent(String userId);
+	
+	public String getFileName(String parent_email);
+	
 }

@@ -749,11 +749,20 @@ public class MySQLConnection implements DBConnection {
 	  		return;
 		}
 		try {
-	  		 String sql = "UPDATE users SET time_viewed = ? WHERE user_id = ?";
-	  		 PreparedStatement ps = conn.prepareStatement(sql);
-	  		 ps.setInt(1, timeViewed);
-	  		 ps.setString(2, userId);
-	  		 ps.executeUpdate();
+			int time = 0;
+			String sql = "SELECT time_viewed FROM users WHERE user_id = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				time = rs.getInt("time_viewed");
+			}
+			time += timeViewed;
+	  		sql = "UPDATE users SET time_viewed = ? WHERE user_id = ?";
+	  		PreparedStatement ps = conn.prepareStatement(sql);
+	  		ps.setInt(1, time);
+	  		ps.setString(2, userId);
+	  		ps.executeUpdate();
 	  		 
 	  	 } catch (Exception e) {
 	  		 e.printStackTrace();
@@ -815,5 +824,45 @@ public class MySQLConnection implements DBConnection {
 	  	 } catch (Exception e) {
 	  		 e.printStackTrace();
 	  	 }
+	}
+	
+	@Override
+	public String findParent(String userId) {
+		if (conn == null) {
+			return "";
+		}
+		String email = "";
+		try {
+			String sql = "SELECT parent_email FROM users WHERE user_id = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				email = rs.getString("parent_email");
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return email;
+	}
+	
+	@Override
+	public String getFileName(String parent_email) {
+		if (conn == null) {
+			return "";
+		}
+		String name = "";
+		try {
+			String sql = "SELECT file_name FROM parents WHERE parent_email = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, parent_email);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				name = rs.getString("file_name");
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return name;
 	}
 }

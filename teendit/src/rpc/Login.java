@@ -59,9 +59,11 @@ public class Login extends HttpServlet {
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
 			String userId;
+			String parent_email = "";
 			boolean isChildren = false;
 			if (input.has("user_id")) {
 				userId = input.getString("user_id");
+				parent_email = connection.findParent(userId);
 				isChildren = true;
 			} else {
 				userId = input.getString("parent_email");
@@ -69,24 +71,27 @@ public class Login extends HttpServlet {
 			String password = input.getString("password");
 			
 			JSONObject obj = new JSONObject();
-			if ((isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getTime(userId) != -1) || (!isChildren && connection.verifyLogin(userId, password, isChildren))) {
-				HttpSession session = request.getSession();
-				if (isChildren) {
-					session.setAttribute("user_id", userId);
+			if ((isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getFileName(parent_email).equals("Checked"))
+					|| (!isChildren && connection.verifyLogin(userId, password, isChildren))) {
+				if (isChildren && connection.getTime(userId) <= connection.getTimeViewed(userId)) {
+					obj.put("status", "You don't have any time to view for today");
+					response.setStatus(401);
 				} else {
-					session.setAttribute("parent_email", userId);
+					HttpSession session = request.getSession();
+					if (isChildren) {
+						session.setAttribute("user_id", userId);
+					} else {
+						session.setAttribute("parent_email", userId);
+					}
+					session.setMaxInactiveInterval(600);
+					if (isChildren) {
+						obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
+					} else {
+						obj.put("status", "OK").put("parent_email", userId);
+					}
 				}
-				session.setMaxInactiveInterval(600);
-				if (isChildren) {
-					obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
-				} else {
-					obj.put("status", "OK").put("parent_email", userId);
-				}
-			} else if (isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getTime(userId) == -1) {
+			} else if (isChildren && connection.verifyLogin(userId, password, isChildren) && !connection.getFileName(parent_email).equals("Checked")) {
 				obj.put("status", "User Haven't been verified");
-				response.setStatus(401);
-			} else if (isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getTime(userId) <= connection.getTimeViewed(userId)) {
-				obj.put("status", "You don't have any time to view for today");
 				response.setStatus(401);
 			} else {
 				obj.put("status", "User Doesn't Exist");
