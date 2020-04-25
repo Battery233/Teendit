@@ -173,7 +173,7 @@
                      <div class="form-group">
                         <label for="uname" class="col-sm-2 control-label">Username*</label>
                         <div class="col-sm-6">
-                           <input type="text" class="form-control" id="txtUserName-su"
+                           <input type="text" class="form-control" id="txtUserName"
                               name="username" placeholder="Please set your username" required>
                            <span id="username.info" style="color: red"></span>
                         </div>
@@ -182,7 +182,7 @@
                         <label for="lastname" class="col-sm-2 control-label">Email*</label>
                         <div class="col-sm-6">
                            <input name="email" type="email" class="form-control"
-                              id="txtEmail-u"
+                              id="txtEmail"
                               placeholder="Please enter your email address to register"
                               required> <span id="email.info" style="color: red"></span>
                         </div>
@@ -199,12 +199,11 @@
                      </div>
                      <div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">Parent
-                        Email*</label>
+                        Email</label>
                         <div class="col-sm-6">
                            <input name="email" type="email" class="form-control"
-                              id="txtEmail-p"
-                              placeholder="Please enter your parent email if you are above 13 or under 18"
-                              required>
+                              id="txtEmail"
+                              placeholder="Please enter your parent email if you are above 13 or under 18">
                            <span id="email.info" style="color: red"></span>
                         </div>
                      </div>
@@ -227,10 +226,7 @@
                      </div>
                      <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                           <button type="submit" id="btn-signup" class="btn btn-primary">Sign Up</button>
-                           
-                           <button id="return-btn-signup" class="btn btn-warning">Return</button>
-                           
+                           <button type="submit" class="btn btn-primary">Sign Up</button>
                         </div>
                      </div>
                   </form>
@@ -261,13 +257,6 @@
          </form>
          <br>
       </div>
-      <div id="upload-file-content" class="container-fluid">
-      
-      
-      </div>
-      
-      
-      
       <footer class="footer">
          <div class="row" style="color: #CCCCCC">
             <div class="col-md-2">
@@ -300,5 +289,6 @@
       <script type="text/javascript" src="js/md5.js"></script>
       <!-- customizes js file -->
       <script type="text/javascript" src="js/teendit.js"></script>
+      <script type="text/javascript" src="js/timer.js"></script>
    </body>
 </html>
