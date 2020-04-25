@@ -1,7 +1,10 @@
 (function() {
     //id for the current user
     var currentUser;
-    
+    var secondsLeft;
+    var secondsPast = 0;
+    var timer;
+
     //call the init function when the page is loaded
     init();
     /**
@@ -159,9 +162,25 @@
             })
             .then(res => {
                 if (res.status === 'OK') {
-                	minutesLeft = res.time - res.time_viewed;
-                	alert("You have "+ minutesLeft+" minutes left today!\nRemember to use logout button, else your timer won't stop!");
+                    secondsLeft = 60 * (res.time - res.time_viewed);
+                    alert("You have " + (res.time - res.time_viewed) + " minutes left today!\nRemember to use logout button, else your timer won't stop!");
                     //login successfully
+
+                    timer = setInterval(function() {
+                        secondsLeft--;
+                        secondsPast++;
+                        s = "<h4>%s minutes</h><h4>%s seconds</h4><h4>left today!</h4>";
+                        s = s.format(parseInt(secondsLeft / 60), secondsLeft % 60);
+                        var timerDiv = document.getElementById('timer');
+                        timerDiv.innerHTML = s;
+                        if (secondsLeft == 0) {
+                            alert("You have run out of today's time budget!");
+                            logout();
+                        } else if (secondsLeft == 60) {
+                            alert("You have one minute left!");
+                        }
+                    }, 100);
+
                     onSessionValid(res);
                 }
             })
@@ -176,8 +195,10 @@
     function logout() {
         //logout and get the index page from server
         var url = './logout';
+        clearInterval(timer);
+        minutes = Math.ceil(secondsPast / 60);
         var req = JSON.stringify({
-        	time_viewed: 0
+            time_viewed: minutes
         });
         fetch(url, {
             method: 'POST',
