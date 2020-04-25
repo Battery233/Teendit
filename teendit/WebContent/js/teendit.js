@@ -1,6 +1,12 @@
 (function() {
     //id for the current user
     var currentUser;
+    var secondsLeft;
+    var secondsPast = 0;
+    var timer;
+
+    //call the init function when the page is loaded
+    init();
     /**
      * Initialize major event handlers
      */
@@ -10,8 +16,10 @@
         document.querySelector('#new-post').addEventListener('click', showPostingPage);
         document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
         document.querySelector('#return-btn').addEventListener('click', validateSession);
+        document.querySelector('#return-btn-signup').addEventListener('click', validateSession);
         document.querySelector('#logout-btn').addEventListener('click', logout);
-        document.querySelector('#register-form-btn').addEventListener('click', register);
+        document.querySelector('#register-form-btn').addEventListener('click', showRegisteringPage);
+        document.querySelector('#btn-signup').addEventListener('click', register);
         document.querySelector('#data-notice-btn').addEventListener('click', policy);
         //check the login status and show the components needs to be shown.
         validateSession();
@@ -50,6 +58,8 @@
         hideElement(document.querySelector('#signup-content'));
         showElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#globalstream-content'));
+        hideElement(document.querySelector('#upload-file-content'));
+
     }
 
     function showLoginPage() {
@@ -59,6 +69,7 @@
         hideElement(document.querySelector('#newpost-content'));
         hideElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#upload-file-content'));
     }
 
     function showPostingPage() {
@@ -68,6 +79,17 @@
         hideElement(document.querySelector('#globalstream-content'));
         showElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#upload-file-content'));
+    }
+
+    function showRegisteringPage() {
+        //set up the page to new post editing page
+        showElement(document.querySelector('#signup-content'));
+        hideElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#globalstream-content'));
+        hideElement(document.querySelector('#logout-btn'));
+        hideElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#upload-file-content'));
     }
 
     //tool functions for hide and show elements in the page
@@ -107,8 +129,6 @@
             fetch(url, {
                 method: 'POST',
                 body: req
-            }).then(res => {
-                console.log(res);
             })
             validateSession();
         }
@@ -137,19 +157,35 @@
                     console.log(res);
                     console.log("RETURN VALUE NOT 200!");
                     throw new Error("not 200");
-                } else {
-                    console.log(res);
                 }
                 return res.json()
             })
             .then(res => {
                 if (res.status === 'OK') {
+                    secondsLeft = 60 * (res.time - res.time_viewed);
+                    alert("You have " + (res.time - res.time_viewed) + " minutes left today!\nRemember to use logout button, else your timer won't stop!");
                     //login successfully
+
+                    timer = setInterval(function() {
+                        secondsLeft--;
+                        secondsPast++;
+                        s = "<h4>%s minutes</h><h4>%s seconds</h4><h4>left today!</h4>";
+                        s = s.format(parseInt(secondsLeft / 60), secondsLeft % 60);
+                        var timerDiv = document.getElementById('timer');
+                        timerDiv.innerHTML = s;
+                        if (secondsLeft == 0) {
+                            alert("You have run out of today's time budget!");
+                            logout();
+                        } else if (secondsLeft == 60) {
+                            alert("You have one minute left!");
+                        }
+                    }, 100);
+
                     onSessionValid(res);
                 }
             })
             .catch(err => {
-                alert("Login error!");
+                alert("Login error! Wrong email/password or account not activated!");
             })
         //clear the input boxes
         document.getElementById('txtUserName').value = "";
@@ -159,8 +195,10 @@
     function logout() {
         //logout and get the index page from server
         var url = './logout';
+        clearInterval(timer);
+        minutes = Math.ceil(secondsPast / 60);
         var req = JSON.stringify({
-            logout: "",
+            time_viewed: minutes
         });
         fetch(url, {
             method: 'POST',
@@ -173,8 +211,44 @@
     }
 
     function register() {
-        //hard coded user info for now
-        alert("username: 111, password 1234\n username: 222, password 5678");
+        //get the user name & password and hash the content
+        var username = document.querySelector('#txtUserName-su').value;
+        var email = document.querySelector('#txtEmail-u').value;
+        var parentemail = document.querySelector('#txtEmail-p').value;
+        var password = document.querySelector('#txtRepeatPass').value;
+        document.querySelector('#btn-signup').disabled = true;
+        alert("Sending request! This might take up to one minute!");
+
+        password = md5(username + md5(password));
+        // The request parameters
+        var url = './register';
+        var req = JSON.stringify({
+            user_id: username,
+            password: password,
+            email: email,
+            parent_email: parentemail
+        });
+        console.log(req);
+        fetch(url, {
+                method: 'POST',
+                body: req
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(res => {
+                if (res.status === 'User or Parent Already Exists') {
+                    alert("Account already exist!");
+                    document.querySelector('#btn-signup').disabled = false;
+                } else if (res.status === 'OK') {
+                    alert("Signup request sent!");
+                }
+            })
+            .catch(err => {
+                alert("signup error!");
+            })
+        //clear the input boxes
+        document.getElementById('txtRepeatPass').value = "";
     }
 
     //function for list all the posts in the global stream
@@ -296,7 +370,4 @@
             return args[count++];
         });
     }
-
-    //call the init function when the page is loaded
-    init();
 })();
