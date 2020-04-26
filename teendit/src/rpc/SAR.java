@@ -44,10 +44,10 @@ public class SAR extends HttpServlet {
 		String userId = session.getAttribute("user_id").toString(); 
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
-			List<Item> items = connection.getItems(userId);
-			List<Comment> comments = connection.getUserComment(userId);
-			String email = connection.getEmail(userId);
-			String parentEmail = connection.findParent(userId);
+			List<Item> items = connection.getItems(userId); // All posts
+			List<Comment> comments = connection.getUserComment(userId);  // All comments
+			String email = connection.getEmail(userId);   // Teenager's email
+			String parentEmail = connection.findParent(userId);  // Parent's email
 			
 			JSONObject obj = new JSONObject();
 			obj.put("email", email);

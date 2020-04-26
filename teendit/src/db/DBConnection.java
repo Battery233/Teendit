@@ -44,15 +44,11 @@ public interface DBConnection {
 	 */
 	public void deleteComments(String commentId);
 	
-//	/**
-//	 * Check if the item exists under the user
-//	 * 
-//	 * @param userId
-//	 * @param itemId
-//	 * @return true or false
-//	 */
-//	public boolean containsItem(String userId, String itemId);
-	
+	/**
+	 * Get the email of the teenager user.
+	 * @param userId
+	 * @return
+	 */
 	public String getEmail(String userId);
 	
 	/**
@@ -71,10 +67,24 @@ public interface DBConnection {
 	 */
 	public List<Item> getItems(String userId);
 	
+	/**
+	 * Get the comment ID based on user ID.
+	 * @param userId
+	 * @return
+	 */
 	public List<Integer> getUserCommentIds(String userId);
 	
+	/**
+	 * Get the comments based on user ID.
+	 * @param userId
+	 * @return
+	 */
 	public List<Comment> getUserComment(String userId);
 	
+	/**
+	 * Get all the posts in the database.
+	 * @return
+	 */
 	public List<Item> getAllItems();
 
 	/**
@@ -188,14 +198,38 @@ public interface DBConnection {
 	 */
 	public void updateTimeViewed(String userId, int timeViewed);
 	
+	/**
+	 * Set the random token for a new parent account.
+	 * @param parentEmail
+	 * @param token
+	 */
 	public void setToken(String parentEmail, String token);
 	
+	/**
+	 * Get the parent email based on the random token.
+	 * @param token
+	 * @return
+	 */
 	public String getParentEmail(String token);
 	
+	/**
+	 * Delete the token after parent use it.
+	 * @param parentEmail
+	 */
 	public void deleteToken(String parentEmail);
 	
+	/**
+	 * Get the parent email based on user ID
+	 * @param userId
+	 * @return
+	 */
 	public String findParent(String userId);
 	
+	/**
+	 * Get the teenager's ID file's name based on parent email. 
+	 * @param parent_email
+	 * @return
+	 */
 	public String getFileName(String parent_email);
 	
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 
 import db.DBConnection;
 import db.DBConnectionFactory;
@@ -37,7 +36,7 @@ public class DeleteAccount extends HttpServlet {
 			response.setStatus(403);
 			return;
 		}
-		String toDeleteId = session.getAttribute("user_id").toString();
+		String toDeleteId = session.getAttribute("user_id").toString();  // Get the user ID
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
 	  		 connection.deleteAccount(toDeleteId);

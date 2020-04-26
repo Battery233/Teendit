@@ -13,10 +13,7 @@ public class Comment {
 	private String commentId;
 	private String userId;
 	private String itemId;
-	//private String name;
 	private String content;
-	//private String time;
-	//private int checked;
 	
 	/**
 	 * This is a builder pattern in Java.
@@ -25,10 +22,7 @@ public class Comment {
 		this.commentId = builder.commentId;
 		this.userId = builder.userId;
 		this.itemId = builder.itemId;
-		//this.name = builder.name;
 		this.content = builder.content;
-		//this.time = builder.time;
-		//this.checked = builder.checked;
 	}
 	
 	//getters for the values
@@ -44,21 +38,10 @@ public class Comment {
 		return userId;
 	}
 
-//	public String getName() {
-//		return name;
-//	}
-
 	public String getContent() {
 		return content;
 	}
 
-//	public String getTime() {
-//		return time;
-//	}
-
-//	public int isChecked() {
-//		return checked;
-//	}
 	
 	// Create a json object using the values
 	public JSONObject toJSONObject() {
@@ -67,10 +50,7 @@ public class Comment {
 			obj.put("comment_id", commentId);
 			obj.put("user_id", userId);
 			obj.put("item_id", itemId);
-//			obj.put("name", name);
 			obj.put("content", content);
-//			obj.put("time", time);
-//			obj.put("checked", checked);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -81,10 +61,7 @@ public class Comment {
 		private String commentId;
 		private String userId;
 		private String itemId;
-		//private String name;
 		private String content;
-		//private String time;
-//		private int checked;
 		
 		
 		// a builder class for create the comment objects and init values 
@@ -100,22 +77,11 @@ public class Comment {
 			this.itemId = itemId;
 			return this;
 		}
-//		public ItemBuilder setName(String name) {
-//			this.name = name;
-//			return this;
-//		}
+		
 		public CommentBuilder setContent(String content) {
 			this.content = content;
 			return this;
 		}
-//		public ItemBuilder setTime(String time) {
-//			this.time = time;
-//			return this;
-//		}
-//		public ItemBuilder setChecked(int checked) {
-//			this.checked = checked;
-//			return this;
-//		}
 		
 		public Comment build() {
 			return new Comment(this);

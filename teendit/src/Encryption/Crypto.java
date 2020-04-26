@@ -9,13 +9,23 @@ import javax.crypto.KeyGenerator;
 import Decoder.BASE64Decoder;
 import Decoder.BASE64Encoder;
 
+/**
+ * A class for encrypting content of a txt file. The content is the base64 String.
+ */
 public class Crypto {
 	
+	/**
+	 * Encrypt a String by using AES.
+	 * @param plainText
+	 * @return
+	 */
 	public static final String encrypt(String plainText) {
     	Key secretKey = getKey("fendo888");
     	try {
-    		Cipher cipher = Cipher.getInstance("AES");
+    		Cipher cipher = Cipher.getInstance("AES");  // set AES
     		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+    		
+    		// Use byte array for AES encryption
     		byte[] p = plainText.getBytes("UTF-8");
     		byte[] result = cipher.doFinal(p);
     		BASE64Encoder encoder = new BASE64Encoder();
@@ -26,6 +36,11 @@ public class Crypto {
     	} 
     }
 	
+	/**
+	 * Decrypt a String by using AES.
+	 * @param cipherText
+	 * @return
+	 */
     public static final String decrypt(String cipherText) {
     	Key secretKey = getKey("fendo888");
     	try {
@@ -41,9 +56,14 @@ public class Crypto {
     	}
     }
 	
+    /**
+     * Generate the AES key based on a input string.
+     * @param keySeed
+     * @return
+     */
     public static Key getKey(String keySeed) {
     	try {  
-            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");  
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");   // use SHA1 for secure ramdom.
             secureRandom.setSeed(keySeed.getBytes());  
             KeyGenerator generator = KeyGenerator.getInstance("AES");  
             generator.init(secureRandom);  
@@ -52,17 +72,5 @@ public class Crypto {
             throw new RuntimeException(e);  
         } 
     }
-	
-	
-	public static void main(String[] args) {
-		String s = Base64Helper.fileToBase64("/Users/wyg/Desktop/upload/0701_1.jpg");
-//		String s = "1302nfndiqwjj23djii32re3";
-		String e = Crypto.encrypt(s);
-//		System.out.println(e);
-//		String e = "j3RooPEy5utbI7BtJfVaA03sqnXPx/2gLisI8+p4gng=";
-		String d = Crypto.decrypt(e);
-//		System.out.println(d);
-		Base64Helper.base64ToFile(d, "/Users/wyg/Desktop/upload/real.jpg");
-	}
 
 }

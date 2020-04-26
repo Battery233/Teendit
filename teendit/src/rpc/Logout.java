@@ -46,7 +46,7 @@ public class Logout extends HttpServlet {
 			DBConnection connection = DBConnectionFactory.getConnection();
 			try {
 		  		 JSONObject input = RpcHelper.readJSONObject(request);
-		  		 int timeViewed = input.getInt("time_viewed");
+		  		 int timeViewed = input.getInt("time_viewed");     // Get the time viewed before logout
 		  		 connection.updateTimeViewed(userId, timeViewed);
 		  		
 		  	 } catch (Exception e) {

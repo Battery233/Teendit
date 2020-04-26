@@ -3,14 +3,20 @@ package Encryption;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.UUID;
 
 import Decoder.BASE64Decoder;
 import Decoder.BASE64Encoder;
 
+/**
+ * The class used for change the base 64 String to a file.
+ */
 public class Base64Helper {
 	
-	 // 将 file 转化为 Base64
+	/**
+	 * Change the file to a base64 String.
+	 * @param path
+	 * @return
+	 */
     public static String fileToBase64(String path) {
         File file = new File(path);
         FileInputStream inputFile;
@@ -21,11 +27,16 @@ public class Base64Helper {
             inputFile.close();
             return new BASE64Encoder().encode(buffer);
         } catch (Exception e) {
-            throw new RuntimeException("文件路径无效\n" + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    // 将 base64 转化为 file
+    /**
+     * Change the base64 String to a file.
+     * @param base64
+     * @param path
+     * @return
+     */
     public static boolean base64ToFile(String base64, String path) {
         byte[] buffer;
         try {
@@ -35,22 +46,7 @@ public class Base64Helper {
             out.close();
             return true;
         } catch (Exception e) {
-            throw new RuntimeException("base64字符串异常或地址异常\n" + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-    }
-	
-    public static void main(String[] args) {
-    	String s = Base64Helper.fileToBase64("/Users/wyg/Desktop/upload/0701_1.jpg");
-    	//String er = Crypto.encrypt(s);
-    	try {
-    		String format = "jpg";
-			String filePath = "/Users/wyg/Desktop/upload/" + UUID.randomUUID().toString()+"( " + format + " )"+".txt";
-            FileOutputStream fos = new FileOutputStream(filePath);
-            fos.write(s.getBytes());
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    	//System.out.println(s);
     }
 }

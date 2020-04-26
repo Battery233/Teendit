@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * The class is used for decrypt the base64 String and change the result to the file.
+ */
 public class Decryption {
 	
 	public static void decrypt(String inPath, String outPath) throws IOException {
@@ -28,8 +31,8 @@ public class Decryption {
         Base64Helper.base64ToFile(base64, outPath);
 	}
 	
-	public static void main(String[] args) throws IOException {
-		Decryption.decrypt("/Users/wyg/Desktop/encryption/2b506e33-c505-4d49-ab45-218d48133c2b(jpg).txt", "/Users/wyg/Desktop/encryption/real.jpg");
-	}
+//	public static void main(String[] args) throws IOException {
+//		Decryption.decrypt("/Users/wyg/Desktop/encryption/2b506e33-c505-4d49-ab45-218d48133c2b(jpg).txt", "/Users/wyg/Desktop/encryption/real.jpg");
+//	}
 
 }

@@ -25,8 +25,6 @@ public class Item {
 		this.name = builder.name;
 		this.category = builder.category;
 		this.content = builder.content;
-		//this.time = builder.time;
-		//this.checked = builder.checked;
 	}
 	
 	//getters for the values
@@ -49,14 +47,6 @@ public class Item {
 	public String getContent() {
 		return content;
 	}
-
-//	public String getTime() {
-//		return time;
-//	}
-
-//	public int isChecked() {
-//		return checked;
-//	}
 	
 	// Create a json object using the values
 	public JSONObject toJSONObject() {
@@ -67,8 +57,6 @@ public class Item {
 			obj.put("name", name);
 			obj.put("category", category);
 			obj.put("content", content);
-//			obj.put("time", time);
-//			obj.put("checked", checked);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -82,8 +70,6 @@ public class Item {
 		private String name;
 		private String category;
 		private String content;
-		//private String time;
-//		private int checked;
 		
 		
 		public ItemBuilder setItemId(String itemId) {
@@ -106,14 +92,6 @@ public class Item {
 			this.content = content;
 			return this;
 		}
-//		public ItemBuilder setTime(String time) {
-//			this.time = time;
-//			return this;
-//		}
-//		public ItemBuilder setChecked(int checked) {
-//			this.checked = checked;
-//			return this;
-//		}
 		
 		public Item build() {
 			return new Item(this);

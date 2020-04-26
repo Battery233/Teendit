@@ -47,6 +47,11 @@ public class SearchItem extends HttpServlet {
 		String userId = session.getAttribute("user_id").toString(); 
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
+			
+			// Get all the posts and get comments based on each post ID.
+			// The format will be a JSON array for all the posts.
+			// In each post JSON object, it has a field which is a JSON array for comment JSON object.
+			
 			List<Item> items = connection.getAllItems();
 			
 			JSONArray array = new JSONArray();
@@ -82,6 +87,7 @@ public class SearchItem extends HttpServlet {
 	  		 JSONObject input = RpcHelper.readJSONObject(request);
 
 	  		 if (input.has("item_id")) {
+	  			 // Add a new comment
 	  			 CommentBuilder builder = new CommentBuilder();
 				 builder.setUserId(input.getString("user_id"));
 				 builder.setItemId(input.getString("item_id"));
@@ -90,6 +96,8 @@ public class SearchItem extends HttpServlet {
 				 connection.addComments(comment);
 				 
 	  		 } else {
+	  			 
+	  			 // Add a new post.
 	  			 ItemBuilder builder = new ItemBuilder();
 	  			 builder.setUserId(input.getString("user_id"));
 				 builder.setName(input.getString("name"));
@@ -108,33 +116,34 @@ public class SearchItem extends HttpServlet {
 	  	 }
 	}
 	
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			response.setStatus(403);
-			return;
-		}
-		DBConnection connection = DBConnectionFactory.getConnection();
-		try {
-	  		 JSONObject input = RpcHelper.readJSONObject(request);
-	  		 String todeleteId;
-	  		 if (input.has("comment_id")) {
-	  			todeleteId = input.getString("comment_id");
-	  		 } else {
-	  			todeleteId = input.getString("item_id");
-	  			connection.deleteItems(todeleteId);
-	  		 }
-	  		
-	  		 RpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
-	  		
-	  	 } catch (Exception e) {
-	  		 e.printStackTrace();
-	  	 } finally {
-	  		 connection.close();
-	  	 }
-	}
+//	/**
+//	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+//	 */
+//	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		HttpSession session = request.getSession(false);
+//		if (session == null) {
+//			response.setStatus(403);
+//			return;
+//		}
+//		DBConnection connection = DBConnectionFactory.getConnection();
+//		try {
+//	  		 JSONObject input = RpcHelper.readJSONObject(request);
+//	  		 String todeleteId;
+//	  		 
+//	  		 if (input.has("comment_id")) {
+//	  			todeleteId = input.getString("comment_id");
+//	  		 } else {
+//	  			todeleteId = input.getString("item_id");
+//	  			connection.deleteItems(todeleteId);
+//	  		 }
+//	  		
+//	  		 RpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
+//	  		
+//	  	 } catch (Exception e) {
+//	  		 e.printStackTrace();
+//	  	 } finally {
+//	  		 connection.close();
+//	  	 }
+//	}
 
 }

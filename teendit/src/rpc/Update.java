@@ -35,7 +35,7 @@ public class Update extends HttpServlet {
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
 			String userId = ""; 
-			boolean isChildren = false;
+			boolean isChildren = false;   // Check if it is a teenager.
 			if (input.has("user_id")) {
 				userId = input.getString("user_id");
 				isChildren = true;
@@ -43,16 +43,19 @@ public class Update extends HttpServlet {
 				userId = input.getString("parent_email");
 			}
 			
+			// Change password
 			if (input.has("password")) {
 				String password = input.getString("password");
 				connection.updatePassword(userId, password, isChildren);
 			}
 			
+			// Change email
 			if (input.has("email")) {
 				String email = input.getString("email");
 				connection.updateEmail(userId, email);
 			}
 			
+			// Change time limit
 			if (input.has("time_to_view")) {
 				int timeView = input.getInt("time_to_view");
 				connection.updateTimeToView(userId, timeView);
