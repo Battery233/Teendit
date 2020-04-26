@@ -1,6 +1,10 @@
 package rpc;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +43,20 @@ public class Login extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			JSONObject obj = new JSONObject();
 			if (session != null) {
-				userId = session.getAttribute("user_id").toString();
-				parentEmail = session.getAttribute("parent_email").toString();
+				Set<String> nameSet = new HashSet<>();
+				Enumeration<String> valueNames = session.getAttributeNames();
+		        if (valueNames.hasMoreElements()) {
+		            while (valueNames.hasMoreElements()) {
+		                String param = (String) valueNames.nextElement();
+		                nameSet.add(param);
+		            }
+		        }
+		        if (nameSet.contains("user_id")) {
+		        	userId = session.getAttribute("user_id").toString();
+		        }
+		        if (nameSet.contains("parent_email")) {
+		        	parentEmail = session.getAttribute("parent_email").toString();
+		        }
 				if (!userId.equals("")) {
 					obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
 				} else {
