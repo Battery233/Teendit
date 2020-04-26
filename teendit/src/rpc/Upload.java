@@ -53,7 +53,7 @@ public class Upload extends HttpServlet {
 			
 			try {
 				// To change!!!
-				String filePath = "/Users/wyg/Desktop/encryption/" + randomName +".txt";  // Store the encrypted base64 String in a local txt file.
+				String filePath = "/home/ubuntu/encryption/" + randomName +".txt";  // Store the encrypted base64 String in a local txt file.
 	            FileOutputStream fos = new FileOutputStream(filePath);
 	            fos.write(encryptedFile.getBytes());
 	            fos.close();
