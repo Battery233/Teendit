@@ -150,6 +150,13 @@ public interface DBConnection {
 	public int getTime(String userId);
 	
 	/**
+	 * Get the time limit for viewing web sites from parent table.
+	 * @param parentEmail
+	 * @return
+	 */
+	public int getTimeParent(String parentEmail);
+	
+	/**
 	 * Get the time the user view today
 	 * @param userId
 	 * @return

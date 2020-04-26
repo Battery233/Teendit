@@ -561,6 +561,26 @@ public class MySQLConnection implements DBConnection {
 	}
 	
 	@Override
+	public int getTimeParent(String parentEmail) {
+		if (conn == null) {
+			return -2;
+		}
+		int time = -2;
+		try {
+			String sql = "SELECT time_to_view FROM parents WHERE parent_email = ? ";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, parentEmail);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				time = rs.getInt("time_to_view");
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return time;
+	}
+	
+	@Override
 	public int getTimeViewed(String userId) {
 		if (conn == null) {
 			return 0;

@@ -52,6 +52,7 @@ public class Upload extends HttpServlet {
 			String randomName = UUID.randomUUID().toString()+"(" + format + ")";
 			
 			try {
+				// To change!!!
 				String filePath = "/Users/wyg/Desktop/encryption/" + randomName +".txt";  // Store the encrypted base64 String in a local txt file.
 	            FileOutputStream fos = new FileOutputStream(filePath);
 	            fos.write(encryptedFile.getBytes());

@@ -34,11 +34,18 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
+			String userId = "";
+			String parentEmail = "";
 			HttpSession session = request.getSession(false);
 			JSONObject obj = new JSONObject();
 			if (session != null) {
-				String userId = session.getAttribute("user_id").toString();
-				obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
+				userId = session.getAttribute("user_id").toString();
+				parentEmail = session.getAttribute("parent_email").toString();
+				if (!userId.equals("")) {
+					obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
+				} else {
+					obj.put("status", "OK").put("parent_email", userId).put("time_to_view", connection.getTimeParent(parentEmail));
+				}
 			} else {
 				obj.put("status", "Invalid Session");
 				response.setStatus(403);
@@ -90,7 +97,7 @@ public class Login extends HttpServlet {
 					if (isChildren) {
 						obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
 					} else {
-						obj.put("status", "OK").put("parent_email", userId);
+						obj.put("status", "OK").put("parent_email", userId).put("time_to_view", connection.getTimeParent(userId));
 					}
 				}
 			} else if (isChildren && connection.verifyLogin(userId, password, isChildren) && !connection.getFileName(parent_email).equals("Checked")) {
