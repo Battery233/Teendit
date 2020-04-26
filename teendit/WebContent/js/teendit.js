@@ -13,6 +13,7 @@
     function init() {
         //add button listeners
         document.querySelector('#login-btn').addEventListener('click', login);
+        document.querySelector('#parent-login-btn').addEventListener('click', parentLogin);
         document.querySelector('#new-post').addEventListener('click', showPostingPage);
         document.querySelector('#new-post-btn').addEventListener('click', sendNewPost);
         document.querySelector('#return-btn').addEventListener('click', validateSession);
@@ -190,6 +191,67 @@
         //clear the input boxes
         document.getElementById('txtUserName').value = "";
         document.getElementById('txtPassword').value = "";
+    }
+    
+    function parentLogin(){
+    	//get the user name & password and hash the content
+        var username = document.querySelector('#txtUserName').value;
+        var password = document.querySelector('#txtPassword').value;
+//        password = md5(username + md5(password));
+        // The request parameters
+        var url = './login';
+        var req = JSON.stringify({
+        	parent_email: username,
+            password: password,
+        });
+
+        console.log(req);
+        fetch(url, {
+                method: 'POST',
+                body: req
+            })
+            .then(res => {
+                //status = 401 if the password does not match
+                if (res.status === 401) {
+                    console.log(res);
+                    console.log("RETURN VALUE NOT 200!");
+                    throw new Error("not 200");
+                }
+                return res.json()
+            })
+            .then(res => {
+                if (res.status === 'OK') {
+                   alert("Parent in!");
+                }
+            })
+            .catch(err => {
+                alert("Login error! Wrong email/password or account not activated!");
+            })
+        //clear the input boxes
+        document.getElementById('txtUserName').value = "";
+        document.getElementById('txtPassword').value = "";
+    }
+    
+    function sar(){
+    	var url = './sar';
+        fetch(url, {
+                method: 'GET',
+            }).then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    alert("SAR get successfully!");
+                }
+                return res.json();
+            }).then(res => {
+            	    var a = document.createElement("a");
+            	    var file = new Blob([JSON.stringify(res)], {type: 'text/plain'});
+            	    a.href = URL.createObjectURL(file);
+            	    a.download = "SAR.txt";
+            	    a.click();
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     function logout() {
