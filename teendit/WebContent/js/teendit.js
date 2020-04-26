@@ -162,6 +162,8 @@
             showPostingPage();
             alert("write something!");
         } else {
+        	document.querySelector('#txtnewpost-headline').value = "";
+            document.querySelector('#txtnewpost-content').value = "";
             //send post
             var url = './main';
             var req = JSON.stringify({
