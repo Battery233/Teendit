@@ -48,7 +48,6 @@
                             format: extension,
                             time_to_view: minutes
                         });
-                        alert(fileString);
                         console.log(req);
                         fetch(url, {
                                 method: 'POST',

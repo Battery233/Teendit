@@ -123,7 +123,7 @@
         hideElement(document.querySelector('#signup-content'));
         hideElement(document.querySelector('#login-content'));
         hideElement(document.querySelector('#globalstream-content'));
-        hideElement(document.querySelector('#logout-btn'));
+        showElement(document.querySelector('#logout-btn'));
         hideElement(document.querySelector('#newpost-content'));
         showElement(document.querySelector('#parent-content'));
         hideElement(document.querySelector('#profile-content'));
@@ -272,7 +272,7 @@
                     currentParent = res.parent_email;
                     dailyLimit = res.time_to_view;
                     document.querySelector('#timepicker').value = dailyLimit;
-                    alert("Welcome, " + currentParent + "!\nDaily budget for the user is " + dailyLimit + " minutes!");
+                    alert("Welcome, " + currentParent + "!\nDaily budget for the child is " + dailyLimit + " minutes!");
                 }
             })
             .catch(err => {
@@ -308,24 +308,36 @@
     }
 
     function logout() {
-        //logout and get the index page from server
-        var url = './logout';
-        currentUser = null;
-        isUser = false;
-        isParent = false;
-        clearInterval(timer);
-        minutes = Math.ceil(secondsPast / 60);
-        var req = JSON.stringify({
-            time_viewed: minutes
-        });
-        fetch(url, {
-            method: 'POST',
-            body: req
-        }).then(res => {
-            if (res.status === 200) {
-                validateSession();
-            }
-        })
+        if (isUser) {
+            //logout and get the index page from server
+            var url = './logout';
+            currentUser = null;
+            isUser = false;
+            isParent = false;
+            clearInterval(timer);
+            minutes = Math.ceil(secondsPast / 60);
+            var req = JSON.stringify({
+                time_viewed: minutes
+            });
+            fetch(url, {
+                method: 'POST',
+                body: req
+            }).then(res => {
+                if (res.status === 200) {
+                    validateSession();
+                }
+            })
+        } else {
+            var url = './logout';
+            currentUser = null;
+            currentParent = null;
+            isUser = false;
+            isParent = false;
+            fetch(url, {
+                method: 'GET'
+            })
+            showLoginPage();
+        }
     }
 
     function register() {
