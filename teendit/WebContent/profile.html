@@ -68,20 +68,33 @@
                             <div class="form-group">
                                 <label for="uname" class="col-sm-3 control-label">Username*</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="txtUserName" name="username" placeholder="username" required>
+                                    <input type="text" class="form-control" id="txtUserName" name="username" placeholder="username" disabled value = "">
                                     <span id="username.info" style="color: red"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="lastname" class="col-sm-3 control-label">Email*</label>
                                 <div class="col-sm-6">
-                                    <input name="email" type="email" class="form-control" id="txtEmail" placeholder="email address" required> <span id="email.info" style="color: red"></span>
+                                    <input name="email" type="email" class="form-control" id="txtEmail" placeholder="email address" value = ""required> <span id="email.info" style="color: red"></span>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="uname" class="col-sm-3 control-label">BirthDate*</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtUserName" name="username" placeholder="birth date" value = "" disabled>
                                 </div>
                             </div>
                         </form>
 
-                        <a href="#" class="btn btn-primary btn-lg btn-block buy-now" value="Save">
-      Save <span class="glyphicon glyphicon-triangle-right"></span>
+                        <a href="#" class="btn btn-primary btn-lg btn-block buy-now">
+      Modify <span class="glyphicon glyphicon-triangle-right"></span>
+    </a>
+    <a href="#" class="btn btn-danger btn-lg btn-block buy-now" >
+      DELETE ACCOUNT <span class="glyphicon glyphicon-triangle-right"></span>
+    </a>
+    <a href="#" class="btn btn-primary btn-lg btn-block buy-now" >
+      SAR (request your data) <span class="glyphicon glyphicon-triangle-right"></span>
     </a>
 
                     </div>

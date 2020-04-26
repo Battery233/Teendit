@@ -49,7 +49,7 @@
         <div class="row ">
             <br>
             <br>
-            <div class="col-sm-2">
+            <div class="col-sm-4">
             </div>
             <div class="col-sm-4">
 
@@ -58,8 +58,8 @@
                         <a href="#">
                             <img src="https://mlqmtwka8c9g.i.optimole.com/gOh5_1g-f23fKlJN/w:764/h:320/q:85/https://www.competethemes.com/wp-content/uploads/2017/02/file-upload-plugins-1.png" class="img-responsive">
                             <div class="card-caption">
-                                <span class="h2">Identification File Upload</span>
-                                <p>Birthdate verification</p>
+                                <span class="h2">Account activation</span>
+                                <p>Birthdate verification & Set time & set password</p>
                             </div>
                         </a>
                     </div>
@@ -71,30 +71,9 @@
 			Choose File...
 			<input type="file" style='position:absolute;z-index:0;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
 		</a>
-                            <span class='label label-info' id="upload-file-info"></span>
-                        </div>
+            <span class='label label-info' id="upload-file-info"></span>
+                      </div>
                         <br>
-
-                        <a href="#" class="btn btn-primary btn-lg btn-block buy-now" id="file-upload-btn" value="upload">
-      Upload <span class="glyphicon glyphicon-triangle-right"></span>
-    </a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-
-                <div class="card card-price">
-                    <div class="card-img">
-                        <a href="#">
-                            <img src="https://www.schreuders.com.au/wp-content/uploads/2015/10/image104.jpg" class="img-responsive">
-                            <div class="card-caption">
-                                <span class="h2">Set Time limitation</span>
-                                <p>Prevent from addiction</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card-body">
                         <div class="lead">Set a time that your child could spend on Teendit each day most:</div>
                         <div class="bfh-timepicker" data-time="08:00">
                         </div>
@@ -104,14 +83,14 @@
                                 <br>
                             </div>
                         </div>
-
-                        <a href="#" class="btn btn-primary btn-lg btn-block buy-now">
-      Set <span class="glyphicon glyphicon-triangle-right"></span>
-    </a>
+                     <div class="lead">Set new password for your account:</div>
+                     <input type="text" class="form-control" id="txtUserName" name="username" placeholder="your password" required>
+                     <span id="username.info" style="color: red"></span><br>
+                     <input name="email" type="email" class="form-control" id="txtEmail" placeholder="confirm your password" required> <span id="email.info" style="color: red"></span><br>
+                     <a href="#" class="btn btn-primary btn-lg btn-block buy-now" value="Save">
+      submit <span class="glyphicon glyphicon-triangle-right"></span></a>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-2">
             </div>
         </div>
 
