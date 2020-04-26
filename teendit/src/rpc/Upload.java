@@ -39,19 +39,20 @@ public class Upload extends HttpServlet {
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
 			
-			String token = input.getString("token");
-			String file = input.getString("base64_file");
-			String encryptedFile = Crypto.encrypt(file);
-			String password = input.getString("password");
-			String format = input.getString("format");
-			int timeView = input.getInt("time_to_view");
+			String token = input.getString("token");  // Get the random token
+			String file = input.getString("base64_file");  // Get the base64 string
+			String encryptedFile = Crypto.encrypt(file);  // Encrypt the base64 string
+			String password = input.getString("password");  // Get the password
+			String format = input.getString("format");     // Get the format of the file
+			int timeView = input.getInt("time_to_view");   // Get the time limit
 			
 			String parentEmail = connection.getParentEmail(token);
 			
+			// Generate a random file name for the uploaded ID
 			String randomName = UUID.randomUUID().toString()+"(" + format + ")";
 			
 			try {
-				String filePath = "/Users/wyg/Desktop/encryption/" + randomName +".txt";  // To change later!!!
+				String filePath = "/Users/wyg/Desktop/encryption/" + randomName +".txt";  // Store the encrypted base64 String in a local txt file.
 	            FileOutputStream fos = new FileOutputStream(filePath);
 	            fos.write(encryptedFile.getBytes());
 	            fos.close();

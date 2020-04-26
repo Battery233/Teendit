@@ -71,6 +71,9 @@ public class Login extends HttpServlet {
 			String password = input.getString("password");
 			
 			JSONObject obj = new JSONObject();
+			
+			// Check the user ID and the password
+			// Also check if the account is valid
 			if ((isChildren && connection.verifyLogin(userId, password, isChildren) && connection.getFileName(parent_email).equals("Checked"))
 					|| (!isChildren && connection.verifyLogin(userId, password, isChildren))) {
 				if (isChildren && connection.getTime(userId) <= connection.getTimeViewed(userId)) {
