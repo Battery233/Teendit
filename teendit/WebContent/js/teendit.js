@@ -32,8 +32,7 @@
         document.querySelector('#profile-modify').addEventListener('click', modifyUserProfile);
         document.querySelector('#parentResetPw').addEventListener('click', parentResetPw);
         document.querySelector('#parentUpdatetimebtn').addEventListener('click', parentUpdatetimebtn);
-
-        //        $(document).on("keydown", disableF5);
+        $(document).on("keydown", disableF5);
         validateSession();
     }
 
@@ -72,6 +71,7 @@
         showElement(document.querySelector('#globalstream-content'));
         hideElement(document.querySelector('#profile-content'));
         hideElement(document.querySelector('#parent-content'));
+        showElement(document.querySelector('#profile-btn'));
     }
 
     function showLoginPage() {
@@ -501,9 +501,6 @@
             .catch(err => {
                 console.error(err); // print error
             })
-
-
-
     }
 
     function disableF5(e) {
