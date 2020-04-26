@@ -1,9 +1,12 @@
 (function() {
     //id for the current user
     var currentUser;
+    var currentParent;
     var secondsLeft;
     var secondsPast = 0;
     var timer;
+    var isUser = false;
+    var isParent = false;
 
     //call the init function when the page is loaded
     init();
@@ -27,7 +30,10 @@
         document.querySelector('#profile-sar-btn').addEventListener('click', sar);
         document.querySelector('#profile-del-btn').addEventListener('click', removeAccount);
         document.querySelector('#profile-modify').addEventListener('click', modifyUserProfile);
-        $(document).on("keydown", disableF5);
+        document.querySelector('#parentResetPw').addEventListener('click', parentResetPw);
+        document.querySelector('#parentUpdatetimebtn').addEventListener('click', parentUpdatetimebtn);
+
+        //        $(document).on("keydown", disableF5);
         validateSession();
     }
 
@@ -65,6 +71,7 @@
         showElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#globalstream-content'));
         hideElement(document.querySelector('#profile-content'));
+        hideElement(document.querySelector('#parent-content'));
     }
 
     function showLoginPage() {
@@ -75,6 +82,7 @@
         hideElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#login-content'));
         hideElement(document.querySelector('#profile-content'));
+        hideElement(document.querySelector('#parent-content'));
     }
 
     function showPostingPage() {
@@ -84,6 +92,7 @@
         hideElement(document.querySelector('#globalstream-content'));
         showElement(document.querySelector('#logout-btn'));
         showElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#parent-content'));
         hideElement(document.querySelector('#profile-content'));
     }
 
@@ -94,17 +103,31 @@
         hideElement(document.querySelector('#globalstream-content'));
         hideElement(document.querySelector('#logout-btn'));
         hideElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#parent-content'));
         hideElement(document.querySelector('#profile-content'));
     }
-    
+
     function showProfilePage() {
-    	document.getElementById("txtUserName-p").placeholder = currentUser;
+        document.getElementById("txtUserName-p").placeholder = currentUser;
         hideElement(document.querySelector('#signup-content'));
         hideElement(document.querySelector('#login-content'));
         hideElement(document.querySelector('#globalstream-content'));
         hideElement(document.querySelector('#logout-btn'));
         hideElement(document.querySelector('#newpost-content'));
+        hideElement(document.querySelector('#parent-content'));
         showElement(document.querySelector('#profile-content'));
+    }
+
+    function showParentPage() {
+        document.getElementById("txtUserName-p").placeholder = currentUser;
+        hideElement(document.querySelector('#signup-content'));
+        hideElement(document.querySelector('#login-content'));
+        hideElement(document.querySelector('#globalstream-content'));
+        hideElement(document.querySelector('#logout-btn'));
+        hideElement(document.querySelector('#newpost-content'));
+        showElement(document.querySelector('#parent-content'));
+        hideElement(document.querySelector('#profile-content'));
+        hideElement(document.querySelector('#profile-btn'));
     }
 
     //tool functions for hide and show elements in the page
@@ -121,13 +144,13 @@
     function policy() {
         alert("For teenage users, by creating this account, we will store users’ ID (user name), password, birthday, browsing time and email address. Your user name, password, and birthday is used to maintain your account, post history, and posts comments. All the information would be securely encrypted and used only for sending account reset information. The birthday data would only be used to determine whether you are the teenage group. For teenage parents, we will store parents’ correlation with their teenage children just to maintain the account. We will temporarily store the ID documents for manually ID verification and will delete them immediately after the verification process. We understand that ID documents are extremely important, we would encrypt them while we are storing them and transferring them. Not all the employees in Teendit can open the ID documents in the database, private keys would be needed. Your data will not be shared with any third party or used for any other purposes that are not directly related to Teendit.");
     }
-    
-    function profile(){
-    	if(currentUser==null){
-    		alert("Login first!");
-    	} else{
-    		showProfilePage();
-    	}
+
+    function profile() {
+        if (currentUser == null) {
+            alert("Login first!");
+        } else {
+            showProfilePage();
+        }
     }
 
     function sendNewPost() {
@@ -202,7 +225,8 @@
                             alert("You have one minute left!");
                         }
                     }, 1000);
-
+                    isUser = true;
+                    isParent = false;
                     onSessionValid(res);
                 }
             })
@@ -213,16 +237,16 @@
         document.getElementById('txtUserName').value = "";
         document.getElementById('txtPassword').value = "";
     }
-    
-    function parentLogin(){
-    	//get the user name & password and hash the content
+
+    function parentLogin() {
+        //get the user name & password and hash the content
         var username = document.querySelector('#txtUserName').value;
         var password = document.querySelector('#txtPassword').value;
         password = md5(password);
         // The request parameters
         var url = './login';
         var req = JSON.stringify({
-        	parent_email: username,
+            parent_email: username,
             password: password,
         });
 
@@ -242,7 +266,13 @@
             })
             .then(res => {
                 if (res.status === 'OK') {
-                   alert("Parent in!");
+                    isUser = false;
+                    isParent = true;
+                    showParentPage()
+                    currentParent = res.parent_email;
+                    dailyLimit = res.time_to_view;
+                    document.querySelector('#timepicker').value = dailyLimit;
+                    alert("Welcome, " + currentParent + "!\nDaily budget for the user is " + dailyLimit + " minutes!");
                 }
             })
             .catch(err => {
@@ -252,9 +282,9 @@
         document.getElementById('txtUserName').value = "";
         document.getElementById('txtPassword').value = "";
     }
-    
-    function sar(){
-    	var url = './sar';
+
+    function sar() {
+        var url = './sar';
         fetch(url, {
                 method: 'GET',
             }).then(res => {
@@ -264,11 +294,13 @@
                 }
                 return res.json();
             }).then(res => {
-            	    var a = document.createElement("a");
-            	    var file = new Blob([JSON.stringify(res)], {type: 'text/plain'});
-            	    a.href = URL.createObjectURL(file);
-            	    a.download = "SAR.txt";
-            	    a.click();
+                var a = document.createElement("a");
+                var file = new Blob([JSON.stringify(res)], {
+                    type: 'text/plain'
+                });
+                a.href = URL.createObjectURL(file);
+                a.download = "SAR.txt";
+                a.click();
             })
             .catch(err => {
                 console.error(err);
@@ -279,6 +311,8 @@
         //logout and get the index page from server
         var url = './logout';
         currentUser = null;
+        isUser = false;
+        isParent = false;
         clearInterval(timer);
         minutes = Math.ceil(secondsPast / 60);
         var req = JSON.stringify({
@@ -334,9 +368,9 @@
         //clear the input boxes
         document.getElementById('txtRepeatPass').value = "";
     }
-    
-    function removeAccount(){  	
-    	var url = './deleteaccount';
+
+    function removeAccount() {
+        var url = './deleteaccount';
         fetch(url, {
                 method: 'GET',
             }).then(res => {
@@ -351,56 +385,119 @@
                 console.error(err);
             })
     }
-    
-    function modifyUserProfile(){
-    	var email = document.querySelector('#txtEmail-profile').value;
+
+    function modifyUserProfile() {
+        var email = document.querySelector('#txtEmail-profile').value;
         var password = document.querySelector('#txtpassword-p').value;
-        if(email==""&&password==""){
-        	alert("Input new email or password!");
-        }else{
-             // The request parameters
-             var url = './update';
-             var req;
-             if(email==""){
-            	 req = JSON.stringify({
-                     user_id: currentUser,
-                     password: md5(username + md5(password))
-                 });
-             }else if(password==""){
-            	 req = JSON.stringify({
-                     user_id: currentUser,
-                     email:email
-                 });
-             }else{
-            	 req = JSON.stringify({
-                     user_id: currentUser,
-                     email:email,
-                     password: md5(currentUser + md5(password))
-                 });
-             }             
-             fetch(url, {
-                     method: 'POST',
-                     body: req
-                 })
-                 .then(res => {
-                     return res.json()
-                 })
-                 .then(res => {
-                     if (res.status === 'OK') {
-                    	 alert("Account info updated!");
-                     }
-                 })
-                 .catch(err => {
-                     alert("Error! Please try later or contact admin");
-                 })
-             //clear the input boxes
-             document.getElementById('txtEmail-profile').value = "";
-             document.getElementById('txtpassword-p').value = "";	
+        if (email == "" && password == "") {
+            alert("Input new email or password!");
+        } else {
+            // The request parameters
+            var url = './update';
+            var req;
+            if (email == "") {
+                req = JSON.stringify({
+                    user_id: currentUser,
+                    password: md5(currentUser + md5(password))
+                });
+            } else if (password == "") {
+                req = JSON.stringify({
+                    user_id: currentUser,
+                    email: email
+                });
+            } else {
+                req = JSON.stringify({
+                    user_id: currentUser,
+                    email: email,
+                    password: md5(currentUser + md5(password))
+                });
+            }
+            fetch(url, {
+                    method: 'POST',
+                    body: req
+                })
+                .then(res => {
+                    return res.json()
+                })
+                .then(res => {
+                    if (res.status === 'OK') {
+                        alert("Account info updated!");
+                    }
+                })
+                .catch(err => {
+                    alert("Error! Please try later or contact admin");
+                })
+            //clear the input boxes
+            document.getElementById('txtEmail-profile').value = "";
+            document.getElementById('txtpassword-p').value = "";
         }
     }
 
-    function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
-    
+    function parentResetPw() {
+        var password1 = document.querySelector('#parentnewpw1').value;
+        var password2 = document.querySelector('#parentnewpw2').value;
+        if (password1 == "" || password1 != password2) {
+            document.getElementById('parentnewpw1').value = "";
+            document.getElementById('parentnewpw2').value = "";
+            alert("Input not valid!");
+        } else {
+            var url = './update';
+            var req = JSON.stringify({
+                parent_email: currentParent,
+                password: md5(password1)
+            });
+
+            console.log(req);
+            fetch(url, {
+                    method: 'POST',
+                    body: req
+                }).then(res => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        alert("Password updated successfully!");
+                    }
+                    return res.json();
+                })
+                .catch(err => {
+                    console.error(err); // print error
+                })
+        }
+    }
+
+
+    function parentUpdatetimebtn() {
+
+        var minutes = document.querySelector('#timepicker').value;
+
+        var url = './update';
+        var req = JSON.stringify({
+            parent_email: currentParent,
+            time_to_view: minutes
+        });
+
+        console.log(req);
+        fetch(url, {
+                method: 'POST',
+                body: req
+            }).then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    alert("Time updated successfully!");
+                }
+                return res.json();
+            })
+            .catch(err => {
+                console.error(err); // print error
+            })
+
+
+
+    }
+
+    function disableF5(e) {
+        if ((e.which || e.keyCode) == 116) e.preventDefault();
+    };
+
     //function for list all the posts in the global stream
     function loadItems() {
         var url = './main';

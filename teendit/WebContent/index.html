@@ -33,7 +33,7 @@
                      class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
                      <span class="sr-only">(current)</span></a>
                   </li>                  
-               </ul-->
+                  </ul-->
                <button id="profile-btn" class="btn btn-secondary" style = "margin-top: 9px; float: left">Profile</button>
                <button id="logout-btn" class="btn btn-secondary" style = "margin-top: 9px; float: right">Logout</button>
             </div>
@@ -191,9 +191,7 @@
                      <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                            <button type="submit" id="btn-signup" class="btn btn-primary">Sign Up</button>
-                           
                            <button id="return-btn-signup" class="btn btn-warning">Return</button>
-                           
                         </div>
                      </div>
                   </form>
@@ -206,8 +204,7 @@
             </div>
          </div>
       </div>
-      
-       <div id="profile-content" class="container-fluid">
+      <div id="profile-content" class="container-fluid">
          <div class="row ">
             <br>
             <br>
@@ -263,7 +260,74 @@
             </div>
          </div>
       </div>
-      
+      <div id="parent-content" class="container-fluid">
+         <div class="row ">
+            <br><br>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-4">
+               <div class="card card-price">
+                  <div class="card-img">
+                     <a href="#">
+                        <img src="https://mlqmtwka8c9g.i.optimole.com/gOh5_1g-f23fKlJN/w:764/h:320/q:85/https://www.competethemes.com/wp-content/uploads/2017/02/file-upload-plugins-1.png" class="img-responsive">
+                        <div class="card-caption">
+                           <span class="h2">Profile</span>
+                           <p>edit your profile here</p>
+                        </div>
+                     </a>
+                  </div>
+                  <div class="card-body">
+                     <form class="form-horizontal" role="form" method="post" id="form">
+                        <div class="form-group">
+                           <label for="uname" class="col-sm-3 control-label">New Password*</label>
+                           <div class="col-sm-6">
+                              <input type="password" class="form-control" id="parentnewpw1" name="username" placeholder="new password" required>
+                              <span id="username.info" style="color: red"></span>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <label for="lastname" class="col-sm-3 control-label">Confirm Password*</label>
+                           <div class="col-sm-6">
+                              <input name="email" type="password" class="form-control" id="parentnewpw2" placeholder="repeat your password" required> <span id="email.info" style="color: red"></span>
+                           </div>
+                        </div>
+                     </form>
+                     <a href="#" id= "parentResetPw" class="btn btn-primary btn-lg btn-block buy-now" value="Save">
+                     Reset <span class="glyphicon glyphicon-triangle-right"></span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="card card-price">
+                  <div class="card-img">
+                     <a href="#">
+                        <img src="https://www.schreuders.com.au/wp-content/uploads/2015/10/image104.jpg" class="img-responsive">
+                        <div class="card-caption">
+                           <span class="h2">Set Time limitation</span>
+                           <p>Prevent from addiction</p>
+                        </div>
+                     </a>
+                  </div>
+                  <div class="card-body">
+                     <div class="lead">Set a time  that your child could spend on Teendit each day most (minutes):</div>
+                     <div class="bfh-timepicker" data-time="08:00"></div>
+                     <div>
+                        <div class="md-form md-outline">
+                           <input type="number" id="timepicker" class="form-control" placeholder="Select time" value="60" min="1" max="600">
+                           <br>
+                        </div>
+                     </div>
+                     <a href="#" id="parentUpdatetimebtn" class="btn btn-primary btn-lg btn-block buy-now">
+                     Set <span class="glyphicon glyphicon-triangle-right"></span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-2">
+            </div>
+         </div>
+      </div>
       <footer class="footer">
          <div class="row" style="color: #CCCCCC">
             <div class="col-md-2">
