@@ -106,10 +106,11 @@ public class Login extends HttpServlet {
 					HttpSession session = request.getSession();
 					if (isChildren) {
 						session.setAttribute("user_id", userId);
+						session.setMaxInactiveInterval(600);
 					} else {
 						session.setAttribute("parent_email", userId);
+						//session.setMaxInactiveInterval(60);
 					}
-					session.setMaxInactiveInterval(600);
 					if (isChildren) {
 						obj.put("status", "OK").put("user_id", userId).put("time", connection.getTime(userId)).put("time_viewed", connection.getTimeViewed(userId));
 					} else {

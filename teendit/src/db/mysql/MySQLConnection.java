@@ -642,11 +642,6 @@ public class MySQLConnection implements DBConnection {
 			ps.setString(1, userId);
 			ps.execute();
 			
-			sql = "DELETE FROM replies WHERE user_id = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, userId);
-			ps.execute();
-			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
