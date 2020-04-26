@@ -250,6 +250,23 @@
         //clear the input boxes
         document.getElementById('txtRepeatPass').value = "";
     }
+    
+    function removeAccount(){  	
+    	var url = './deleteaccount';
+        fetch(url, {
+                method: 'GET',
+            }).then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    alert("Successfully!");
+                    validateSession();
+                }
+                return res.json();
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
 
     //function for list all the posts in the global stream
     function loadItems() {
@@ -316,7 +333,7 @@
         }
 
         //add the comment input boxes for this post
-        var s4 = " <div class=\"row\"><div class=\"col-xs-10\"><input type=\"text\" class=\"form-control\" name=\"comment_content\"id=\"comment-input-%s\" placeholder=\"Please comment here\" required></div><div class=\"col-xs-1\"><button id=\"post-comment-btn-%s\" type=\"submit\" class=\"btn btn-primary\">Comment</button></div><div class=\"col-xs-1\"><button type=\"submit\" class=\"btn btn-warning\">BullyReport</button></div><br><br><br><br>";
+        var s4 = " <div class=\"row\"><div class=\"col-xs-10\"><input type=\"text\" class=\"form-control\" name=\"comment_content\"id=\"comment-input-%s\" placeholder=\"Please comment here\" required></div><div class=\"col-xs-1\"><button id=\"post-comment-btn-%s\" type=\"submit\" class=\"btn btn-primary\">Comment</button></div><div class=\"col-xs-1\"></div><br><br><br><br>";
         var child4 = document.createElement('div');
         s4 = s4.format(item.item_id, item.item_id);
         child4.innerHTML = s4;

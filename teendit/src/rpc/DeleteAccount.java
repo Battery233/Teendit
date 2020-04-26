@@ -37,10 +37,9 @@ public class DeleteAccount extends HttpServlet {
 			response.setStatus(403);
 			return;
 		}
+		String toDeleteId = session.getAttribute("user_id").toString();
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
-	  		 JSONObject input = RpcHelper.readJSONObject(request);
-	  		 String toDeleteId = input.getString("user_id");
 	  		 connection.deleteAccount(toDeleteId);
 	  		 session.invalidate();
 	  		
