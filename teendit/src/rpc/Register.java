@@ -40,7 +40,7 @@ public class Register extends HttpServlet {
 			String parentEmail = input.getString("parent_email");
 			
 			JSONObject obj = new JSONObject();
-			if (connection.registerUser(userId, password, email, parentEmail) && connection.registerParent(parentEmail, userId)) {
+			if (connection.registerParent(parentEmail, userId) && connection.registerUser(userId, password, email, parentEmail)) {
 				String token = generateRandomString(20);  // Generate a random token
 				connection.setToken(parentEmail, token);  // Set the token.
 				// Send the email to parent.
