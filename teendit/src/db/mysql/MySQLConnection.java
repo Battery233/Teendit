@@ -468,7 +468,7 @@ public class MySQLConnection implements DBConnection {
 		}
 
 		try {
-			String sql = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
 			ps.setString(2, password);
@@ -476,6 +476,7 @@ public class MySQLConnection implements DBConnection {
 			ps.setString(4, parentEmail);
 			ps.setInt(5, -1);
 			ps.setInt(6, 0);
+			ps.setInt(7, 0);
 			
 			return ps.executeUpdate() == 1;
 		} catch (Exception e) {

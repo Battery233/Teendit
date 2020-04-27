@@ -67,6 +67,7 @@ public class MySQLTableCreation {
 					+ "parent_email VARCHAR(255),"
 					+ "time_to_view INT,"
 					+ "time_viewed INT,"
+					+ "day_left INT,"
 					+ "PRIMARY KEY (user_id)"
 					+ ")";
 			statement.executeUpdate(sql);
