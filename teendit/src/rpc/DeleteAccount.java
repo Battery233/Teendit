@@ -24,7 +24,6 @@ public class DeleteAccount extends HttpServlet {
      */
     public DeleteAccount() {
         super();
-        // TODO Auto-generated constructor stub
     }
 	
 	/**

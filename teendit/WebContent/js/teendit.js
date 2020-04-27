@@ -1,5 +1,5 @@
 (function() {
-    //id for the current user
+    //vars for recording the current status of the page
     var currentUser;
     var currentParent;
     var secondsLeft;
@@ -34,7 +34,9 @@
         document.querySelector('#parentUpdatetimebtn').addEventListener('click', parentUpdatetimebtn);
         document.querySelector('#footer-privacy').addEventListener('click', privacyPolicy);
         document.querySelector('#career').addEventListener('click', career);
+        //disable F5 refresh
         $(document).on("keydown", disableF5);
+        //check session and show the components
         validateSession();
     }
 
@@ -142,11 +144,12 @@
         element.style.display = displayStyle;
     }
 
-    // show the policy information
+    // show the data policy information
     function policy() {
         alert("For teenage users, by creating this account, we will store users’ ID (user name), password, birthday, browsing time and email address. Your user name, password, and birthday is used to maintain your account, post history, and posts comments. All the information would be securely encrypted and used only for sending account reset information. The birthday data would only be used to determine whether you are the teenage group. For teenage parents, we will store parents’ correlation with their teenage children just to maintain the account. We will temporarily store the ID documents for manually ID verification and will delete them immediately after the verification process. We understand that ID documents are extremely important, we would encrypt them while we are storing them and transferring them. Not all the employees in Teendit can open the ID documents in the database, private keys would be needed. Your data will not be shared with any third party or used for any other purposes that are not directly related to Teendit.");
     }
 
+    //show profile
     function profile() {
         if (currentUser == null) {
             alert("Login first!");
@@ -154,13 +157,13 @@
             showProfilePage();
         }
     }
-    
-    function privacyPolicy(){
-    	window.open('privacy_policy.html');
+
+    function privacyPolicy() {
+        window.open('privacy_policy.html');
     }
-    
-    function career(){
-    	alert("Thanks for your interest in Teendit. We really appreciate the time and effort you took to submit your application. After thoughtful consideration, we have decided not to move forward with your application for this position. This may not be the end; there are no openings at Teendit for now and we will look for smart, qualified and motivated candidates at some time. Check out the Teendit Careers site often and if you see something interesting, please apply and we’ll get back in touch!❤");
+
+    function career() {
+        alert("Thanks for your interest in Teendit. We really appreciate the time and effort you took to submit your application. After thoughtful consideration, we have decided not to move forward with your application for this position. This may not be the end; there are no openings at Teendit for now and we will look for smart, qualified and motivated candidates at some time. Check out the Teendit Careers site often and if you see something interesting, please apply and we’ll get back in touch!❤");
     }
 
     function sendNewPost() {
@@ -172,7 +175,7 @@
             showPostingPage();
             alert("write something!");
         } else {
-        	document.querySelector('#txtnewpost-headline').value = "";
+            document.querySelector('#txtnewpost-headline').value = "";
             document.querySelector('#txtnewpost-content').value = "";
             //send post
             var url = './main';
@@ -295,6 +298,7 @@
         document.getElementById('txtPassword').value = "";
     }
 
+    //get sar data
     function sar() {
         var url = './sar';
         fetch(url, {
@@ -306,6 +310,7 @@
                 }
                 return res.json();
             }).then(res => {
+                //generate a sar.txt for downloading
                 var a = document.createElement("a");
                 var file = new Blob([JSON.stringify(res)], {
                     type: 'text/plain'
@@ -340,6 +345,7 @@
                 }
             })
         } else {
+            //logout as a parent
             var url = './logout';
             currentUser = null;
             currentParent = null;
@@ -393,6 +399,7 @@
         document.getElementById('txtRepeatPass').value = "";
     }
 
+    //delete account
     function removeAccount() {
         var url = './deleteaccount';
         fetch(url, {
@@ -410,6 +417,7 @@
             })
     }
 
+    //update the user information
     function modifyUserProfile() {
         var email = document.querySelector('#txtEmail-profile').value;
         var password = document.querySelector('#txtpassword-p').value;
@@ -457,6 +465,7 @@
         }
     }
 
+    //the function for parents to reset password
     function parentResetPw() {
         var password1 = document.querySelector('#parentnewpw1').value;
         var password2 = document.querySelector('#parentnewpw2').value;
@@ -488,7 +497,7 @@
         }
     }
 
-
+    //button for the parent to reset time limit
     function parentUpdatetimebtn() {
 
         var minutes = document.querySelector('#timepicker').value;
@@ -515,6 +524,7 @@
             })
     }
 
+    //disable f5 refresh
     function disableF5(e) {
         if ((e.which || e.keyCode) == 116) e.preventDefault();
     };
@@ -628,7 +638,6 @@
             }
         });
     }
-
 
     //tool function for string formatting
     String.prototype.format = function() {

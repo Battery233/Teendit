@@ -30,9 +30,4 @@ public class Decryption {
         String base64 = Crypto.decrypt(encrypt);
         Base64Helper.base64ToFile(base64, outPath);
 	}
-	
-//	public static void main(String[] args) throws IOException {
-//		Decryption.decrypt("/Users/wyg/Desktop/encryption/2b506e33-c505-4d49-ab45-218d48133c2b(jpg).txt", "/Users/wyg/Desktop/encryption/real.jpg");
-//	}
-
 }

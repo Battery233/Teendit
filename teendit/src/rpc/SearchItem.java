@@ -32,7 +32,6 @@ public class SearchItem extends HttpServlet {
      */
     public SearchItem() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

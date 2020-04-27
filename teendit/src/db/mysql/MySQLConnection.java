@@ -165,29 +165,6 @@ public class MySQLConnection implements DBConnection {
 		return email;
 	}
 	
-//	@Override
-//	public boolean containsItem(String userId, String itemId) {
-//		if (conn == null) {
-//			return false;
-//		}
-//		try {
-//			String sql = "SELECT item_id FROM items WHERE user_id = ? AND item_id = ?";
-//			PreparedStatement stmt = conn.prepareStatement(sql);
-//			stmt.setString(1, userId);
-//			stmt.setString(2, itemId);
-//			
-//			ResultSet rs = stmt.executeQuery();
-//			
-//			if (rs != null) {
-//				return true;
-//			}
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return false;
-//	}
-
 	@Override
 	public List<Integer> getItemIds(String userId) {
 		if (conn == null) {

@@ -74,9 +74,4 @@ public class SendEmail {
             mex.printStackTrace();
         }
     }
-    
-//    public static void main(String[] args) {
-//    	//SendEmail test = new SendEmail();
-//    	SendEmail.send("yigengw@gmail.com", "<h2>Dear Parent,</h2><br><br><p>This is the link:</p><br><p>https://123.com</p>");
-//    }
 }
