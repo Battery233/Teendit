@@ -32,6 +32,10 @@
         document.querySelector('#profile-modify').addEventListener('click', modifyUserProfile);
         document.querySelector('#parentResetPw').addEventListener('click', parentResetPw);
         document.querySelector('#parentUpdatetimebtn').addEventListener('click', parentUpdatetimebtn);
+        document.querySelector('#privacy-policy-btn').addEventListener('click', privacyPolicy);
+        document.querySelector('#footer-terms').addEventListener('click', privacyPolicy);
+        document.querySelector('#footer-privacy').addEventListener('click', privacyPolicy);
+        document.querySelector('#career').addEventListener('click', career);
         $(document).on("keydown", disableF5);
         validateSession();
     }
@@ -112,7 +116,7 @@
         hideElement(document.querySelector('#signup-content'));
         hideElement(document.querySelector('#login-content'));
         hideElement(document.querySelector('#globalstream-content'));
-        hideElement(document.querySelector('#logout-btn'));
+        showElement(document.querySelector('#logout-btn'));
         hideElement(document.querySelector('#newpost-content'));
         hideElement(document.querySelector('#parent-content'));
         showElement(document.querySelector('#profile-content'));
@@ -151,6 +155,14 @@
         } else {
             showProfilePage();
         }
+    }
+    
+    function privacyPolicy(){
+    	window.open('privacy_policy.html');
+    }
+    
+    function career(){
+    	alert("Thanks for your interest in Teendit. We really appreciate the time and effort you took to submit your application. After thoughtful consideration, we have decided not to move forward with your application for this position. This may not be the end; there are no openings at Teendit for now and we will look for smart, qualified and motivated candidates at some time. Check out the Teendit Careers site often and if you see something interesting, please apply and we’ll get back in touch!❤");
     }
 
     function sendNewPost() {
