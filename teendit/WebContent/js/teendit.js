@@ -32,7 +32,6 @@
         document.querySelector('#profile-modify').addEventListener('click', modifyUserProfile);
         document.querySelector('#parentResetPw').addEventListener('click', parentResetPw);
         document.querySelector('#parentUpdatetimebtn').addEventListener('click', parentUpdatetimebtn);
-        document.querySelector('#privacy-policy-btn').addEventListener('click', privacyPolicy);
         document.querySelector('#footer-privacy').addEventListener('click', privacyPolicy);
         document.querySelector('#career').addEventListener('click', career);
         $(document).on("keydown", disableF5);
