@@ -28,6 +28,7 @@ public class DeleteAccount extends HttpServlet {
 	
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 * Handle the GET reuqest to delete all accoount info.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);

@@ -36,6 +36,7 @@ public class SearchItem extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * GET all existing posts and comments.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
@@ -74,6 +75,7 @@ public class SearchItem extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * POST a new post or comment.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
@@ -114,35 +116,5 @@ public class SearchItem extends HttpServlet {
 	  		 connection.close();
 	  	 }
 	}
-	
-//	/**
-//	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-//	 */
-//	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession(false);
-//		if (session == null) {
-//			response.setStatus(403);
-//			return;
-//		}
-//		DBConnection connection = DBConnectionFactory.getConnection();
-//		try {
-//	  		 JSONObject input = RpcHelper.readJSONObject(request);
-//	  		 String todeleteId;
-//	  		 
-//	  		 if (input.has("comment_id")) {
-//	  			todeleteId = input.getString("comment_id");
-//	  		 } else {
-//	  			todeleteId = input.getString("item_id");
-//	  			connection.deleteItems(todeleteId);
-//	  		 }
-//	  		
-//	  		 RpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
-//	  		
-//	  	 } catch (Exception e) {
-//	  		 e.printStackTrace();
-//	  	 } finally {
-//	  		 connection.close();
-//	  	 }
-//	}
 
 }

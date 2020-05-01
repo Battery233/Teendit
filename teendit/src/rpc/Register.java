@@ -29,6 +29,7 @@ public class Register extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Handle the POST reuqest to record register info and send email.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();

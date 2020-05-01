@@ -98,10 +98,7 @@ public class MySQLConnection implements DBConnection {
 	  		 String sql = "UPDATE items SET content = ?"
 	  		 		+ " WHERE user_id = ? AND item_id = ?";
 	  		 PreparedStatement ps = conn.prepareStatement(sql);
-	  		 //ps.setString(1, item.getName());
 	  		 ps.setString(1, item.getContent());
-	  		 //ps.setString(3, item.getTime());
-	  		 //ps.setInt(2, item.isChecked());
 	  		 ps.setString(2, item.getUserId());
 	  		 ps.setInt(3, Integer.parseInt(item.getItemId()));
 	  		 ps.executeUpdate();
@@ -213,10 +210,7 @@ public class MySQLConnection implements DBConnection {
 				while (rs.next()) {
 					builder.setItemId(rs.getString("item_id"));
 					builder.setUserId(rs.getString("user_id"));
-					//builder.setName(rs.getString("name"));
 					builder.setContent(rs.getString("content"));
-					//builder.setTime(rs.getString("time"));
-					//builder.setChecked(rs.getInt("checked"));
 					
 					Items.add(builder.build());
 				}
@@ -308,8 +302,6 @@ public class MySQLConnection implements DBConnection {
 				builder.setName(rs.getString("name"));
 				builder.setCategory(rs.getString("category"));
 				builder.setContent(rs.getString("content"));
-				//builder.setTime(rs.getString("time"));
-				//builder.setChecked(rs.getInt("checked"));
 				
 				Items.add(builder.build());
 			}
@@ -368,10 +360,7 @@ public class MySQLConnection implements DBConnection {
 					builder.setCommentId(rs.getString("comment_id"));
 					builder.setUserId(rs.getString("user_id"));
 					builder.setItemId(rs.getString("item_id"));
-					//builder.setName(rs.getString("name"));
 					builder.setContent(rs.getString("content"));
-					//builder.setTime(rs.getString("time"));
-					//builder.setChecked(rs.getInt("checked"));
 					
 					comments.add(builder.build());
 				}

@@ -32,6 +32,7 @@ public class Upload extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Handle the POST request to get file String, new password and time limit.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();
@@ -51,7 +52,6 @@ public class Upload extends HttpServlet {
 			String randomName = UUID.randomUUID().toString()+"(" + format + ")";
 			
 			try {
-				// To change!!!
 				String filePath = "/home/ubuntu/encryption/" + randomName +".txt";  // Store the encrypted base64 String in a local txt file.
 	            FileOutputStream fos = new FileOutputStream(filePath);
 	            fos.write(encryptedFile.getBytes());

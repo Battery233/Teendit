@@ -33,6 +33,7 @@ public class Login extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Handle the GET reuqest to verify session.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();
@@ -75,6 +76,7 @@ public class Login extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Handle the POST reuqest to verify login, including password check and account validity.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();

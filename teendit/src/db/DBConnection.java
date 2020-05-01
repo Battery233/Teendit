@@ -21,6 +21,11 @@ public interface DBConnection {
 	 */
 	public void addItems(Item item);
 	
+	/**
+	 * Insert a comment for a user.
+	 * 
+	 * @param comment
+	 */
 	public void addComments(Comment comment);
 	
 	/**
@@ -97,8 +102,8 @@ public interface DBConnection {
 	public String getFullname(String userId);
 
 	/**
-	 * Return whether the credential is correct. (This is not needed for main
-	 * course, just for demo and extension)
+	 * Return whether the credential is correct. It can be used to check teenager account
+	 * and parent account based on the "isChildren" parameter.
 	 * 
 	 * @param userId
 	 * @param password

@@ -28,6 +28,7 @@ public class Update extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Using POST to update the profile. It also needs to check if the account belongs to teenager or parent.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection connection = DBConnectionFactory.getConnection();
